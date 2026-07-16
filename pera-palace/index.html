@@ -127,6 +127,19 @@
   .gloss{font-size:11px;color:var(--faint);font-style:italic;margin:5px 5px 0;line-height:1.4}
   .row.a .gloss{border-left:2px solid var(--line);padding-left:8px}
 
+  /* rezervasyon iletim şeridi */
+  .route{align-self:flex-start;display:flex;flex-direction:column;gap:6px;margin:2px 2px 0;max-width:88%}
+  .route .rt-h{font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--emer);
+    display:flex;align-items:center;gap:6px}
+  .route .rt-h::before{content:"";width:14px;height:1px;background:color-mix(in srgb,var(--emer) 45%,transparent)}
+  .rchip{font-size:11.5px;color:var(--emer);background:var(--emer-soft);align-self:flex-start;
+    border:1px solid color-mix(in srgb,var(--emer) 30%,transparent);padding:5px 11px 5px 6px;
+    border-radius:20px;display:inline-flex;align-items:center;gap:7px;animation:rin .35s ease}
+  @keyframes rin{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+  .rchip .tick{width:15px;height:15px;border-radius:50%;background:var(--emer);color:#06130d;flex:none;
+    display:grid;place-items:center;font-size:9px;font-weight:800}
+  .rchip b{color:var(--ink);font-weight:600}
+
   .typing{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);
     padding:11px 14px;border-radius:16px;border-bottom-left-radius:5px;display:flex;gap:4px}
   .typing span{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:bnc 1.2s infinite}
@@ -241,7 +254,8 @@ const SCEN = {
         gloss:'Alya aynı dilde, otelin gerçek ikon mekânlarıyla yanıtladı.'},
       {who:'g',lang:'İngilizce',text:"Yes — Orient Bar at 8, then dinner for two."},
       {who:'a',audio:'dinner_a2',lang:'İngilizce',text:"Reserved: <b>Orient Bar</b> 20:00, <b>Agatha</b> 21:00, table for two. A little history — Agatha Christie stayed here in room <b>411</b> and wrote here. I'd be glad to arrange a visit tomorrow.",
-        gloss:'Rezervasyon yapıldı + mirası (411 numaralı oda) deneyime çevirdi.'},
+        gloss:'Rezervasyon yapıldı + mirası (411 numaralı oda) deneyime çevirdi.',
+        route:['Yönetim paneline düştü','Orient Bar’a iletildi','Agatha Restaurant’a iletildi']},
     ]},
   heritage:{
     icon:'🎩', head:'Miras & 411 numaralı oda', desc:'Otelin tarihini deneyime çevirir — Arapça', lang:'AR', globe:'AR',
@@ -249,7 +263,8 @@ const SCEN = {
       {who:'g',lang:'Arapça',text:"مساء الخير. سمعت أن أجاثا كريستي أقامت هنا. هل يمكنني زيارة الغرفة؟",
         gloss:'“İyi akşamlar. Agatha Christie’nin burada kaldığını duydum. Odayı ziyaret edebilir miyim?”'},
       {who:'a',audio:'heritage_a1',lang:'Arapça',text:"مساء الخير! نعم، إنها الغرفة رقم <b>411</b>، حيث أقامت أجاثا كريستي. رتّبتُ لكم زيارة غدًا الساعة 11، مع شاي بعد الظهر في <b>Kubbeli Lounge</b> على أنغام البيانو.",
-        gloss:'Alya Arapça yanıtladı: 411 numaralı oda ziyareti + Kubbeli Lounge’da piyanolu afternoon tea ayarlandı.'},
+        gloss:'Alya Arapça yanıtladı: 411 numaralı oda ziyareti + Kubbeli Lounge’da piyanolu afternoon tea ayarlandı.',
+        route:['Yönetim paneline düştü','Konsiyerj’e iletildi','Kubbeli Lounge’a iletildi']},
       {who:'g',lang:'Arapça',text:"رائع، شكراً لك.",
         gloss:'“Harika, teşekkürler.”'},
       {who:'a',audio:'heritage_a2',lang:'Arapça',text:"بكل سرور. أهلًا وسهلًا بكم في <b>Pera Palace</b>.",
@@ -263,7 +278,8 @@ const SCEN = {
         gloss:'Otelin gerçek mekânlarıyla kişisel bir program önerdi.'},
       {who:'g',lang:'Türkçe',text:"Evet, 15:00 çay olur."},
       {who:'a',audio:'spa_a2',lang:'Türkçe',text:"<b>Kubbeli</b> 15:00 afternoon tea, <b>Pera SPA</b> 16:30 hamam ayrıldı. Ayrılırken <b>Patisserie de Pera</b>'dan el yapımı çikolatalarımızı da denemenizi öneririm.",
-        gloss:'Rezervasyon + Patisserie de Pera upsell’i.'},
+        gloss:'Rezervasyon + Patisserie de Pera upsell’i.',
+        route:['Yönetim paneline düştü','Kubbeli Lounge’a iletildi','Pera SPA’ya iletildi']},
     ]},
 };
 
@@ -304,6 +320,20 @@ function rowEl(m){
   return d;
 }
 
+async function showRoute(targets, chat, gen){
+  const box = document.createElement('div'); box.className='route';
+  box.innerHTML = '<div class="rt-h">otomatik iletildi</div>';
+  chat.appendChild(box); chat.scrollTop = chat.scrollHeight;
+  for(const t of targets){
+    if(gen !== playGen) return;
+    await sleep(480);
+    if(gen !== playGen) return;
+    const c = document.createElement('div'); c.className = 'rchip';
+    c.innerHTML = '<span class="tick">✓</span> ' + esc(t);
+    box.appendChild(c); chat.scrollTop = chat.scrollHeight;
+  }
+}
+
 async function play(k){
   current = k; stopAudio();
   const gen = ++playGen;                 // her yeni oynatma öncekini iptal eder
@@ -324,7 +354,8 @@ async function play(k){
       chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
       const played = await playAudio(m.audio);   // SES BİTENE KADAR bekler
       if(gen !== playGen) return;
-      await sleep(played ? 550 : 1100 + Math.min(m.text.length*20, 3200));
+      if(m.route){ await sleep(300); if(gen !== playGen) return; await showRoute(m.route, chat, gen); if(gen !== playGen) return; }
+      await sleep(played ? 650 : 1100 + Math.min(m.text.length*20, 3200));
     } else {
       chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
       await sleep(950 + Math.min(m.text.length*9, 1400));
