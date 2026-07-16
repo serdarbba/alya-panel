@@ -127,6 +127,19 @@
   .gloss{font-size:11px;color:var(--faint);font-style:italic;margin:5px 5px 0;line-height:1.4}
   .row.a .gloss{border-left:2px solid var(--line);padding-left:8px}
 
+  /* rezervasyon iletim şeridi */
+  .route{align-self:flex-start;display:flex;flex-direction:column;gap:6px;margin:2px 2px 0;max-width:88%}
+  .route .rt-h{font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--emer);
+    display:flex;align-items:center;gap:6px}
+  .route .rt-h::before{content:"";width:14px;height:1px;background:color-mix(in srgb,var(--emer) 45%,transparent)}
+  .rchip{font-size:11.5px;color:var(--emer);background:var(--emer-soft);align-self:flex-start;
+    border:1px solid color-mix(in srgb,var(--emer) 30%,transparent);padding:5px 11px 5px 6px;
+    border-radius:20px;display:inline-flex;align-items:center;gap:7px;animation:rin .35s ease}
+  @keyframes rin{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+  .rchip .tick{width:15px;height:15px;border-radius:50%;background:var(--emer);color:#06130d;flex:none;
+    display:grid;place-items:center;font-size:9px;font-weight:800}
+  .rchip b{color:var(--ink);font-weight:600}
+
   .typing{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);
     padding:11px 14px;border-radius:16px;border-bottom-left-radius:5px;display:flex;gap:4px}
   .typing span{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:bnc 1.2s infinite}
@@ -240,7 +253,7 @@ const SCEN = {
       {who:'a',audio:'night_a1',lang:'İngilizce',text:"Good evening! Tonight <b>Golden Cage</b> (Lebanese) and <b>Mey Blue</b> (seafood) serve until 23:00, and <b>Ocakbaşı</b> for grill. <b>Cage Club</b> opens tonight at 23:00 — reservation needed. Shall I reserve a table?",
         gloss:'Alya aynı dilde, bu gece AÇIK mekânları gerçek adlarıyla verdi.'},
       {who:'g',lang:'İngilizce',text:"A quiet sea-view table for two at 20:30, please."},
-      {who:'a',audio:'night_a2',lang:'İngilizce',text:"Done — <b>Mey Blue</b>, sea-view, 20:30, table for two. Code <b>CR-2211</b>. I've also held two spots at <b>Cage Club</b> after dinner. Anything else — spa or a nightcap at <b>Port Lounge</b>?",
+      {who:'a',audio:'night_a2',route:['Yönetim paneline düştü','Mey Blue’ya iletildi','Cage Club’a iletildi'],lang:'İngilizce',text:"Done — <b>Mey Blue</b>, sea-view, 20:30, table for two. Code <b>CR-2211</b>. I've also held two spots at <b>Cage Club</b> after dinner. Anything else — spa or a nightcap at <b>Port Lounge</b>?",
         gloss:'Rezervasyon + gece kulübü yeri ayrıldı, upsell önerildi.'},
     ]},
   vip:{
@@ -248,21 +261,21 @@ const SCEN = {
     msgs:[
       {who:'g',lang:'Rusça',text:"Добрый вечер. Я в VIP-зале казино. Можно поздний ужин после игры и трансфер в аэропорт утром?",
         gloss:'“İyi akşamlar. Casino VIP salonundayım. Oyundan sonra geç yemek ve sabah havaalanı transferi olur mu?”'},
-      {who:'a',audio:'vip_a1',lang:'Rusça',text:"Добрый вечер! Забронировала поздний ужин в <b>Golden Cage</b> до 01:00 и трансфер в аэропорт на 07:00. Ваш столик в VIP-зоне сохранён. Напитки — на счёт номера?",
+      {who:'a',audio:'vip_a1',route:['Yönetim paneline düştü','Golden Cage’e iletildi','Ulaşım / Vale’ye iletildi'],lang:'Rusça',text:"Добрый вечер! Забронировала поздний ужин в <b>Golden Cage</b> до 01:00 и трансфер в аэропорт на 07:00. Ваш столик в VIP-зоне сохранён. Напитки — на счёт номера?",
         gloss:'Alya Rusça yanıtladı: Golden Cage 01:00’a kadar geç yemek + 07:00 transfer + VIP masa korundu, içki oda hesabına.'},
       {who:'g',lang:'Rusça',text:"Да, спасибо. И столик в Coco Bongo завтра.",
         gloss:'“Evet, teşekkürler. Bir de yarın Coco Bongo’da masa.”'},
-      {who:'a',audio:'vip_a2',lang:'Rusça',text:"С удовольствием — <b>Coco Bongo Island</b>, завтра, кабана у воды. Всё готово. Приятной игры!",
+      {who:'a',audio:'vip_a2',route:['Coco Bongo Island’a iletildi'],lang:'Rusça',text:"С удовольствием — <b>Coco Bongo Island</b>, завтра, кабана у воды. Всё готово. Приятной игры!",
         gloss:'Coco Bongo Island’da su kenarı kabana ayrıldı. “İyi oyunlar!”'},
     ]},
   arrival:{
     icon:'🔔', head:'Varış öncesi — sessiz oda', desc:'Gürültü şikâyetini oluşmadan önler', lang:'TR', globe:'TR',
     msgs:[
       {who:'g',lang:'Türkçe',text:"Merhaba, yarın check-in'imiz var. Sakin bir oda istiyoruz, gece müzik gelmesin."},
-      {who:'a',audio:'arrival_a1',lang:'Türkçe',text:"Hoş geldiniz! <b>Cage Club</b> ve <b>Coco Bongo</b> etkinlikleri hafta sonu geç saatlere kadar sürüyor. Sizi ana binada, <b>Maldive Villalar</b>'dan uzakta, deniz tarafı sessiz bir odaya aldım. Erken check-in de ayarlayabilirim — ister misiniz?",
+      {who:'a',audio:'arrival_a1',route:['Yönetim paneline düştü','Kat Hizmetleri’ne iletildi'],lang:'Türkçe',text:"Hoş geldiniz! <b>Cage Club</b> ve <b>Coco Bongo</b> etkinlikleri hafta sonu geç saatlere kadar sürüyor. Sizi ana binada, <b>Maldive Villalar</b>'dan uzakta, deniz tarafı sessiz bir odaya aldım. Erken check-in de ayarlayabilirim — ister misiniz?",
         gloss:'Alya, yorumlardaki “müzik villalara geliyor” şikâyetini varıştan önce çözdü.'},
       {who:'g',lang:'Türkçe',text:"Harika olur, 13:00 gibi gelebiliriz. Bir de çocuğumuz var."},
-      {who:'a',audio:'arrival_a2',lang:'Türkçe',text:"Not aldım — 13:00 erken giriş hazır. Çocuğunuz için <b>Cratoys</b> mini kulüp ve <b>La Plage</b>'da sığ havuz alanı var; isterseniz kahvaltıya yakın masa ayırayım.",
+      {who:'a',audio:'arrival_a2',route:['Resepsiyon’a iletildi','Cratoys’a iletildi'],lang:'Türkçe',text:"Not aldım — 13:00 erken giriş hazır. Çocuğunuz için <b>Cratoys</b> mini kulüp ve <b>La Plage</b>'da sığ havuz alanı var; isterseniz kahvaltıya yakın masa ayırayım.",
         gloss:'Çocuk kulübü (Cratoys) ve plaj yönlendirmesiyle deneyim kişiselleştirildi.'},
     ]},
 };
@@ -304,6 +317,20 @@ function rowEl(m){
   return d;
 }
 
+async function showRoute(targets, chat, gen){
+  const box = document.createElement('div'); box.className='route';
+  box.innerHTML = '<div class="rt-h">otomatik iletildi</div>';
+  chat.appendChild(box); chat.scrollTop = chat.scrollHeight;
+  for(const t of targets){
+    if(gen !== playGen) return;
+    await sleep(480);
+    if(gen !== playGen) return;
+    const c = document.createElement('div'); c.className = 'rchip';
+    c.innerHTML = '<span class="tick">✓</span> ' + esc(t);
+    box.appendChild(c); chat.scrollTop = chat.scrollHeight;
+  }
+}
+
 async function play(k){
   current = k; stopAudio();
   const gen = ++playGen;                 // her yeni oynatma öncekini iptal eder
@@ -324,7 +351,8 @@ async function play(k){
       chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
       const played = await playAudio(m.audio);
       if(gen !== playGen) return;
-      await sleep(played ? 550 : 1100 + Math.min(m.text.length*20, 3200));
+      if(m.route){ await sleep(300); if(gen !== playGen) return; await showRoute(m.route, chat, gen); if(gen !== playGen) return; }
+      await sleep(played ? 650 : 1100 + Math.min(m.text.length*20, 3200));
     } else {
       chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
       await sleep(950 + Math.min(m.text.length*9, 1400));
