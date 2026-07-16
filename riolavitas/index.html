@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alya · Swissôtel Bosphorus — Misafir Deneyimi</title>
+<title>Alya · Riolavitas Resort — Misafir Deneyimi</title>
 <style>
   :root{
     --bg:#0b110e; --bg2:#0e1611; --panel:#141a15; --panel2:#1a211b; --line:#2c332b;
@@ -161,14 +161,14 @@
     display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--faint)}
   footer b{color:var(--gold2);font-weight:600}
   @media(prefers-reduced-motion:reduce){.row,.typing span{animation:none}}
-:root{--gold:#6f9fe0;--gold2:#aecbf2;--goldsoft:rgba(111,159,224,.15);--bg:#0a0d14;--bg2:#0d1119;--panel:#12161f;--panel2:#181d29;}</style>
+:root{--gold:#3fb6a0;--gold2:#8fd9c6;--goldsoft:rgba(63,182,160,.15);--bg:#08110f;--bg2:#0b1613;--panel:#0f1817;--panel2:#141f1d;}</style>
 
 <div class="top">
   <div class="brand">
     <div class="orb"></div>
     <div>
       <h1 class="serif">Alya</h1>
-      <div class="sub">Swissôtel Bosphorus</div>
+      <div class="sub">Riolavitas Resort</div>
     </div>
   </div>
   <div class="bybba"><b>BBA Technology</b> · İzmir · yapay zekâ konsiyerj</div>
@@ -176,7 +176,7 @@
 
 <div class="hero">
   <h2 class="serif">Misafiriniz <em>kendi dilinde</em> soruyor.<br>Alya <em>anında</em> yanıtlıyor.</h2>
-  <p>Boğaz manzarası — misafirinizi kendi dilinde sesle karşılar, restoran, spa ve transfer taleplerini tek ekranda çözer ve yönetim paneline iletir.</p>
+  <p>Manavgat nehrinin denize kavuştuğu yer — misafirinizi kendi dilinde sesle karşılar, restoran, spa ve transfer taleplerini tek ekranda çözer ve yönetim paneline iletir.</p>
 </div>
 
 <div class="stage">
@@ -198,7 +198,7 @@
       <div class="phead">
         <div class="orb" id="pOrb"></div>
         <div>
-          <div class="ph-name">Alya · Swissôtel Bosphorus</div>
+          <div class="ph-name">Alya · Riolavitas Resort</div>
           <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · sesli · 9 dil</span></div>
         </div>
         <button class="spk on" id="spk" title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
@@ -222,7 +222,7 @@
 <script>
 try{ if(!sessionStorage.getItem('_alyavisit')){ sessionStorage.setItem('_alyavisit','1');
   fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',
-    body:'Swissôtel Bosphorus demoyu açtı',
+    body:'Riolavitas Resort demoyu açtı',
     headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada','Priority':'default'}});
 } }catch(e){}
 </script>
@@ -250,7 +250,7 @@ function playAudio(key){
 }
 
 /* ---- senaryolar (gerçek mekânlar, çok dilli) ---- */
-const SCEN = {"s1": {"icon": "🍽️", "head": "Bu akşam nereye?", "desc": "Akşam yemeği önerir ve rezerve eder", "lang": "İngilizce", "globe": "EN", "msgs": [{"who": "g", "lang": "İngilizce", "text": "Good evening! Could you help us plan dinner tonight?", "gloss": "Misafir İngilizce yazdı."}, {"who": "a", "lang": "İngilizce", "text": "Good evening, and welcome to Swissôtel Bosphorus. With pleasure — our à la carte restaurant has a lovely quiet table, and I can arrange a welcome drink beforehand. Shall I reserve for two?", "gloss": "Alya İngilizce karşıladı ve rezervasyon önerdi.", "audio": "s1_a1"}, {"who": "g", "lang": "İngilizce", "text": "Yes, a quiet table at 20:30.", "gloss": "“Evet, 20:30’da sakin bir masa.”"}, {"who": "a", "lang": "İngilizce", "text": "Reserved — 20:30, a quiet table for two, with a welcome drink noted. Anything else — the spa, or an airport transfer tomorrow?", "gloss": "Rezervasyon yapıldı, upsell önerildi.", "audio": "s1_a2", "route": ["Yönetim paneline düştü", "Restorana iletildi", "Servise iletildi"]}]}, "s2": {"icon": "🧖", "head": "Sakin bir gün", "desc": "Spa + geç çıkış planlar", "lang": "Arapça", "globe": "AR", "msgs": [{"who": "g", "lang": "Arapça", "text": "مرحبًا! نريد أمسية هادئة غدًا بعد الظهر.", "gloss": "Misafir Arapça yazdı."}, {"who": "a", "lang": "Arapça", "text": "رائع. سأحجز السبا ومكانًا هادئًا بعده، مع تسجيل خروج متأخر حتى لا تتعجلوا. أرتب ذلك؟", "gloss": "Alya spa + geç çıkış önerdi.", "audio": "s2_a1"}, {"who": "g", "lang": "Arapça", "text": "نعم من فضلك، حوالي الساعة 15:00.", "gloss": "“Evet, 15:00 civarı.”"}, {"who": "a", "lang": "Arapça", "text": "تم — السبا الساعة 15:00 وتسجيل خروج متأخر. سأجهّز كل شيء.", "gloss": "Program kuruldu.", "audio": "s2_a2", "route": ["Yönetim paneline düştü", "Spa’ya iletildi", "Resepsiyona iletildi"]}]}};
+const SCEN = {"s1": {"icon": "🍽️", "head": "Bu akşam nereye?", "desc": "Akşam yemeği önerir ve rezerve eder", "lang": "Rusça", "globe": "RU", "msgs": [{"who": "g", "lang": "Rusça", "text": "Добрый вечер! Поможете спланировать ужин сегодня?", "gloss": "Misafir Rusça yazdı."}, {"who": "a", "lang": "Rusça", "text": "Добрый вечер и добро пожаловать в Riolavitas Resort. С удовольствием — в нашем ресторане а-ля-карт есть уютный тихий столик, и я подготовлю аперитив. Забронировать на двоих?", "gloss": "Alya Rusça karşıladı ve rezervasyon önerdi.", "audio": "s1_a1"}, {"who": "g", "lang": "Rusça", "text": "Да, тихий столик на 20:30.", "gloss": "“Evet, 20:30’a sakin bir masa.”"}, {"who": "a", "lang": "Rusça", "text": "Готово — 20:30, тихий столик на двоих, аперитив отмечен. Что-нибудь ещё — спа или трансфер в аэропорт завтра?", "gloss": "Rezervasyon yapıldı, upsell önerildi.", "audio": "s1_a2", "route": ["Yönetim paneline düştü", "Restorana iletildi", "Servise iletildi"]}]}, "s2": {"icon": "🧖", "head": "Sakin bir gün", "desc": "Spa + geç çıkış planlar", "lang": "Almanca", "globe": "DE", "msgs": [{"who": "g", "lang": "Almanca", "text": "Hallo! Wir möchten morgen einen entspannten Nachmittag.", "gloss": "Misafir Almanca yazdı."}, {"who": "a", "lang": "Almanca", "text": "Wunderbar. Ich buche unser Spa und einen ruhigen Platz danach, dazu ein spätes Check-out, damit Sie nie in Eile sind. Soll ich?", "gloss": "Alya spa + geç çıkış önerdi.", "audio": "s2_a1"}, {"who": "g", "lang": "Almanca", "text": "Ja bitte, gegen 15:00 Uhr.", "gloss": "“Evet, 15:00 civarı.”"}, {"who": "a", "lang": "Almanca", "text": "Erledigt — Spa um 15:00 Uhr und spätes Check-out notiert. Ich bereite alles vor.", "gloss": "Program kuruldu.", "audio": "s2_a2", "route": ["Yönetim paneline düştü", "Spa’ya iletildi", "Resepsiyona iletildi"]}]}};
 
 /* otelin imza mekânları */
 const VENUES = ["Restoran rezervasyonu", "Spa & wellness", "Havaalanı transferi", "Oda servisi", "Geç çıkış", "Etkinlik & toplantı"];
