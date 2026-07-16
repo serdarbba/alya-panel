@@ -1,6 +1,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Alya · Novikov Istanbul — Misafir Deneyimi</title>
+<title>Alya · Radisson İzmir Aliağa — Misafir Deneyimi</title>
 <style>
   :root{
     --bg:#0b110e; --bg2:#0e1611; --panel:#141a15; --panel2:#1a211b; --line:#2c332b;
@@ -161,14 +161,14 @@
     display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--faint)}
   footer b{color:var(--gold2);font-weight:600}
   @media(prefers-reduced-motion:reduce){.row,.typing span{animation:none}}
-:root{--gold:#d08a6e;--gold2:#eeb89f;--goldsoft:rgba(208,138,110,.15);--bg:#120c0d;--bg2:#170f10;--panel:#1a1214;--panel2:#211719;}</style>
+:root{--gold:#6f9fe0;--gold2:#aecbf2;--goldsoft:rgba(111,159,224,.15);--bg:#0a0d14;--bg2:#0d1119;--panel:#12161f;--panel2:#181d29;}</style>
 
 <div class="top">
   <div class="brand">
     <div class="orb"></div>
     <div>
       <h1 class="serif">Alya</h1>
-      <div class="sub">Novikov Istanbul</div>
+      <div class="sub">Radisson İzmir Aliağa</div>
     </div>
   </div>
   <div class="bybba"><b>BBA Technology</b> · İzmir · yapay zekâ konsiyerj</div>
@@ -176,7 +176,7 @@
 
 <div class="hero">
   <h2 class="serif">Misafiriniz <em>kendi dilinde</em> soruyor.<br>Alya <em>anında</em> yanıtlıyor.</h2>
-  <p>imza dünya mutfağı — misafirinizi kendi dilinde sesle karşılar, restoran, spa ve transfer taleplerini tek ekranda çözer ve yönetim paneline iletir.</p>
+  <p>Aliağa’nın iş misafiri adresi — misafirinizi kendi dilinde sesle karşılar, restoran, spa ve transfer taleplerini tek ekranda çözer ve yönetim paneline iletir.</p>
 </div>
 
 <div class="stage">
@@ -198,7 +198,7 @@
       <div class="phead">
         <div class="orb" id="pOrb"></div>
         <div>
-          <div class="ph-name">Alya · Novikov Istanbul</div>
+          <div class="ph-name">Alya · Radisson İzmir Aliağa</div>
           <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · sesli · 9 dil</span></div>
         </div>
         <button class="spk on" id="spk" title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
@@ -219,13 +219,6 @@
   <div><b>Alya</b> · BBA Technology · İzmir</div>
 </footer>
 
-<script>
-(function(){var sent=false;function ping(){if(sent)return;sent=true;
-  try{fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'Novikov Istanbul demoyu açtı',
-    headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada'}});}}catch(e){}}
-  ['pointerdown','keydown','touchstart'].forEach(function(ev){window.addEventListener(ev,ping,{once:true,passive:true});});
-})();
-</script>
 <script>
 const $ = s => document.querySelector(s);
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -250,10 +243,10 @@ function playAudio(key){
 }
 
 /* ---- senaryolar (gerçek mekânlar, çok dilli) ---- */
-const SCEN = {"s1": {"icon": "🍽️", "head": "Bu akşam nereye?", "desc": "Akşam yemeği önerir ve rezerve eder", "lang": "İngilizce", "globe": "EN", "msgs": [{"who": "g", "lang": "İngilizce", "text": "Good evening! Could you help us plan dinner tonight?", "gloss": "Misafir İngilizce yazdı."}, {"who": "a", "lang": "İngilizce", "text": "Good evening, and welcome to Novikov Istanbul. With pleasure — our à la carte restaurant has a lovely quiet table, and I can arrange a welcome drink beforehand. Shall I reserve for two?", "gloss": "Alya İngilizce karşıladı ve rezervasyon önerdi.", "audio": "s1_a1"}, {"who": "g", "lang": "İngilizce", "text": "Yes, a quiet table at 20:30.", "gloss": "“Evet, 20:30’da sakin bir masa.”"}, {"who": "a", "lang": "İngilizce", "text": "Reserved — 20:30, a quiet table for two, with a welcome drink noted. Anything else — the spa, or an airport transfer tomorrow?", "gloss": "Rezervasyon yapıldı, upsell önerildi.", "audio": "s1_a2", "route": ["Yönetim paneline düştü", "Restorana iletildi", "Servise iletildi"]}]}, "s2": {"icon": "🥂", "head": "Özel bir kutlama", "desc": "Grup/etkinlik rezervasyonu", "lang": "Rusça", "globe": "RU", "msgs": [{"who": "g", "lang": "Rusça", "text": "Здравствуйте! Хочу заказать столик для небольшого праздника.", "gloss": "Misafir Rusça yazdı."}, {"who": "a", "lang": "Rusça", "text": "Замечательно — добро пожаловать в Novikov Istanbul. Забронирую особый столик и отмечу повод для шефа. На сколько человек и в какой вечер?", "gloss": "Alya etkinlik rezervasyonu aldı.", "audio": "s2_a1"}, {"who": "g", "lang": "Rusça", "text": "Шесть человек, в субботу в 8.", "gloss": "“Altı kişi, Cumartesi 20:00.”"}, {"who": "a", "lang": "Rusça", "text": "Готово — суббота 20:00, столик на шестерых, повод отмечен для шефа. Добавлю маленький сюрприз. Что-нибудь ещё?", "gloss": "Grup rezervasyonu yapıldı.", "audio": "s2_a2", "route": ["Yönetim paneline düştü", "Restorana iletildi", "Şefe iletildi"]}]}};
+const SCEN = {"s1": {"icon": "🍽️", "head": "Bu akşam nereye?", "desc": "Akşam yemeği önerir ve rezerve eder", "lang": "İngilizce", "globe": "EN", "msgs": [{"who": "g", "lang": "İngilizce", "text": "Good evening! Could you help us plan dinner tonight?", "gloss": "Misafir İngilizce yazdı."}, {"who": "a", "lang": "İngilizce", "text": "Good evening, and welcome to Radisson İzmir Aliağa. With pleasure — our à la carte restaurant has a lovely quiet table, and I can arrange a welcome drink beforehand. Shall I reserve for two?", "gloss": "Alya İngilizce karşıladı ve rezervasyon önerdi.", "audio": "s1_a1"}, {"who": "g", "lang": "İngilizce", "text": "Yes, a quiet table at 20:30.", "gloss": "“Evet, 20:30’da sakin bir masa.”"}, {"who": "a", "lang": "İngilizce", "text": "Reserved — 20:30, a quiet table for two, with a welcome drink noted. Anything else — the spa, or an airport transfer tomorrow?", "gloss": "Rezervasyon yapıldı, upsell önerildi.", "audio": "s1_a2", "route": ["Yönetim paneline düştü", "Restorana iletildi", "Servise iletildi"]}]}, "s2": {"icon": "🧖", "head": "Sakin bir gün", "desc": "Spa + geç çıkış planlar", "lang": "Türkçe", "globe": "TR", "msgs": [{"who": "g", "lang": "Türkçe", "text": "Merhaba! Yarın öğleden sonrası için sakin bir program isteriz."}, {"who": "a", "lang": "Türkçe", "text": "Harika. Spa’mızı ayarlayıp ardından sakin bir köşe tutabilir, bir de geç çıkış ekleyebilirim ki acele etmeyin. Ayarlayayım mı?", "audio": "s2_a1"}, {"who": "g", "lang": "Türkçe", "text": "Evet, 15:00 civarı olsun."}, {"who": "a", "lang": "Türkçe", "text": "Oldu — 15:00 spa ve geç çıkış not edildi. Her şeyi hazır edeceğim.", "audio": "s2_a2", "route": ["Yönetim paneline düştü", "Spa’ya iletildi", "Resepsiyona iletildi"]}]}};
 
 /* otelin imza mekânları */
-const VENUES = ["Masa rezervasyonu", "Özel etkinlik", "Menü & şef önerisi", "Çok dilli karşılama", "Geri bildirim", "Sadakat"];
+const VENUES = ["Restoran rezervasyonu", "Spa & wellness", "Havaalanı transferi", "Oda servisi", "Geç çıkış", "Etkinlik & toplantı"];
 const OPEN_NIGHT = new Set();
 
 let current = 's1', playGen = 0;

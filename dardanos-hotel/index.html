@@ -220,11 +220,11 @@
 </footer>
 
 <script>
-try{ if(!sessionStorage.getItem('_alyavisit')){ sessionStorage.setItem('_alyavisit','1');
-  fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',
-    body:'Dardanos demoyu açtı',
-    headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada','Priority':'default'}});
-} }catch(e){}
+(function(){var sent=false;function ping(){if(sent)return;sent=true;
+  try{fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'Dardanos demoyu açtı',
+    headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada'}});}}catch(e){}}
+  ['pointerdown','keydown','touchstart'].forEach(function(ev){window.addEventListener(ev,ping,{once:true,passive:true});});
+})();
 </script>
 <script>
 const $ = s => document.querySelector(s);
