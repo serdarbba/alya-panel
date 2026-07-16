@@ -161,7 +161,19 @@
     display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--faint)}
   footer b{color:var(--gold2);font-weight:600}
   @media(prefers-reduced-motion:reduce){.row,.typing span{animation:none}}
-:root{--gold:#d08a6e;--gold2:#eeb89f;--goldsoft:rgba(208,138,110,.15);--bg:#120c0d;--bg2:#170f10;--panel:#1a1214;--panel2:#211719;}</style>
+:root{--gold:#d08a6e;--gold2:#eeb89f;--goldsoft:rgba(208,138,110,.15);--bg:#120c0d;--bg2:#170f10;--panel:#1a1214;--panel2:#211719;}
+  .startov{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:15px;background:radial-gradient(circle at 50% 38%, color-mix(in srgb,var(--gold) 14%, var(--bg)) 0%, var(--bg) 70%);
+    cursor:pointer;text-align:center;padding:26px;transition:opacity .35s}
+  .startov.hide{opacity:0;pointer-events:none}
+  .startov .pbtn{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:30px;color:#14130c;
+    background:radial-gradient(circle at 35% 30%,var(--gold2),var(--gold) 65%);box-shadow:0 0 36px -4px var(--gold);
+    animation:ppls 2s ease-in-out infinite;padding-left:5px}
+  @keyframes ppls{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .startov .ptitle{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .startov .psub{font-size:12.5px;color:var(--mut);max-width:230px;line-height:1.5}
+  @media(prefers-reduced-motion:reduce){.startov .pbtn{animation:none}}
+</style>
 
 <div class="top">
   <div class="brand">
@@ -205,6 +217,11 @@
         <div class="globe" id="globe">TR</div>
       </div>
       <div class="chat" id="chat"></div>
+      <div class="startov" id="startov">
+        <div class="pbtn">&#9654;</div>
+        <div class="ptitle">Sesli demoyu başlat</div>
+        <div class="psub">Alya sizinle kendi sesiyle konuşacak. Başlamak için dokunun.</div>
+      </div>
       <button class="replay" id="replay">↻ baştan oynat</button>
       <div class="pfoot">
         <div class="fake">Mesaj yazın…</div>
@@ -339,5 +356,6 @@ $('#spk').onclick = ()=>{
   $('#spk').textContent = soundOn ? '🔊' : '🔇';
   if(!soundOn) stopAudio();
 };
-buildScns(); buildVenues(); play('s1');
+function armStart(k){var o=document.getElementById('startov');if(!o){play(k);return;}o.addEventListener('click',function(){o.classList.add('hide');play(k);},{once:true});}
+buildScns(); buildVenues(); armStart('s1');
 </script>
