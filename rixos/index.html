@@ -1,0 +1,566 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alya · Yönetici Kokpiti — Rixos Salalah Oman</title>
+<style>
+  :root{
+    --bg:#0e1016; --bg2:#12141c; --panel:#171a22; --panel2:#1e222d; --line:#2a2f3d;
+    --ink:#eef1f7; --mut:#98a1b3; --faint:#6b7385;
+    --gold:#c8a45b; --gold2:#e7c987; --goldsoft:rgba(200,164,91,.14);
+    --ok:#54cf8c; --warn:#e7b24f; --hot:#e8756f; --blue:#6aa6e0; --violet:#a68ae0;
+    --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#f4f1ea; --bg2:#efeae0; --panel:#ffffff; --panel2:#f7f4ee; --line:#e3dccf;
+      --ink:#1d2027; --mut:#6a7080; --faint:#98a0b0;
+      --gold:#9c7c34; --gold2:#7a5f22; --goldsoft:rgba(156,124,52,.12);
+      --shadow:0 18px 50px -26px rgba(60,50,20,.28);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#0e1016; --bg2:#12141c; --panel:#171a22; --panel2:#1e222d; --line:#2a2f3d;
+    --ink:#eef1f7; --mut:#98a1b3; --faint:#6b7385;
+    --gold:#c8a45b; --gold2:#e7c987; --goldsoft:rgba(200,164,91,.14);
+    --shadow:0 18px 50px -20px rgba(0,0,0,.7);
+  }
+  :root[data-theme="light"]{
+    --bg:#f4f1ea; --bg2:#efeae0; --panel:#ffffff; --panel2:#f7f4ee; --line:#e3dccf;
+    --ink:#1d2027; --mut:#6a7080; --faint:#98a0b0;
+    --gold:#9c7c34; --gold2:#7a5f22; --goldsoft:rgba(156,124,52,.12);
+    --shadow:0 18px 50px -26px rgba(60,50,20,.28);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1100px 520px at 82% -12%, color-mix(in srgb,var(--gold) 10%, transparent) 0%, transparent 60%),
+      linear-gradient(180deg,var(--bg2),var(--bg) 40%);
+    color:var(--ink);min-height:100vh;
+    font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.4}
+  .serif{font-family:'Iowan Old Style',Georgia,'Times New Roman',serif}
+  h1,h2,h3{margin:0}
+  .tnum{font-variant-numeric:tabular-nums}
+
+  header{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:16px 30px;border-bottom:1px solid var(--line);
+    background:color-mix(in srgb,var(--bg) 78%, transparent);
+    position:sticky;top:0;backdrop-filter:blur(10px);z-index:9}
+  .brand{display:flex;align-items:center;gap:14px}
+  .logo{width:40px;height:40px;border-radius:50%;flex:none;position:relative;
+    background:radial-gradient(circle at 34% 28%,var(--gold2),var(--gold) 58%,#8a6f3a);
+    box-shadow:0 0 20px -2px color-mix(in srgb,var(--gold) 60%, transparent)}
+  .logo::after{content:"";position:absolute;inset:0;border-radius:50%;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
+  .brand h1{font-size:17px;font-weight:600;letter-spacing:.3px}
+  .brand .sub{font-size:11px;color:var(--gold2);letter-spacing:2.4px;text-transform:uppercase;margin-top:2px}
+  .rgt{display:flex;align-items:center;gap:20px}
+  .clock{font-size:13px;color:var(--mut)}
+  .live{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--mut)}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);
+    box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 70%, transparent);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--ok) 55%, transparent)}
+    70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  @media(prefers-reduced-motion:reduce){.dot{animation:none}}
+
+  .wrap{max-width:1300px;margin:0 auto;padding:24px 30px 70px}
+
+  /* KPI */
+  .kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:13px;margin-bottom:20px}
+  .kpi{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);
+    border-radius:15px;padding:15px 16px 14px;box-shadow:var(--shadow)}
+  .kpi .lbl{font-size:10.5px;color:var(--mut);letter-spacing:.7px;text-transform:uppercase;
+    display:flex;align-items:center;gap:6px}
+  .kpi .val{font-size:27px;font-weight:700;margin-top:9px;letter-spacing:.2px}
+  .kpi .val small{font-size:13px;color:var(--mut);font-weight:500}
+  .kpi.gold .val{color:var(--gold2)}
+  .kpi .delta{font-size:11px;color:var(--ok);margin-top:4px}
+  .kpi.hero-kpi{border-color:color-mix(in srgb,var(--ok) 42%, var(--line))}
+  .pdot{width:7px;height:7px;border-radius:50%;background:var(--ok);
+    box-shadow:0 0 8px var(--ok);display:inline-block;animation:blink 1.6s ease-in-out infinite}
+  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+  /* reputation banner */
+  .guard{display:flex;align-items:center;gap:16px;margin-bottom:22px;padding:16px 20px;
+    border-radius:15px;border:1px solid color-mix(in srgb,var(--ok) 34%, var(--line));
+    background:linear-gradient(100deg,color-mix(in srgb,var(--ok) 12%, var(--panel)),var(--panel) 62%);
+    box-shadow:var(--shadow)}
+  .guard .shield{width:44px;height:44px;flex:none;border-radius:12px;display:grid;place-items:center;
+    background:color-mix(in srgb,var(--ok) 18%, transparent);color:var(--ok);font-size:22px}
+  .guard .g-main{flex:1;min-width:0}
+  .guard .g-main b{color:var(--ok)}
+  .guard .g-title{font-size:15px;font-weight:600}
+  .guard .g-sub{font-size:12.5px;color:var(--mut);margin-top:3px}
+  .guard .g-num{font-size:30px;font-weight:700;color:var(--ok);text-align:center;line-height:1}
+  .guard .g-num small{display:block;font-size:10.5px;color:var(--mut);font-weight:500;
+    letter-spacing:.5px;text-transform:uppercase;margin-top:5px}
+
+  /* gelir + konuşma özeti bandı */
+  .band{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:22px}
+  .revbody,.sumbody{padding:16px 18px 18px}
+  .revtop{display:flex;justify-content:space-between;align-items:flex-start;gap:14px}
+  .revbig{font-size:34px;font-weight:700;color:var(--gold2);line-height:1}
+  .revbig span{font-size:18px;color:var(--mut);font-weight:500}
+  .revlbl{font-size:11.5px;color:var(--mut);margin-top:6px;max-width:250px;line-height:1.45}
+  .roi{text-align:right;flex:none}
+  .roi-x{font-size:30px;font-weight:700;color:var(--ok);line-height:1}
+  .roi-sub{font-size:10.5px;color:var(--mut);margin-top:5px;letter-spacing:.2px;line-height:1.4}
+  .spark{display:flex;align-items:flex-end;gap:5px;height:50px;margin:18px 0 5px}
+  .spark .sb{flex:1;border-radius:4px 4px 0 0;background:linear-gradient(180deg,var(--gold2),var(--gold));
+    min-height:5px;opacity:.5;transition:height .7s cubic-bezier(.2,.7,.2,1)}
+  .spark .sb.last{opacity:1;box-shadow:0 0 12px -3px var(--gold)}
+  .spark-x{display:flex;justify-content:space-between;font-size:9.5px;color:var(--faint);letter-spacing:.3px}
+  .revbreak{display:flex;flex-direction:column;gap:7px;margin-top:15px}
+  .rbrow{display:flex;align-items:center;gap:10px;font-size:12.5px}
+  .rbrow .rbname{flex:none;width:132px;color:var(--ink)}
+  .rbrow .rbtrack{flex:1;height:7px;border-radius:5px;background:color-mix(in srgb,var(--line) 60%,transparent);overflow:hidden}
+  .rbrow .rbfill{height:100%;border-radius:5px;background:linear-gradient(90deg,var(--gold),var(--gold2));
+    transition:width .8s cubic-bezier(.2,.7,.2,1)}
+  .rbrow .rbval{flex:none;width:62px;text-align:right;color:var(--gold2);font-weight:600}
+  .summetrics{display:flex;gap:22px;flex-wrap:wrap;padding-bottom:13px;border-bottom:1px solid var(--line)}
+  .summetrics div{display:flex;flex-direction:column}
+  .summetrics b{font-size:22px;color:var(--ink)}
+  .summetrics span{font-size:10.5px;color:var(--mut);letter-spacing:.3px;margin-top:2px}
+  .sumtext{font-size:13px;color:var(--ink);line-height:1.62;margin:14px 0}
+  .sumtext b{color:var(--gold2);font-weight:600}
+  .highs{display:flex;flex-direction:column;gap:9px}
+  .high{display:flex;gap:9px;align-items:flex-start;font-size:12px;color:var(--mut);line-height:1.4}
+  .high .ht{font-size:9.5px;padding:2px 8px;border-radius:20px;flex:none;letter-spacing:.2px;white-space:nowrap;margin-top:1px}
+  .ht.pos{background:color-mix(in srgb,var(--ok) 15%,transparent);color:var(--ok)}
+  .ht.rep{background:color-mix(in srgb,var(--hot) 15%,transparent);color:var(--hot)}
+  .ht.ups{background:var(--goldsoft);color:var(--gold2)}
+  @media(max-width:960px){.band{grid-template-columns:1fr}}
+
+  /* iletilen işler — departman panosu */
+  .dispatch{margin-bottom:22px}
+  .dispatch .body{padding:6px 8px 4px}
+  .job{display:grid;grid-template-columns:1.55fr .95fr 1.7fr 66px 98px;gap:12px;align-items:center;
+    padding:11px 12px;border-radius:11px;margin:3px;background:var(--panel2)}
+  .job .jname{font-size:13.5px;font-weight:600}
+  .job .jsub{font-size:11px;color:var(--mut);margin-top:2px}
+  .jsteps{display:flex;align-items:flex-start;gap:0}
+  .jstep{display:flex;flex-direction:column;align-items:center;gap:5px;flex:none;width:60px}
+  .jstep .sd{width:10px;height:10px;border-radius:50%;background:transparent;
+    border:1.5px solid var(--line);flex:none}
+  .jstep.on .sd{background:var(--gold);border-color:var(--gold);box-shadow:0 0 8px -1px var(--gold)}
+  .jstep.done .sd{background:var(--ok);border-color:var(--ok);box-shadow:0 0 8px -1px var(--ok)}
+  .jstep .sl{font-size:9.5px;color:var(--mut);text-align:center;white-space:nowrap;letter-spacing:.2px}
+  .jstep.on .sl{color:var(--ink)}
+  .jline{flex:1;height:1.5px;background:var(--line);margin-top:5px;min-width:6px;border-radius:2px}
+  .jline.on{background:var(--gold)}
+  .jeta{font-size:11.5px;color:var(--mut);text-align:center}
+  .job .st{justify-self:end}
+  .dispatch .headnums{display:flex;gap:16px;margin-left:auto;font-weight:400;font-size:11px;color:var(--faint)}
+  .dispatch .headnums b{color:var(--gold2);font-weight:600}
+  @media(max-width:820px){
+    .job{grid-template-columns:1fr auto;grid-auto-flow:row;gap:8px 12px}
+    .job .jdept{grid-column:2;grid-row:1;justify-self:end}
+    .jsteps{grid-column:1/-1;justify-content:space-between}
+    .jstep{width:auto;flex:1}
+    .jeta{grid-column:1;justify-self:start} .job .st{grid-column:2}
+  }
+
+  .grid{display:grid;grid-template-columns:1.42fr 1fr;gap:18px}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:15px;overflow:hidden;
+    box-shadow:var(--shadow)}
+  .card>h2{font-size:12.5px;font-weight:600;padding:14px 18px;border-bottom:1px solid var(--line);
+    letter-spacing:.4px;display:flex;align-items:center;gap:9px}
+  .card>h2 .c{color:var(--gold)}
+  .card>h2 .rt{margin-left:auto;font-weight:400;color:var(--faint);font-size:10.5px;
+    letter-spacing:.6px;text-transform:uppercase;display:flex;align-items:center;gap:6px}
+  .body{padding:8px}
+  .stack{display:flex;flex-direction:column;gap:18px}
+
+  /* request rows */
+  .req{display:flex;gap:12px;padding:12px 12px;border-radius:12px;margin:3px;
+    background:var(--panel2);border:1px solid transparent;transition:border-color .2s, transform .2s}
+  .req:hover{border-color:var(--line)}
+  .req.flash{animation:drop .6s ease}
+  @keyframes drop{0%{opacity:0;transform:translateY(-8px)}100%{opacity:1;transform:none}}
+  .req .flag{font-size:22px;line-height:1.3;flex:none;filter:saturate(1.05)}
+  .req .mid{flex:1;min-width:0}
+  .req .orig{font-size:13.5px;color:var(--ink);direction:auto}
+  .req .arrow{font-size:12.5px;color:var(--gold2);margin:5px 0 2px;display:flex;gap:7px;align-items:flex-start}
+  .req .arrow .ai{color:var(--gold);font-weight:600;flex:none}
+  .req .meta{font-size:11px;color:var(--mut);margin-top:6px;display:flex;gap:9px;flex-wrap:wrap;align-items:center}
+  .tag{font-size:10px;padding:2px 9px;border-radius:20px;background:var(--goldsoft);color:var(--gold2);
+    border:1px solid color-mix(in srgb,var(--gold) 25%, transparent);letter-spacing:.2px;white-space:nowrap}
+  .lang{font-size:10px;padding:2px 8px;border-radius:20px;background:color-mix(in srgb,var(--blue) 14%, transparent);
+    color:var(--blue);border:1px solid color-mix(in srgb,var(--blue) 26%, transparent)}
+  .st{font-size:10.5px;padding:3px 10px;border-radius:20px;white-space:nowrap;align-self:flex-start;flex:none}
+  .st.open{background:color-mix(in srgb,var(--warn) 16%, transparent);color:var(--warn)}
+  .st.done{background:color-mix(in srgb,var(--ok) 15%, transparent);color:var(--ok)}
+  .st.guard{background:color-mix(in srgb,var(--hot) 16%, transparent);color:var(--hot)}
+  .req.rep{border-color:color-mix(in srgb,var(--hot) 34%, transparent);
+    background:linear-gradient(100deg,color-mix(in srgb,var(--hot) 9%, var(--panel2)),var(--panel2) 60%)}
+
+  /* reservation rows */
+  .rrow{display:flex;align-items:center;gap:11px;padding:10px 12px;border-radius:11px;margin:3px;background:var(--panel2)}
+  .rrow .rk{width:5px;align-self:stretch;border-radius:4px;background:var(--gold)}
+  .rrow .rk.spa{background:var(--violet)} .rrow .rk.transfer{background:var(--blue)}
+  .rrow .rmid{flex:1;min-width:0}
+  .rrow .rname{font-size:13.5px;font-weight:600}
+  .rrow .rmeta{font-size:11px;color:var(--mut);margin-top:2px;display:flex;gap:8px;flex-wrap:wrap}
+  .rrow .rtime{font-size:11px;color:var(--gold2);white-space:nowrap}
+
+  /* bars */
+  .bar{margin:9px 11px}
+  .bar .top{display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px}
+  .bar .top b{color:var(--gold2);font-weight:600}
+  .bar .top .pct{color:var(--mut);font-size:11.5px}
+  .bar .track{height:8px;border-radius:6px;background:color-mix(in srgb,var(--line) 60%, transparent);overflow:hidden}
+  .bar .fill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--gold),var(--gold2));
+    transition:width .8s cubic-bezier(.2,.7,.2,1)}
+  .bar.lang .fill{background:linear-gradient(90deg,var(--blue),color-mix(in srgb,var(--blue) 55%, var(--gold2)))}
+
+  .chips{display:flex;flex-wrap:wrap;gap:8px;padding:13px}
+  .chip{font-size:12px;padding:6px 12px;border-radius:22px;background:var(--panel2);
+    border:1px solid var(--line);color:var(--ink)}
+  .chip b{color:var(--gold2)}
+  .note{font-size:10.5px;color:var(--faint);padding:11px 18px;border-top:1px solid var(--line);line-height:1.5}
+
+  footer{max-width:1300px;margin:30px auto 0;padding:16px 30px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;
+    font-size:11px;color:var(--faint)}
+  footer b{color:var(--gold2);font-weight:600}
+  @media(max-width:960px){
+    .grid{grid-template-columns:1fr}
+    .kpis{grid-template-columns:repeat(2,1fr)}
+    header{padding:14px 18px}.wrap{padding:20px 16px 50px}
+    .rgt .clock{display:none}
+  }
+</style>
+
+<header>
+  <div class="brand">
+    <div class="logo"></div>
+    <div>
+      <h1 class="serif">Alya · Yönetici Kokpiti</h1>
+      <div class="sub">Rixos Salalah · Oman</div>
+    </div>
+  </div>
+  <div class="rgt">
+    <div class="clock tnum" id="clock">—</div>
+    <div class="live"><span class="dot"></span><span>canlı</span></div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <!-- KPI -->
+  <div class="kpis">
+    <div class="kpi hero-kpi">
+      <div class="lbl"><span class="pdot"></span> Şu an Alya'yla konuşan</div>
+      <div class="val tnum" id="k_active">7</div>
+    </div>
+    <div class="kpi"><div class="lbl">Bugün Alya'yı kullanan</div><div class="val tnum" id="k_today">143</div>
+      <div class="delta">misafirlerin %61'i</div></div>
+    <div class="kpi"><div class="lbl">Toplam talep</div><div class="val tnum" id="k_total">89 <small>(11 açık)</small></div></div>
+    <div class="kpi"><div class="lbl">Ort. yanıt süresi</div><div class="val tnum">3<small> sn</small></div>
+      <div class="delta">resepsiyon: ~9 dk</div></div>
+    <div class="kpi gold"><div class="lbl">Rezervasyon (bugün)</div><div class="val tnum" id="k_res">21</div></div>
+    <div class="kpi gold"><div class="lbl">Ek gelir · upsell (bugün)</div><div class="val tnum">1.240 <small>﷼</small></div>
+      <div class="delta">spa + premium içki + à la carte</div></div>
+  </div>
+
+  <!-- reputation guard -->
+  <div class="guard">
+    <div class="shield">✦</div>
+    <div class="g-main">
+      <div class="g-title">İtibar koruması — yorum sitesine düşmeden yakalandı</div>
+      <div class="g-sub">Bugün <b>3 misafir memnuniyetsizliği</b> Alya tarafından odada anında tespit edildi, ilgili müdüre iletildi ve
+        misafir otelden ayrılmadan çözüldü. Salalah henüz yeni açıldı — ilk yorumlar bu günlerde oluşuyor.</div>
+    </div>
+    <div class="g-num tnum">3<small>bugün çözüldü</small></div>
+    <div class="g-num tnum" style="color:var(--gold2)">0<small>siteye düştü</small></div>
+  </div>
+
+  <!-- gelir + konuşma özeti -->
+  <div class="band">
+    <div class="card">
+      <h2><span class="c">❖</span> Alya'dan gerçekleşen gelir <span class="rt">folio'ya işlendi</span></h2>
+      <div class="revbody">
+        <div class="revtop">
+          <div>
+            <div class="revbig tnum">18.400 <span>﷼</span></div>
+            <div class="revlbl">bu ay · Alya'nın başlattığı ve folio'ya işlenmiş ek gelir</div>
+          </div>
+          <div class="roi">
+            <div class="roi-x tnum">17×</div>
+            <div class="roi-sub">aylık yatırım ~1.080 ﷼<br>geri dönüş</div>
+          </div>
+        </div>
+        <div class="spark" id="spark"></div>
+        <div class="spark-x"><span>7 gün önce</span><span>bugün</span></div>
+        <div class="revbreak" id="revbreak"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2><span class="c">❝</span> Günün konuşma özeti <span class="rt">Alya özeti</span></h2>
+      <div class="sumbody">
+        <div class="summetrics">
+          <div><b class="tnum">143</b><span>konuşma</span></div>
+          <div><b class="tnum">4.7</b><span>/5 memnuniyet</span></div>
+          <div><b class="tnum">9</b><span>dil</span></div>
+          <div><b class="tnum">2:10</b><span>ort. süre</span></div>
+        </div>
+        <p class="sumtext">Misafirler bugün en çok <b>restoran yönlendirmesi</b>, <b>spa randevusu</b> ve
+          <b>havaalanı transferi</b> konuştu. Genel ton olumlu; üç memnuniyetsizlik odada erkenden
+          yakalanıp çözüldü. Öne çıkan an: Villa 12'deki Rus misafir, Seraya'daki villa ayrıcalığını
+          öğrenince aynı akşam rezervasyon yaptı.</p>
+        <div class="highs" id="highs"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- iletilen işler -->
+  <div class="card dispatch">
+    <h2><span class="c">⇄</span> İletilen işler — departman panosu
+      <span class="headnums"><span>kendi staff arayüzümüzden</span><span><b id="j_sent">6</b> iletildi</span><span><b id="j_done">3</b> tamamlandı</span></span></h2>
+    <div class="body" id="dispatch"></div>
+    <div class="note">İşler Alya'dan doğrudan ilgili departmanın ekranına düşer — konuşma ile operasyon arasında
+      elle kopyalama yok. Villa/oda, dil ve öncelik bilgisiyle birlikte iletilir.</div>
+  </div>
+
+  <div class="grid">
+    <!-- SOL: canlı talepler -->
+    <div class="card">
+      <h2><span class="c">●</span> Alya'nın topladığı talepler
+        <span class="rt"><span class="pdot"></span> canlı akış · 9 dil</span></h2>
+      <div class="body" id="reqList"></div>
+    </div>
+
+    <!-- SAĞ -->
+    <div class="stack">
+      <div class="card">
+        <h2><span class="c">◷</span> Bugünkü rezervasyonlar <span class="rt">gerçek mekânlar</span></h2>
+        <div class="body" id="resList"></div>
+      </div>
+
+      <div class="card">
+        <h2><span class="c">◇</span> Misafir dili dağılımı</h2>
+        <div class="body" id="langBars"></div>
+        <div class="note">Alya her misafire <b>kendi dilinde</b> yanıt verir — resepsiyonda dil bariyeri yok.
+          Salalah misafir profiline göre canlı hesaplanır.</div>
+      </div>
+
+      <div class="card">
+        <h2><span class="c">▲</span> En çok istenenler</h2>
+        <div class="body" id="topBars"></div>
+      </div>
+
+      <div class="card">
+        <h2><span class="c">✧</span> Yakalanan misafir tercihleri <span class="rt">rıza ile · KVKK/PDPL</span></h2>
+        <div class="chips" id="prefs"></div>
+        <div class="note">Tercihler yalnız misafir onayıyla saklanır; tekrar gelişte kişiselleştirme ve hedefli upsell için kullanılır.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>Bu ekran <b>temsilî verilerle önizlemedir</b> — kurulumda otelinizin canlı PMS/POS verisiyle çalışır.</div>
+  <div><b>Alya</b> · BBA Technology · İzmir &nbsp;·&nbsp; alya-konsiyerj.up.railway.app</div>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* saat — Salalah UTC+4 */
+function tick(){
+  const now = new Date();
+  const oman = new Date(now.getTime() + (now.getTimezoneOffset()+240)*60000);
+  const hh = String(oman.getHours()).padStart(2,'0'), mm = String(oman.getMinutes()).padStart(2,'0');
+  $('#clock').textContent = 'Salalah  '+hh+':'+mm;
+}
+setInterval(tick,1000); tick();
+
+/* ---- talepler (gerçek Rixos mekânları, çok dilli) ---- */
+const REQS = [
+  {flag:'🇷🇺',lang:'Rusça',rep:true,st:'guard',stx:'itibar · çözüldü',
+    orig:'«Суп был холодным, к сожалению.»',
+    ai:'Özür + sıcak tabak yollandı; F&B müdürüne <b>acil</b> bildirim. Misafir memnun ayrıldı.',
+    tag:'Yiyecek-İçecek',room:'Oda 1418',t:2},
+  {flag:'🇸🇦',lang:'Arapça',st:'open',
+    orig:'«من فضلك، منشفتان إضافيتان ومياه للفيلا ١٢»',
+    ai:'Kat Hizmetleri’ne iletildi — 2 havlu + su, ~8 dk.',
+    tag:'Kat Hizmetleri',room:'Villa 12',t:5},
+  {flag:'🇷🇺',lang:'Rusça',st:'done',
+    orig:'«Столик на двоих в Seraya на 20:30?»',
+    ai:'Seraya rezervasyonu onaylandı; villa misafiri ayrıcalığı hatırlatıldı.',
+    tag:'Konsiyerj',room:'Oda 1204',t:11},
+  {flag:'🇬🇧',lang:'İngilizce',st:'done',
+    orig:'“Is the Anjana spa open after 9 pm? Couple’s massage?”',
+    ai:'Anjana Spa 22:00’a kadar açık; 21:15 çift masajı ayrıldı.',
+    tag:'Spa',room:'Oda 2210',t:18},
+  {flag:'🇩🇪',lang:'Almanca',st:'done',
+    orig:'„Können wir einen ruhigen Tisch am Fenster bekommen?“',
+    ai:'Turquoise’da sessiz pencere masası ayarlandı.',
+    tag:'Yiyecek-İçecek',room:'Oda 1626',t:24},
+  {flag:'🇸🇦',lang:'Arapça',st:'done',
+    orig:'«نحتاج سيارة إلى المطار الساعة ٦ صباحاً»',
+    ai:'06:00 havaalanı transferi ayarlandı; vale bilgilendirildi.',
+    tag:'Transfer',room:'Villa 07',t:31},
+  {flag:'🇮🇷',lang:'Farsça',st:'done',
+    orig:'«صبحانه تا چه ساعتی سرو می‌شود؟»',
+    ai:'Kahvaltı 10:30’a kadar; geç kahvaltı için Orient önerildi.',
+    tag:'Bilgi',room:'Oda 1109',t:37},
+  {flag:'🇬🇧',lang:'İngilizce',st:'guard',
+    orig:'“The A/C in our room feels weak.”',
+    ai:'Teknik ekip yönlendirildi (~12 dk); misafire durum bildirildi. <b>Şikâyet önlendi.</b>',
+    tag:'Teknik',room:'Oda 2033',t:44},
+];
+
+const REP_QUEUE = [
+  {flag:'🇷🇺',lang:'Rusça',st:'done',orig:'«Можно поздний выезд до 14:00?»',
+    ai:'14:00 geç çıkış onaylandı — folio’ya not düşüldü.',tag:'Resepsiyon',room:'Oda 1512',t:0},
+  {flag:'🇸🇦',lang:'Arapça',st:'done',orig:'«هل يوجد خيارات نباتية في العشاء؟»',
+    ai:'Mermaid ve Seraya’da vejetaryen menü; şefe not iletildi.',tag:'Yiyecek-İçecek',room:'Villa 03',t:0},
+  {flag:'🇬🇧',lang:'İngilizce',st:'done',orig:'“Peanut allergy — which dishes are safe tonight?”',
+    ai:'Alerjen filtresi uygulandı; güvenli tabaklar listelendi, mutfak uyarıldı.',tag:'Mutfak',room:'Oda 2118',t:0},
+];
+
+function reqRow(r){
+  return `<div class="req ${r.rep?'rep':''} flash">
+    <div class="flag">${r.flag}</div>
+    <div class="mid">
+      <div class="orig">${esc(r.orig)}</div>
+      <div class="arrow"><span class="ai">Alya →</span><span>${r.ai}</span></div>
+      <div class="meta">
+        <span class="lang">${esc(r.lang)}</span>
+        <span class="tag">${esc(r.tag)}</span>
+        <span>${esc(r.room)}</span>
+        <span>${r.t} dk önce</span>
+      </div>
+    </div>
+    <span class="st ${r.st}">${r.st==='guard'?'itibar · çözüldü':r.st==='open'?'açık':'tamamlandı'}</span>
+  </div>`;
+}
+function paintReqs(){ $('#reqList').innerHTML = REQS.map(reqRow).join(''); }
+paintReqs();
+
+/* canlı akış: kuyruktan yeni talep düşür */
+let qi = 0;
+function pushNew(){
+  if(qi >= REP_QUEUE.length) return;
+  const r = {...REP_QUEUE[qi++], t:0};
+  REQS.forEach(x=>x.t += 1);
+  REQS.unshift(r);
+  if(REQS.length > 9) REQS.pop();
+  paintReqs();
+  // KPI ufak artış
+  const kt = $('#k_today'); kt.textContent = (parseInt(kt.textContent)+1);
+  const kr = $('#k_res'); if(qi%2===0) kr.textContent = (parseInt(kr.textContent)+1);
+}
+setInterval(pushNew, 16000);
+
+/* aktif kullanıcı sayısı hafif dalgalansın */
+setInterval(()=>{
+  const el = $('#k_active');
+  let v = parseInt(el.textContent) + (Math.round(Math.sin(Date.now()/9000)*3));
+  v = Math.max(4, Math.min(12, 7 + (Math.floor((Date.now()/16000)%5)-2)));
+  el.textContent = v;
+}, 4000);
+
+/* ---- rezervasyonlar (gerçek mekânlar) ---- */
+const RES = [
+  {k:'',name:'Seraya · akşam yemeği',meta:['2 kişi','villa ayrıcalığı'],time:'20:30'},
+  {k:'spa',name:'Anjana Spa · çift masajı',meta:['Oda 2210'],time:'21:15'},
+  {k:'',name:'Turquoise · sessiz masa',meta:['Almanca misafir'],time:'21:00'},
+  {k:'transfer',name:'Havaalanı transferi',meta:['Villa 07'],time:'06:00'},
+  {k:'',name:'Arela Terrace · gün batımı içki',meta:['4 kişi'],time:'18:45'},
+  {k:'',name:'Orient · geç kahvaltı',meta:['Oda 1109'],time:'10:00'},
+];
+$('#resList').innerHTML = RES.map(r=>`
+  <div class="rrow">
+    <div class="rk ${r.k}"></div>
+    <div class="rmid">
+      <div class="rname">${esc(r.name)}</div>
+      <div class="rmeta">${r.meta.map(m=>`<span>${esc(m)}</span>`).join('')}</div>
+    </div>
+    <div class="rtime tnum">${esc(r.time)}</div>
+  </div>`).join('');
+
+/* ---- diller ---- */
+const LANGS = [['Arapça',34],['Rusça',26],['İngilizce',21],['Almanca',9],['Farsça',6],['Diğer',4]];
+$('#langBars').innerHTML = LANGS.map(([n,p])=>`
+  <div class="bar lang">
+    <div class="top"><b>${esc(n)}</b><span class="pct tnum">%${p}</span></div>
+    <div class="track"><div class="fill" style="width:0"></div></div>
+  </div>`).join('');
+
+/* ---- en çok istenenler ---- */
+const TOP = [['Havlu / oda amenity',28],['Restoran rezervasyonu',24],['Spa randevusu',17],
+  ['Havaalanı transferi',13],['Geç check-out',9]];
+$('#topBars').innerHTML = TOP.map(([n,v])=>{
+  const max = TOP[0][1];
+  return `<div class="bar"><div class="top"><span>${esc(n)}</span><b class="tnum">${v}</b></div>
+    <div class="track"><div class="fill" data-w="${Math.round(v/max*100)}" style="width:0"></div></div></div>`;
+}).join('');
+
+/* ---- tercihler ---- */
+const PREFS = [['fıstık alerjisi',3],['deniz manzarası',5],['az baharatlı'],['geç kahvaltı',2],
+  ['glutensiz'],['sessiz oda',2],['çift yastık']];
+$('#prefs').innerHTML = PREFS.map(([p,n])=>`<span class="chip">${esc(p)}${n?` <b>×${n}</b>`:''}</span>`).join('');
+
+/* ---- iletilen işler (departman panosu) ---- */
+const STEPS = ['İletildi','Görüldü','Tamamlandı'];
+function stepper(prog){
+  let h = '';
+  STEPS.forEach((s,i)=>{
+    const on = i<=prog, done = (prog>=2 && i===2);
+    h += `<div class="jstep ${on?'on':''} ${done?'done':''}"><span class="sd"></span><span class="sl">${s}</span></div>`;
+    if(i<STEPS.length-1) h += `<span class="jline ${i<prog?'on':''}"></span>`;
+  });
+  return `<div class="jsteps">${h}</div>`;
+}
+const JOBS = [
+  {name:'Sıcak tabak — çorba değişimi',sub:'Oda 1418 · itibar önceliği',dept:'Yiyecek-İçecek',prog:2,eta:'—',stat:'Tamamlandı',sc:'done'},
+  {name:'2 havlu + su',sub:'Villa 12 · Arapça talep',dept:'Kat Hizmetleri',prog:1,eta:'~8 dk',stat:'Yapılıyor',sc:'open'},
+  {name:'Oda kliması kontrolü',sub:'Oda 2033 · İngilizce talep',dept:'Teknik servis',prog:1,eta:'~12 dk',stat:'Yolda',sc:'open'},
+  {name:'Seraya rezervasyonu · 20:30',sub:'Oda 1204 · 2 kişi',dept:'Konsiyerj',prog:2,eta:'—',stat:'Onaylandı',sc:'done'},
+  {name:'Alerjen filtresi — fıstık',sub:'Oda 2118 · akşam servisi',dept:'Mutfak',prog:1,eta:'~5 dk',stat:'Görüldü',sc:'open'},
+  {name:'06:00 havaalanı transferi',sub:'Villa 07 · Arapça talep',dept:'Ulaşım / Vale',prog:0,eta:'planlandı',stat:'İletildi',sc:'open'},
+];
+$('#dispatch').innerHTML = JOBS.map(j=>`
+  <div class="job">
+    <div class="jtask"><div class="jname">${esc(j.name)}</div><div class="jsub">${esc(j.sub)}</div></div>
+    <div class="jdept"><span class="tag">${esc(j.dept)}</span></div>
+    ${stepper(j.prog)}
+    <div class="jeta tnum">${esc(j.eta)}</div>
+    <span class="st ${j.sc}">${esc(j.stat)}</span>
+  </div>`).join('');
+
+/* ---- gelir: 7 günlük trend + kaynak kırılımı ---- */
+const SPARK = [2100,2600,2300,3100,2800,3400,3900]; // son 7 gün ﷼
+const smax = Math.max(...SPARK);
+$('#spark').innerHTML = SPARK.map((v,i)=>
+  `<div class="sb ${i===SPARK.length-1?'last':''}" data-h="${Math.round(v/smax*100)}" style="height:5px" title="${v.toLocaleString('tr-TR')} ﷼"></div>`).join('');
+const REVB = [['Spa · Anjana',6200,100],['Premium içki',4800,77],['À la carte upgrade',3900,63],
+  ['Transfer',2100,34],['Geç çıkış / deneyim',1400,23]];
+$('#revbreak').innerHTML = REVB.map(([n,v,p])=>
+  `<div class="rbrow"><span class="rbname">${esc(n)}</span>
+    <span class="rbtrack"><span class="rbfill" data-w="${p}" style="width:0"></span></span>
+    <span class="rbval tnum">${v.toLocaleString('tr-TR')}</span></div>`).join('');
+
+/* ---- konuşma özeti: öne çıkanlar ---- */
+const HIGH = [
+  ['upsell','Villa 12 Rus misafir, Seraya villa ayrıcalığını Alya’dan öğrenince aynı akşam rezervasyon yaptı'],
+  ['erken müdahale','Soğuk çorba ve zayıf klima şikâyeti odada, yorum sitesine düşmeden çözüldü'],
+  ['olumlu','Anjana Spa çift masajı ve geç kahvaltı yönlendirmesi 5/5 geri bildirim aldı'],
+];
+$('#highs').innerHTML = HIGH.map(([t,x])=>{
+  const cls = t==='upsell'?'ups':t==='erken müdahale'?'rep':'pos';
+  return `<div class="high"><span class="ht ${cls}">${esc(t)}</span><span>${esc(x)}</span></div>`;
+}).join('');
+
+/* barları doldur (animasyon) */
+requestAnimationFrame(()=>setTimeout(()=>{
+  document.querySelectorAll('#langBars .fill').forEach((f,i)=>f.style.width=LANGS[i][1]+'%');
+  document.querySelectorAll('#topBars .fill').forEach(f=>f.style.width=f.dataset.w+'%');
+  document.querySelectorAll('#spark .sb').forEach(b=>b.style.height=b.dataset.h+'%');
+  document.querySelectorAll('#revbreak .rbfill').forEach(f=>f.style.width=f.dataset.w+'%');
+},250));
+</script>
