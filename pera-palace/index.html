@@ -1,0 +1,327 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alya · Pera Palace — Misafir Deneyimi</title>
+<style>
+  :root{
+    --bg:#0b110e; --bg2:#0e1611; --panel:#141a15; --panel2:#1a211b; --line:#2c332b;
+    --ink:#f0efe7; --mut:#a3a89a; --faint:#727869;
+    --gold:#c6a25a; --gold2:#e8d19a; --goldsoft:rgba(198,162,90,.14);
+    --emer:#4fb98c; --emer-soft:rgba(79,185,140,.13);
+    --rose:#d98a72;
+    --shadow:0 30px 70px -30px rgba(0,0,0,.85);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 15% -8%, rgba(198,162,90,.12) 0%, transparent 55%),
+      radial-gradient(800px 500px at 92% 4%, rgba(79,185,140,.07) 0%, transparent 55%),
+      linear-gradient(180deg,var(--bg2),var(--bg) 45%);
+    color:var(--ink);min-height:100vh;
+    font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.45}
+  .serif{font-family:'Iowan Old Style',Georgia,'Times New Roman',serif}
+  h1,h2,h3{margin:0}
+  a{color:var(--gold2)}
+
+  .top{max-width:1120px;margin:0 auto;padding:30px 26px 6px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:13px}
+  .orb{width:40px;height:40px;border-radius:50%;flex:none;position:relative;
+    background:radial-gradient(circle at 34% 28%,var(--gold2),var(--gold) 55%,#7c6330);
+    box-shadow:0 0 22px -2px rgba(201,163,93,.6)}
+  .orb::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+  .brand h1{font-size:16px;font-weight:600;letter-spacing:.2px}
+  .brand .sub{font-size:10.5px;color:var(--gold2);letter-spacing:2.6px;text-transform:uppercase;margin-top:2px}
+  .bybba{font-size:11px;color:var(--faint);letter-spacing:.4px}
+  .bybba b{color:var(--mut);font-weight:600}
+
+  .hero{max-width:1120px;margin:0 auto;padding:20px 26px 6px;text-align:center}
+  .hero h2{font-size:clamp(26px,4.6vw,40px);font-weight:600;letter-spacing:-.4px;text-wrap:balance;line-height:1.12}
+  .hero h2 em{font-style:normal;color:var(--gold2)}
+  .hero p{max-width:600px;margin:14px auto 0;color:var(--mut);font-size:15px;text-wrap:balance}
+
+  .stage{max-width:1120px;margin:0 auto;padding:26px 26px 20px;
+    display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:center}
+  @media(max-width:900px){.stage{grid-template-columns:1fr;gap:26px;justify-items:center}}
+
+  /* sol: anlatı + senaryo seçim + mekanlar */
+  .left{max-width:440px}
+  .scn-label{font-size:11px;color:var(--faint);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+  .scns{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .scn{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:14px;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line);transition:.22s;text-align:left;width:100%;color:inherit;font:inherit}
+  .scn:hover{border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+  .scn.on{border-color:var(--gold);background:linear-gradient(100deg,var(--goldsoft),var(--panel) 65%);
+    box-shadow:0 0 0 1px var(--gold) inset}
+  .scn .ic{width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:17px;
+    background:var(--panel2);border:1px solid var(--line)}
+  .scn.on .ic{background:var(--goldsoft);border-color:transparent}
+  .scn .st{flex:1;min-width:0}
+  .scn .sh{font-size:14px;font-weight:600}
+  .scn .sd{font-size:11.5px;color:var(--mut);margin-top:2px}
+  .scn .lg{font-size:9.5px;padding:2px 8px;border-radius:20px;background:var(--panel2);color:var(--faint);
+    border:1px solid var(--line);letter-spacing:.4px;flex:none}
+  .scn.on .lg{color:var(--gold2)}
+
+  .venues{border-top:1px solid var(--line);padding-top:18px}
+  .venues .vh{font-size:11px;color:var(--faint);letter-spacing:.5px;margin-bottom:10px}
+  .venues .vh b{color:var(--mut);font-weight:600}
+  .vchips{display:flex;flex-wrap:wrap;gap:7px}
+  .vchip{font-size:11.5px;padding:5px 11px;border-radius:20px;background:var(--panel);
+    border:1px solid var(--line);color:var(--mut)}
+  .vchip.open{color:var(--emer);border-color:color-mix(in srgb,var(--emer) 36%,transparent);
+    background:var(--emer-soft)}
+  .vchip .d{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--emer);
+    margin-right:5px;vertical-align:middle;box-shadow:0 0 6px var(--emer)}
+
+  /* sağ: telefon */
+  .phone{width:360px;max-width:92vw;height:720px;max-height:78vh;border-radius:44px;flex:none;position:relative;
+    background:linear-gradient(160deg,#20242f,#0c0e14);padding:13px;
+    box-shadow:var(--shadow), 0 0 0 1px rgba(255,255,255,.05), inset 0 0 0 1px rgba(0,0,0,.6)}
+  .screen{position:relative;height:100%;border-radius:33px;overflow:hidden;background:var(--bg);
+    display:flex;flex-direction:column}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:26px;
+    background:#0c0e14;border-radius:0 0 16px 16px;z-index:6}
+  .phead{display:flex;align-items:center;gap:11px;padding:20px 18px 14px;
+    background:linear-gradient(180deg,var(--panel2),var(--panel));border-bottom:1px solid var(--line);z-index:4}
+  .phead .orb{width:36px;height:36px}
+  .phead .ph-name{font-size:14px;font-weight:600;line-height:1.1}
+  .phead .ph-sub{font-size:10.5px;color:var(--emer);margin-top:2px;display:flex;align-items:center;gap:5px}
+  .phead .ph-sub .d{width:6px;height:6px;border-radius:50%;background:var(--emer);box-shadow:0 0 6px var(--emer)}
+  .spk{margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+    display:grid;place-items:center;font-size:15px;background:var(--panel2);border:1px solid var(--line);
+    color:var(--gold2);transition:.2s}
+  .spk:hover{border-color:var(--gold)}
+  .spk.off{color:var(--faint)}
+  .spk:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+  .globe{font-size:11px;color:var(--faint);letter-spacing:.4px;border:1px solid var(--line);
+    padding:3px 9px;border-radius:20px}
+  .orb.speaking{animation:spk 1s ease-in-out infinite}
+  @keyframes spk{0%,100%{box-shadow:0 0 22px -2px rgba(201,163,93,.6)}
+    50%{box-shadow:0 0 32px 2px rgba(201,163,93,.92), 0 0 0 5px rgba(201,163,93,.16)}}
+  @media(prefers-reduced-motion:reduce){.orb.speaking{animation:none}}
+
+  .chat{flex:1;overflow-y:auto;padding:16px 14px 18px;display:flex;flex-direction:column;gap:12px;
+    scroll-behavior:smooth;
+    background:
+      radial-gradient(600px 300px at 80% 0%, rgba(201,163,93,.05), transparent 60%),
+      var(--bg)}
+  .chat::-webkit-scrollbar{width:0}
+  .row{display:flex;flex-direction:column;max-width:82%;animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .row.g{align-self:flex-end;align-items:flex-end}
+  .row.a{align-self:flex-start;align-items:flex-start}
+  .bub{padding:10px 13px;border-radius:16px;font-size:13.5px;line-height:1.45}
+  .row.a .bub{background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:5px;color:var(--ink)}
+  .row.g .bub{background:linear-gradient(160deg,var(--gold),#a5813f);color:#1a1407;
+    border-bottom-right-radius:5px;font-weight:500}
+  .lgtag{font-size:9px;letter-spacing:.5px;text-transform:uppercase;color:var(--faint);margin:0 4px 3px}
+  .gloss{font-size:11px;color:var(--faint);font-style:italic;margin:5px 5px 0;line-height:1.4}
+  .row.a .gloss{border-left:2px solid var(--line);padding-left:8px}
+
+  .typing{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);
+    padding:11px 14px;border-radius:16px;border-bottom-left-radius:5px;display:flex;gap:4px}
+  .typing span{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:bnc 1.2s infinite}
+  .typing span:nth-child(2){animation-delay:.18s}.typing span:nth-child(3){animation-delay:.36s}
+  @keyframes bnc{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+
+  .pfoot{padding:11px 14px;border-top:1px solid var(--line);background:var(--panel);
+    display:flex;align-items:center;gap:9px}
+  .pfoot .fake{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:20px;
+    padding:9px 14px;font-size:12.5px;color:var(--faint)}
+  .pfoot .send{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--gold2),var(--gold));color:#1a1407;font-size:15px}
+  .replay{position:absolute;bottom:76px;left:50%;transform:translateX(-50%);z-index:5;
+    font-size:11.5px;padding:7px 15px;border-radius:20px;background:rgba(12,14,20,.82);color:var(--gold2);
+    border:1px solid var(--line);cursor:pointer;backdrop-filter:blur(6px);opacity:0;transition:.3s;pointer-events:none}
+  .replay.show{opacity:1;pointer-events:auto}
+
+  footer{max-width:1120px;margin:14px auto 0;padding:18px 26px 46px;
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--faint)}
+  footer b{color:var(--gold2);font-weight:600}
+  @media(prefers-reduced-motion:reduce){.row,.typing span{animation:none}}
+</style>
+
+<div class="top">
+  <div class="brand">
+    <div class="orb"></div>
+    <div>
+      <h1 class="serif">Alya</h1>
+      <div class="sub">Pera Palace · İstanbul</div>
+    </div>
+  </div>
+  <div class="bybba"><b>BBA Technology</b> · İzmir · yapay zekâ konsiyerj</div>
+</div>
+
+<div class="hero">
+  <h2 class="serif">Misafiriniz <em>kendi dilinde</em> soruyor.<br>Alya <em>anında</em> yanıtlıyor.</h2>
+  <p>Agatha Restaurant, Orient Bar, Kubbeli afternoon tea, Agatha Christie’nin 411 numaralı odası —
+    Pera Palace'ın mirasını misafire kendi dilinde, tek ekranda anlatır ve rezerve eder.</p>
+</div>
+
+<div class="stage">
+  <!-- SOL -->
+  <div class="left">
+    <div class="scn-label">Bir senaryo seçin — Alya canlı oynasın</div>
+    <div class="scns" id="scns"></div>
+
+    <div class="venues">
+      <div class="vh"><b>Gerçek Pera Palace mekânları</b> · Alya bunları tanır <span id="vhinfo" style="color:var(--emer)"></span></div>
+      <div class="vchips" id="vchips"></div>
+    </div>
+  </div>
+
+  <!-- SAĞ: telefon -->
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="phead">
+        <div class="orb" id="pOrb"></div>
+        <div>
+          <div class="ph-name">Alya · Pera Palace</div>
+          <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · sesli · 9 dil</span></div>
+        </div>
+        <button class="spk on" id="spk" title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
+        <div class="globe" id="globe">TR</div>
+      </div>
+      <div class="chat" id="chat"></div>
+      <button class="replay" id="replay">↻ baştan oynat</button>
+      <div class="pfoot">
+        <div class="fake">Mesaj yazın…</div>
+        <div class="send">➤</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>Temsilî demo · gerçek Cratos mekân adlarıyla. Kurulumda otelin canlı menü, saat ve PMS verisiyle çalışır.</div>
+  <div><b>Alya</b> · BBA Technology · İzmir</div>
+</footer>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---- ses (Alya'nın gerçek sesi — Sulafat) ---- */
+let soundOn = true, curAudio = null;
+function stopAudio(){ if(curAudio){ curAudio.pause(); curAudio=null; } const o=$('#pOrb'); if(o) o.classList.remove('speaking'); }
+function speak(key){
+  if(!soundOn || !key) return;
+  stopAudio();
+  const a = new Audio('audio/'+key+'.mp3'); curAudio = a;
+  a.onplay  = ()=>$('#pOrb').classList.add('speaking');
+  a.onended = ()=>{ $('#pOrb').classList.remove('speaking'); if(curAudio===a) curAudio=null; };
+  a.onerror = ()=>$('#pOrb').classList.remove('speaking');
+  a.play().catch(()=>{ /* tarayıcı autoplay engeli — ilk dokunuştan sonra çalışır */ });
+}
+
+/* ---- senaryolar (gerçek mekânlar, çok dilli) ---- */
+const SCEN = {
+  dinner:{
+    icon:'🍽️', head:'Bu akşam nereye?', desc:'Karakterli bir akşam yemeği önerir ve rezerve eder', lang:'EN', globe:'EN',
+    msgs:[
+      {who:'g',lang:'İngilizce',text:"Good evening! Where should we have dinner tonight — somewhere with real character?",
+        gloss:'Misafir İngilizce yazdı.'},
+      {who:'a',audio:'dinner_a1',lang:'İngilizce',text:"Good evening, and welcome to Pera Palace. For character, <b>Agatha Restaurant</b> blends the flavours of the Orient Express — Paris, Venice, İstanbul. And before dinner, a cocktail at the legendary <b>Orient Bar</b>? I can reserve both.",
+        gloss:'Alya aynı dilde, otelin gerçek ikon mekânlarıyla yanıtladı.'},
+      {who:'g',lang:'İngilizce',text:"Yes — Orient Bar at 8, then dinner for two."},
+      {who:'a',audio:'dinner_a2',lang:'İngilizce',text:"Reserved: <b>Orient Bar</b> 20:00, <b>Agatha</b> 21:00, table for two. A little history — Agatha Christie stayed here in room <b>411</b> and wrote here. I'd be glad to arrange a visit tomorrow.",
+        gloss:'Rezervasyon yapıldı + mirası (411 numaralı oda) deneyime çevirdi.'},
+    ]},
+  heritage:{
+    icon:'🎩', head:'Miras & 411 numaralı oda', desc:'Otelin tarihini deneyime çevirir — Arapça', lang:'AR', globe:'AR',
+    msgs:[
+      {who:'g',lang:'Arapça',text:"مساء الخير. سمعت أن أجاثا كريستي أقامت هنا. هل يمكنني زيارة الغرفة؟",
+        gloss:'“İyi akşamlar. Agatha Christie’nin burada kaldığını duydum. Odayı ziyaret edebilir miyim?”'},
+      {who:'a',audio:'heritage_a1',lang:'Arapça',text:"مساء الخير! نعم، إنها الغرفة رقم <b>411</b>، حيث أقامت أجاثا كريستي. رتّبتُ لكم زيارة غدًا الساعة 11، مع شاي بعد الظهر في <b>Kubbeli Lounge</b> على أنغام البيانو.",
+        gloss:'Alya Arapça yanıtladı: 411 numaralı oda ziyareti + Kubbeli Lounge’da piyanolu afternoon tea ayarlandı.'},
+      {who:'g',lang:'Arapça',text:"رائع، شكراً لك.",
+        gloss:'“Harika, teşekkürler.”'},
+      {who:'a',audio:'heritage_a2',lang:'Arapça',text:"بكل سرور. أهلًا وسهلًا بكم في <b>Pera Palace</b>.",
+        gloss:'“Rica ederim. Pera Palace’a hoş geldiniz.”'},
+    ]},
+  spa:{
+    icon:'🧖', head:'Sakin bir öğleden sonra', desc:'Afternoon tea + hamam programı kurar — Türkçe', lang:'TR', globe:'TR',
+    msgs:[
+      {who:'g',lang:'Türkçe',text:"Merhaba, yarın öğleden sonrası için sakin bir program önerir misin?"},
+      {who:'a',audio:'spa_a1',lang:'Türkçe',text:"Memnuniyetle. <b>Kubbeli Lounge</b>'da piyano eşliğinde geleneksel afternoon tea, ardından <b>Pera SPA by Spa Soul</b>'da hamam ve kapalı havuz çok iyi gider. İkisini de ayırayım mı?",
+        gloss:'Otelin gerçek mekânlarıyla kişisel bir program önerdi.'},
+      {who:'g',lang:'Türkçe',text:"Evet, 15:00 çay olur."},
+      {who:'a',audio:'spa_a2',lang:'Türkçe',text:"<b>Kubbeli</b> 15:00 afternoon tea, <b>Pera SPA</b> 16:30 hamam ayrıldı. Ayrılırken <b>Patisserie de Pera</b>'dan el yapımı çikolatalarımızı da denemenizi öneririm.",
+        gloss:'Rezervasyon + Patisserie de Pera upsell’i.'},
+    ]},
+};
+
+/* otelin imza mekânları */
+const VENUES = ['Agatha Restaurant','Orient Bar','Orient Terrace','Kubbeli Lounge',
+  'Patisserie de Pera','Pera SPA by Spa Soul'];
+const OPEN_NIGHT = new Set();
+
+let current = 'night', timer = null, tokens = [];
+
+function buildScns(){
+  $('#scns').innerHTML = Object.entries(SCEN).map(([k,s])=>`
+    <button class="scn ${k===current?'on':''}" data-k="${k}">
+      <div class="ic">${s.icon}</div>
+      <div class="st"><div class="sh">${esc(s.head)}</div><div class="sd">${esc(s.desc)}</div></div>
+      <div class="lg">${s.lang}</div>
+    </button>`).join('');
+  $('#scns').querySelectorAll('.scn').forEach(b=>b.onclick=()=>play(b.dataset.k));
+}
+function buildVenues(){
+  const openSet = current==='night' ? OPEN_NIGHT : null;
+  $('#vhinfo').textContent = current==='night' ? '· yeşil = bu gece açık' : '';
+  $('#vchips').innerHTML = VENUES.map(v=>{
+    const on = openSet && openSet.has(v);
+    return `<span class="vchip ${on?'open':''}">${on?'<span class="d"></span>':''}${esc(v)}</span>`;
+  }).join('');
+}
+
+function clearTimers(){ tokens.forEach(t=>clearTimeout(t)); tokens=[]; }
+function addTimer(fn,ms){ tokens.push(setTimeout(fn,ms)); }
+
+function typingEl(){ const d=document.createElement('div'); d.className='typing';
+  d.innerHTML='<span></span><span></span><span></span>'; return d; }
+
+function rowEl(m){
+  const d=document.createElement('div'); d.className='row '+m.who;
+  d.innerHTML = `<div class="lgtag">${esc(m.lang)}</div><div class="bub">${m.text}</div>`+
+    (m.gloss?`<div class="gloss">${esc(m.gloss)}</div>`:'');
+  return d;
+}
+
+function play(k){
+  current = k; clearTimers(); stopAudio();
+  const s = SCEN[k];
+  buildScns(); buildVenues();
+  $('#globe').textContent = s.globe;
+  $('#phstatus').textContent = 'çevrimiçi · 9 dil';
+  $('#replay').classList.remove('show');
+  const chat = $('#chat'); chat.innerHTML='';
+  let t = 350;
+  s.msgs.forEach((m,i)=>{
+    if(m.who==='a'){
+      addTimer(()=>{ const tp=typingEl(); chat.appendChild(tp); chat.scrollTop=chat.scrollHeight; }, t);
+      t += 950 + Math.min(m.text.length*11, 1500);
+      addTimer(()=>{ const tp=chat.querySelector('.typing'); if(tp) tp.remove();
+        chat.appendChild(rowEl(m)); chat.scrollTop=chat.scrollHeight; speak(m.audio); }, t);
+      t += 500;
+    } else {
+      addTimer(()=>{ chat.appendChild(rowEl(m)); chat.scrollTop=chat.scrollHeight; }, t);
+      t += 800 + Math.min(m.text.length*9, 1200);
+    }
+  });
+  addTimer(()=>$('#replay').classList.add('show'), t+300);
+}
+
+$('#replay').onclick = ()=>play(current);
+$('#spk').onclick = ()=>{
+  soundOn = !soundOn;
+  $('#spk').classList.toggle('off', !soundOn);
+  $('#spk').textContent = soundOn ? '🔊' : '🔇';
+  if(!soundOn) stopAudio();
+};
+buildScns(); buildVenues(); play('night');
+</script>
