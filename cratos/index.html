@@ -89,8 +89,18 @@
   .phead .ph-name{font-size:14px;font-weight:600;line-height:1.1}
   .phead .ph-sub{font-size:10.5px;color:var(--emer);margin-top:2px;display:flex;align-items:center;gap:5px}
   .phead .ph-sub .d{width:6px;height:6px;border-radius:50%;background:var(--emer);box-shadow:0 0 6px var(--emer)}
-  .globe{margin-left:auto;font-size:11px;color:var(--faint);letter-spacing:.4px;border:1px solid var(--line);
+  .spk{margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+    display:grid;place-items:center;font-size:15px;background:var(--panel2);border:1px solid var(--line);
+    color:var(--gold2);transition:.2s}
+  .spk:hover{border-color:var(--gold)}
+  .spk.off{color:var(--faint)}
+  .spk:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+  .globe{font-size:11px;color:var(--faint);letter-spacing:.4px;border:1px solid var(--line);
     padding:3px 9px;border-radius:20px}
+  .orb.speaking{animation:spk 1s ease-in-out infinite}
+  @keyframes spk{0%,100%{box-shadow:0 0 22px -2px rgba(201,163,93,.6)}
+    50%{box-shadow:0 0 32px 2px rgba(201,163,93,.92), 0 0 0 5px rgba(201,163,93,.16)}}
+  @media(prefers-reduced-motion:reduce){.orb.speaking{animation:none}}
 
   .chat{flex:1;overflow-y:auto;padding:16px 14px 18px;display:flex;flex-direction:column;gap:12px;
     scroll-behavior:smooth;
@@ -167,11 +177,12 @@
     <div class="screen">
       <div class="notch"></div>
       <div class="phead">
-        <div class="orb"></div>
+        <div class="orb" id="pOrb"></div>
         <div>
           <div class="ph-name">Alya · Cratos Premium</div>
-          <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · 9 dil</span></div>
+          <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · sesli · 9 dil</span></div>
         </div>
+        <button class="spk on" id="spk" title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
         <div class="globe" id="globe">TR</div>
       </div>
       <div class="chat" id="chat"></div>
@@ -193,6 +204,19 @@
 const $ = s => document.querySelector(s);
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 
+/* ---- ses (Alya'nın gerçek sesi — Sulafat) ---- */
+let soundOn = true, curAudio = null;
+function stopAudio(){ if(curAudio){ curAudio.pause(); curAudio=null; } const o=$('#pOrb'); if(o) o.classList.remove('speaking'); }
+function speak(key){
+  if(!soundOn || !key) return;
+  stopAudio();
+  const a = new Audio('audio/'+key+'.mp3'); curAudio = a;
+  a.onplay  = ()=>$('#pOrb').classList.add('speaking');
+  a.onended = ()=>{ $('#pOrb').classList.remove('speaking'); if(curAudio===a) curAudio=null; };
+  a.onerror = ()=>$('#pOrb').classList.remove('speaking');
+  a.play().catch(()=>{ /* tarayıcı autoplay engeli — ilk dokunuştan sonra çalışır */ });
+}
+
 /* ---- senaryolar (gerçek mekânlar, çok dilli) ---- */
 const SCEN = {
   night:{
@@ -200,10 +224,10 @@ const SCEN = {
     msgs:[
       {who:'g',lang:'İngilizce',text:"Hi Alya! What's open tonight for a nice dinner? And is Cage Club on?",
         gloss:'Misafir İngilizce yazdı.'},
-      {who:'a',lang:'İngilizce',text:"Good evening! Tonight <b>Golden Cage</b> (Lebanese) and <b>Mey Blue</b> (seafood) serve until 23:00, and <b>Ocakbaşı</b> for grill. <b>Cage Club</b> opens tonight at 23:00 — reservation needed. Shall I reserve a table?",
+      {who:'a',audio:'night_a1',lang:'İngilizce',text:"Good evening! Tonight <b>Golden Cage</b> (Lebanese) and <b>Mey Blue</b> (seafood) serve until 23:00, and <b>Ocakbaşı</b> for grill. <b>Cage Club</b> opens tonight at 23:00 — reservation needed. Shall I reserve a table?",
         gloss:'Alya aynı dilde, bu gece AÇIK mekânları gerçek adlarıyla verdi.'},
       {who:'g',lang:'İngilizce',text:"A quiet sea-view table for two at 20:30, please."},
-      {who:'a',lang:'İngilizce',text:"Done — <b>Mey Blue</b>, sea-view, 20:30, table for two. Code <b>CR-2211</b>. I've also held two spots at <b>Cage Club</b> after dinner. Anything else — spa or a nightcap at <b>Port Lounge</b>?",
+      {who:'a',audio:'night_a2',lang:'İngilizce',text:"Done — <b>Mey Blue</b>, sea-view, 20:30, table for two. Code <b>CR-2211</b>. I've also held two spots at <b>Cage Club</b> after dinner. Anything else — spa or a nightcap at <b>Port Lounge</b>?",
         gloss:'Rezervasyon + gece kulübü yeri ayrıldı, upsell önerildi.'},
     ]},
   vip:{
@@ -211,21 +235,21 @@ const SCEN = {
     msgs:[
       {who:'g',lang:'Rusça',text:"Добрый вечер. Я в VIP-зале казино. Можно поздний ужин после игры и трансфер в аэропорт утром?",
         gloss:'“İyi akşamlar. Casino VIP salonundayım. Oyundan sonra geç yemek ve sabah havaalanı transferi olur mu?”'},
-      {who:'a',lang:'Rusça',text:"Добрый вечер! Забронировала поздний ужин в <b>Golden Cage</b> до 01:00 и трансфер в аэропорт на 07:00. Ваш столик в VIP-зоне сохранён. Напитки — на счёт номера?",
+      {who:'a',audio:'vip_a1',lang:'Rusça',text:"Добрый вечер! Забронировала поздний ужин в <b>Golden Cage</b> до 01:00 и трансфер в аэропорт на 07:00. Ваш столик в VIP-зоне сохранён. Напитки — на счёт номера?",
         gloss:'Alya Rusça yanıtladı: Golden Cage 01:00’a kadar geç yemek + 07:00 transfer + VIP masa korundu, içki oda hesabına.'},
       {who:'g',lang:'Rusça',text:"Да, спасибо. И столик в Coco Bongo завтра.",
         gloss:'“Evet, teşekkürler. Bir de yarın Coco Bongo’da masa.”'},
-      {who:'a',lang:'Rusça',text:"С удовольствием — <b>Coco Bongo Island</b>, завтра, кабана у воды. Всё готово. Приятной игры!",
+      {who:'a',audio:'vip_a2',lang:'Rusça',text:"С удовольствием — <b>Coco Bongo Island</b>, завтра, кабана у воды. Всё готово. Приятной игры!",
         gloss:'Coco Bongo Island’da su kenarı kabana ayrıldı. “İyi oyunlar!”'},
     ]},
   arrival:{
     icon:'🔔', head:'Varış öncesi — sessiz oda', desc:'Gürültü şikâyetini oluşmadan önler', lang:'TR', globe:'TR',
     msgs:[
       {who:'g',lang:'Türkçe',text:"Merhaba, yarın check-in'imiz var. Sakin bir oda istiyoruz, gece müzik gelmesin."},
-      {who:'a',lang:'Türkçe',text:"Hoş geldiniz! <b>Cage Club</b> ve <b>Coco Bongo</b> etkinlikleri hafta sonu geç saatlere kadar sürüyor. Sizi ana binada, <b>Maldive Villalar</b>'dan uzakta, deniz tarafı sessiz bir odaya aldım. Erken check-in de ayarlayabilirim — ister misiniz?",
+      {who:'a',audio:'arrival_a1',lang:'Türkçe',text:"Hoş geldiniz! <b>Cage Club</b> ve <b>Coco Bongo</b> etkinlikleri hafta sonu geç saatlere kadar sürüyor. Sizi ana binada, <b>Maldive Villalar</b>'dan uzakta, deniz tarafı sessiz bir odaya aldım. Erken check-in de ayarlayabilirim — ister misiniz?",
         gloss:'Alya, yorumlardaki “müzik villalara geliyor” şikâyetini varıştan önce çözdü.'},
       {who:'g',lang:'Türkçe',text:"Harika olur, 13:00 gibi gelebiliriz. Bir de çocuğumuz var."},
-      {who:'a',lang:'Türkçe',text:"Not aldım — 13:00 erken giriş hazır. Çocuğunuz için <b>Cratoys</b> mini kulüp ve <b>La Plage</b>'da sığ havuz alanı var; isterseniz kahvaltıya yakın masa ayırayım.",
+      {who:'a',audio:'arrival_a2',lang:'Türkçe',text:"Not aldım — 13:00 erken giriş hazır. Çocuğunuz için <b>Cratoys</b> mini kulüp ve <b>La Plage</b>'da sığ havuz alanı var; isterseniz kahvaltıya yakın masa ayırayım.",
         gloss:'Çocuk kulübü (Cratoys) ve plaj yönlendirmesiyle deneyim kişiselleştirildi.'},
     ]},
 };
@@ -269,7 +293,7 @@ function rowEl(m){
 }
 
 function play(k){
-  current = k; clearTimers();
+  current = k; clearTimers(); stopAudio();
   const s = SCEN[k];
   buildScns(); buildVenues();
   $('#globe').textContent = s.globe;
@@ -282,7 +306,7 @@ function play(k){
       addTimer(()=>{ const tp=typingEl(); chat.appendChild(tp); chat.scrollTop=chat.scrollHeight; }, t);
       t += 950 + Math.min(m.text.length*11, 1500);
       addTimer(()=>{ const tp=chat.querySelector('.typing'); if(tp) tp.remove();
-        chat.appendChild(rowEl(m)); chat.scrollTop=chat.scrollHeight; }, t);
+        chat.appendChild(rowEl(m)); chat.scrollTop=chat.scrollHeight; speak(m.audio); }, t);
       t += 500;
     } else {
       addTimer(()=>{ chat.appendChild(rowEl(m)); chat.scrollTop=chat.scrollHeight; }, t);
@@ -293,5 +317,11 @@ function play(k){
 }
 
 $('#replay').onclick = ()=>play(current);
+$('#spk').onclick = ()=>{
+  soundOn = !soundOn;
+  $('#spk').classList.toggle('off', !soundOn);
+  $('#spk').textContent = soundOn ? '🔊' : '🔇';
+  if(!soundOn) stopAudio();
+};
 buildScns(); buildVenues(); play('night');
 </script>
