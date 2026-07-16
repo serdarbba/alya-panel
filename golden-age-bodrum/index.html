@@ -251,17 +251,28 @@ let soundOn = true, curAudio = null;
 const sleep = ms => new Promise(r=>setTimeout(r,ms));
 function stopAudio(){ if(curAudio){ curAudio.pause(); curAudio=null; } const o=$('#pOrb'); if(o) o.classList.remove('speaking'); }
 /* sesi çalar ve BİTENE kadar bekler (Promise) — akış sese göre ilerlesin diye */
-function playAudio(key){
+function playAudio(key, text, lang){
   return new Promise(resolve=>{
-    if(!soundOn || !key){ resolve(false); return; }
+    if(!soundOn){ resolve(false); return; }
     stopAudio();
+    const o=$('#pOrb');
+    const LC={'İngilizce':'en-US','Türkçe':'tr-TR','Rusça':'ru-RU','Almanca':'de-DE','Arapça':'ar-SA'};
+    function fallback(){
+      try{ const u=new SpeechSynthesisUtterance(String(text||'').replace(/<[^>]+>/g,''));
+        u.lang=LC[lang]||'tr-TR'; if(o) o.classList.add('speaking');
+        u.onend=()=>{ if(o) o.classList.remove('speaking'); resolve(true); };
+        u.onerror=()=>{ if(o) o.classList.remove('speaking'); resolve(false); };
+        window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+      }catch(e){ if(o) o.classList.remove('speaking'); resolve(false); }
+    }
+    if(!key){ fallback(); return; }
     const a = new Audio('audio/'+key+'.mp3'); curAudio = a;
     let done = false;
-    const fin = ok => { if(done) return; done = true; const o=$('#pOrb'); if(o) o.classList.remove('speaking'); if(curAudio===a) curAudio=null; resolve(ok); };
-    a.onplay  = ()=>{ const o=$('#pOrb'); if(o) o.classList.add('speaking'); };
+    const fin = ok => { if(done) return; done = true; if(o) o.classList.remove('speaking'); if(curAudio===a) curAudio=null; resolve(ok); };
+    a.onplay  = ()=>{ if(o) o.classList.add('speaking'); };
     a.onended = ()=>fin(true);
-    a.onerror = ()=>fin(false);
-    a.play().catch(()=>fin(false)); // tarayıcı autoplay engeli — ilk dokunuştan sonra çalışır
+    a.onerror = ()=>{ if(done) return; done=true; if(curAudio===a) curAudio=null; fallback(); };
+    a.play().catch(()=>{ if(done) return; done=true; if(curAudio===a) curAudio=null; fallback(); });
   });
 }
 
@@ -336,7 +347,7 @@ async function play(k){
       if(gen !== playGen){ tp.remove(); return; }
       tp.remove();
       chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
-      const played = await playAudio(m.audio);   // SES BİTENE KADAR bekler
+      const played = await playAudio(m.audio, m.text, m.lang);   // SES BİTENE KADAR bekler
       if(gen !== playGen) return;
       if(m.route){ await sleep(300); if(gen !== playGen) return; await showRoute(m.route, chat, gen); if(gen !== playGen) return; }
       await sleep(played ? 650 : 1100 + Math.min(m.text.length*20, 3200));
