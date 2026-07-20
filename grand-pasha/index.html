@@ -371,8 +371,8 @@ const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&l
 /* saat — Girne UTC+3 */
 function tick(){
   const now = new Date();
-  const oman = new Date(now.getTime() + (now.getTimezoneOffset()+240)*60000);
-  const hh = String(oman.getHours()).padStart(2,'0'), mm = String(oman.getMinutes()).padStart(2,'0');
+  const trnc = new Date(now.getTime() + (now.getTimezoneOffset()+180)*60000);
+  const hh = String(trnc.getHours()).padStart(2,'0'), mm = String(trnc.getMinutes()).padStart(2,'0');
   $('#clock').textContent = 'Girne  '+hh+':'+mm;
 }
 setInterval(tick,1000); tick();
@@ -389,23 +389,23 @@ const REQS = [
     tag:'Plaj / Ulaşım',room:'Oda 305',t:5},
   {flag:'🇹🇷',lang:'Türkçe',st:'done',
     orig:'«Hamam ve masaj için bu akşam yer var mı?»',
-    ai:'Spa 22:00'+A+'a kadar açık; 21:30 hamam + masaj paketi ayrıldı.',
+    ai:'Spa 22:00’a kadar açık; 21:30 hamam + masaj paketi ayrıldı.',
     tag:'Spa',room:'Oda 718',t:11},
   {flag:'🇷🇺',lang:'Rusça',st:'done',
     orig:'«Можно поздний выезд до 14:00?»',
-    ai:'14:00 geç çıkış onaylandı, folio'+A+'ya işlendi.',
+    ai:'14:00 geç çıkış onaylandı, folio’ya işlendi.',
     tag:'Resepsiyon',room:'Oda 226',t:18},
   {flag:'🇩🇪',lang:'Almanca',st:'done',
     orig:'„Können wir einen ruhigen Tisch bekommen?“',
     ai:'Teras tarafında sessiz masa ayarlandı, 20:30.',
     tag:'Yiyecek-İçecek',room:'Oda 511',t:24},
   {flag:'🇹🇷',lang:'Türkçe',st:'done',
-    orig:'«Sabah Ercan'+A+'a transfer ayarlanabilir mi?»',
+    orig:'«Sabah Ercan’a transfer ayarlanabilir mi?»',
     ai:'06:30 Ercan Havalimanı transferi ayarlandı; vale bilgilendirildi.',
     tag:'Transfer',room:'Oda 604',t:31},
   {flag:'🇮🇷',lang:'Farsça',st:'done',
     orig:'«صبحانه تا چه ساعتی سرو می‌شود؟»',
-    ai:'Kahvaltı 10:30'+A+'a kadar; geç kalkanlara teras servisi önerildi.',
+    ai:'Kahvaltı 10:30’a kadar; geç kalkanlara teras servisi önerildi.',
     tag:'Bilgi',room:'Oda 133',t:37},
   {flag:'🇬🇧',lang:'İngilizce',st:'guard',
     orig:'“We waited a long time at the pool bar.”',
@@ -419,7 +419,7 @@ const REP_QUEUE = [
   {flag:'🇷🇺',lang:'Rusça',st:'done',orig:'«Есть ли вегетарианское меню на ужин?»',
     ai:'Vejetaryen seçenekler listelendi; mutfağa not iletildi.',tag:'Yiyecek-İçecek',room:'Oda 217',t:0},
   {flag:'🇬🇧',lang:'İngilizce',st:'done',orig:'“Can we upgrade to a sea view room for two nights?”',
-    ai:'Deniz manzaralı odaya yükseltme yapıldı; fark folio'+A+'ya işlendi.',tag:'Resepsiyon',room:'Oda 118',t:0},
+    ai:'Deniz manzaralı odaya yükseltme yapıldı; fark folio’ya işlendi.',tag:'Resepsiyon',room:'Oda 118',t:0},
 ];
 
 function reqRow(r){
@@ -547,7 +547,7 @@ $('#revbreak').innerHTML = REVB.map(([n,v,p])=>
 
 /* ---- konuşma özeti: öne çıkanlar ---- */
 const HIGH = [
-  ['upsell','Casino katından çıkan misafir, hamam + masaj paketini Alya'+A+'dan öğrenince aynı gece randevu aldı'],
+  ['upsell','Casino katından çıkan misafir, hamam + masaj paketini Alya’dan öğrenince aynı gece randevu aldı'],
   ['erken müdahale','Klima arızası ve havuz bar beklemesi, yorum sitesine düşmeden odada çözüldü'],
   ['olumlu','Özel plaj shuttle saatleri ve teras servisi yönlendirmesi 5/5 geri bildirim aldı'],
 ];
