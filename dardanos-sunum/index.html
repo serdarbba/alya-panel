@@ -1,0 +1,230 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alya · ÇOMÜ Dardanos Yerleşkesi — Rezervasyon ve Talep Merkezi</title>
+<style>
+  :root{
+    --bg:#0a0b0d; --bg2:#0e1012; --panel:#141619; --panel2:#1a1d21; --line:#2a2e33;
+    --ink:#f2f1ec; --mut:#a5a89f; --faint:#71756d;
+    --gold:#c6a25a; --gold2:#e8d19a; --goldsoft:rgba(198,162,90,.12);
+    --emer:#4fb98c; --emer-soft:rgba(79,185,140,.11);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1000px 560px at 12% -10%, rgba(198,162,90,.11) 0%, transparent 58%),
+      radial-gradient(820px 520px at 94% 2%, rgba(79,185,140,.06) 0%, transparent 55%),
+      linear-gradient(180deg,var(--bg2),var(--bg) 42%);
+    color:var(--ink);min-height:100vh;
+    font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;font-size:15.5px;line-height:1.55}
+  .serif{font-family:'Iowan Old Style',Georgia,'Times New Roman',serif}
+  h1,h2,h3{margin:0;letter-spacing:-.3px}
+  .wrap{max-width:940px;margin:0 auto;padding:0 26px}
+
+  .top{display:flex;align-items:center;justify-content:space-between;gap:16px;
+    flex-wrap:wrap;padding:32px 0 0}
+  .brand{display:flex;align-items:center;gap:13px}
+  .orb{width:42px;height:42px;border-radius:50%;flex:none;position:relative;
+    background:radial-gradient(circle at 34% 28%,var(--gold2),var(--gold) 55%,#7c6330);
+    box-shadow:0 0 24px -2px rgba(201,163,93,.55)}
+  .orb::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.2)}
+  .brand h1{font-size:17px;font-weight:600}
+  .brand .sub{font-size:10.5px;color:var(--gold2);letter-spacing:2.6px;text-transform:uppercase;margin-top:3px}
+  .bybba{font-size:11.5px;color:var(--faint);text-align:right}
+  .bybba b{color:var(--mut);font-weight:600}
+
+  .hero{padding:46px 0 10px}
+  .hero .kicker{font-size:11px;color:var(--gold2);letter-spacing:2.4px;text-transform:uppercase;margin-bottom:16px}
+  .hero h2{font-size:clamp(29px,4.6vw,44px);font-weight:600;line-height:1.14;text-wrap:balance}
+  .hero h2 em{font-style:normal;color:var(--gold2)}
+  .hero p{color:var(--mut);font-size:16.5px;margin:18px 0 0;max-width:660px;text-wrap:balance}
+
+  section{padding:40px 0 0}
+  .shead{font-size:11px;color:var(--faint);letter-spacing:2.2px;text-transform:uppercase;
+    padding-bottom:13px;margin-bottom:22px;border-bottom:1px solid var(--line)}
+
+  .flow{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;margin-bottom:16px}
+  @media(max-width:760px){.flow{grid-template-columns:repeat(2,1fr)}}
+  .fch{background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    padding:12px 10px;text-align:center;font-size:12.5px;color:var(--mut)}
+  .arrowrow{text-align:center;color:var(--faint);font-size:19px;margin:4px 0 12px}
+  .merge{background:linear-gradient(100deg,var(--goldsoft),var(--panel) 70%);
+    border:1px solid var(--gold);border-radius:14px;padding:17px 20px;
+    box-shadow:0 0 0 1px var(--gold) inset}
+  .merge b{color:var(--gold2)}
+
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr}}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:19px 21px}
+  .card h3{font-size:15.5px;font-weight:600;margin-bottom:8px}
+  .card p{margin:0;color:var(--mut);font-size:13.8px;line-height:1.6}
+  .card .tag{display:inline-block;font-size:10px;letter-spacing:1.4px;text-transform:uppercase;
+    color:var(--gold2);background:var(--goldsoft);border:1px solid color-mix(in srgb,var(--gold) 32%,transparent);
+    padding:3px 9px;border-radius:20px;margin-bottom:11px}
+
+  ul.clean{list-style:none;padding:0;margin:0}
+  ul.clean li{padding:11px 0 11px 26px;border-bottom:1px solid var(--line);position:relative;
+    color:var(--mut);font-size:14.3px}
+  ul.clean li:last-child{border-bottom:0}
+  ul.clean li::before{content:"";position:absolute;left:6px;top:19px;width:7px;height:7px;
+    border-radius:50%;background:var(--gold)}
+  ul.clean li b{color:var(--ink);font-weight:600}
+
+  .stage{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+  @media(max-width:760px){.stage{grid-template-columns:1fr}}
+  .st{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+  .st .n{font-size:11px;color:var(--gold2);letter-spacing:1.6px;text-transform:uppercase;margin-bottom:9px}
+  .st h3{font-size:15px;font-weight:600;margin-bottom:7px}
+  .st p{margin:0;font-size:13.5px;color:var(--mut);line-height:1.6}
+
+  .note{background:var(--emer-soft);border:1px solid color-mix(in srgb,var(--emer) 26%,transparent);
+    border-radius:14px;padding:18px 21px;font-size:14.3px;color:var(--mut);line-height:1.65}
+  .note b{color:var(--emer);font-weight:600}
+
+  .cta{margin:34px 0 0;background:var(--panel2);border:1px solid var(--line);border-radius:16px;
+    padding:26px 24px;text-align:center}
+  .cta h3{font-size:19px;font-weight:600;margin-bottom:9px}
+  .cta p{color:var(--mut);font-size:14.3px;margin:0 auto 18px;max-width:520px}
+  .btn{display:inline-block;text-decoration:none;font-size:14.5px;font-weight:600;
+    padding:13px 26px;border-radius:26px;color:#14130c;
+    background:linear-gradient(160deg,var(--gold2),var(--gold));
+    box-shadow:0 14px 30px -14px rgba(201,163,93,.75)}
+
+  footer{margin-top:44px;padding:22px 0 52px;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11.5px;color:var(--faint)}
+  footer b{color:var(--gold2);font-weight:600}
+</style>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="brand">
+      <div class="orb"></div>
+      <div>
+        <h1 class="serif">Alya</h1>
+        <div class="sub">ÇOMÜ Dardanos Yerleşkesi</div>
+      </div>
+    </div>
+    <div class="bybba"><b>BBA Technology</b><br>İzmir · yapay zekâ çözümleri</div>
+  </div>
+
+  <div class="hero">
+    <div class="kicker">Sn. Hacer Öner Boğ için hazırlanmıştır · 21 Temmuz 2026</div>
+    <h2 class="serif">Talep beş ayrı kanaldan geliyor.<br><em>Tek yerde</em> toplanabilir.</h2>
+    <p>Dardanos’a gelen her konaklama, plaj, yemek ve kongre talebi aynı ekrana düşsün;
+    kapora, grup planı ve kurumsal teklif hiçbir aşamada kaybolmasın istiyoruz.</p>
+  </div>
+
+  <section>
+    <div class="shead">Bugünkü akış</div>
+    <div class="flow">
+      <div class="fch">WhatsApp</div>
+      <div class="fch">Telefon</div>
+      <div class="fch">E-posta</div>
+      <div class="fch">Booking</div>
+      <div class="fch">Obilet · Enuygun</div>
+    </div>
+    <div class="arrowrow">↓</div>
+    <div class="merge">
+      Beş kanaldan gelen talep, <b>tek bir merkezde</b> birleşir: müsaitlik yanıtlanır,
+      kapora ve dekont kayda girer, grup ile bireysel servis çakışmadan planlanır,
+      kurumsal talep ön blokajla işletme müdürlüğüne düşer.
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">Dört başlıkta ne değişir</div>
+    <div class="cards">
+      <div class="card">
+        <div class="tag">Rezervasyon</div>
+        <h3>Talep ilk dakikada yanıtlanır</h3>
+        <p>Müsaitlik, fiyat ve kapora bilgisi anında paylaşılır. Dekont sohbete iletilir,
+        ön büroya kayıtla düşer — takip kimsenin hafızasına kalmaz.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Grup & bireysel</div>
+        <h3>Restoran çakışması önceden çözülür</h3>
+        <p>Sempozyum veya tur grubu olan akşamlarda bireysel misafire ikinci servis saati
+        açılır. Misafir sürprizle değil, bilgiyle karşılaşır.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Sezon</div>
+        <h3>Tekrarlayan sorular personelden düşer</h3>
+        <p>Plaj, havuz, günübirlik giriş, otopark ve yemek saatleri gibi sezon boyunca
+        yüzlerce kez sorulan başlıklar otomatik yanıtlanır.</p>
+      </div>
+      <div class="card">
+        <div class="tag">Kongre</div>
+        <h3>Kurumsal talep mesai dışında da durur</h3>
+        <p>Salon, konaklama ve ikram talebi kayda alınır, tarih ön blokajla tutulur ve
+        teklif kuyruğuna girer.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">Nasıl çalışır</div>
+    <ul class="clean">
+      <li><b>Mevcut kanalınızı değiştirmiyoruz.</b> Misafir yine WhatsApp’tan yazar; fark, karşısında bekleyen bir yapı olmasıdır.</li>
+      <li><b>Misafir hiçbir uygulama indirmez.</b> Karekod veya mevcut numara üzerinden erişir.</li>
+      <li><b>Personel tarafında tek ekran.</b> Gelen her talep, hangi kanaldan geldiğine bakılmaksızın aynı listeye düşer ve kapanana kadar takipte kalır.</li>
+      <li><b>16 dilde yanıt.</b> Yabancı misafir kendi dilinde yazar, kendi dilinde yanıt alır.</li>
+      <li><b>Raporlama.</b> Doluluk, talep hacmi, yanıt süresi ve kapanmayan talepler yönetime düzenli olarak raporlanır.</li>
+    </ul>
+  </section>
+
+  <section>
+    <div class="shead">Başlangıç planı</div>
+    <div class="stage">
+      <div class="st">
+        <div class="n">Aşama 1</div>
+        <h3>Tek alanla başlangıç</h3>
+        <p>Konaklama rezervasyonu ve kapora takibi ile sınırlı, ölçülebilir bir başlangıç.
+        Yerleşkenin işleyişi bozulmadan kurulur.</p>
+      </div>
+      <div class="st">
+        <div class="n">Aşama 2</div>
+        <h3>Ölçüm</h3>
+        <p>Yanıtlanan talep sayısı, ortalama yanıt süresi ve kapanmayan talepler
+        birlikte değerlendirilir.</p>
+      </div>
+      <div class="st">
+        <div class="n">Aşama 3</div>
+        <h3>Kapsam genişletme</h3>
+        <p>Sonuçlar konuşulduktan sonra plaj, restoran ve kongre başlıkları
+        aynı merkeze eklenir.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="shead">Ticari çerçeve</div>
+    <div class="note">
+      Çalışmayı, Dardanos Yerleşkesi İktisadi İşletmesi’nin <b>yıllık doğrudan temin limitinin altında</b>
+      kalacak şekilde kurguluyoruz; böylece ihale sürecine gerek kalmadan, tek sözleşmeyle başlanabilir.
+      Kurulum, eğitim ve destek yıllık bedele dahildir. Kapsam ve bedel, birlikte belirlenecek
+      başlangıç alanına göre netleştirilir.
+    </div>
+  </section>
+
+  <div class="cta">
+    <h3 class="serif">Canlı demo</h3>
+    <p>Dardanos’un gerçek akışı üzerine kurulmuş dört senaryoyu sesli olarak dinleyebilirsiniz.</p>
+    <a class="btn" href="../dardanos-hotel/">Sesli demoyu aç</a>
+  </div>
+
+  <footer>
+    <div>Bu doküman ÇOMÜ Dardanos Yerleşkesi için hazırlanmıştır · Temmuz 2026</div>
+    <div><b>Alya</b> · BBA Technology · İzmir</div>
+  </footer>
+
+</div>
+
+<script>
+(function(){var sent=false;function ping(){if(sent)return;sent=true;
+  try{fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'Dardanos SUNUM sayfasi acildi',
+    headers:{'Title':'Dardanos sunum goruntulendi','Tags':'eyes,tada'}});}catch(e){}}
+  ['pointerdown','keydown','touchstart'].forEach(function(ev){window.addEventListener(ev,ping,{once:true,passive:true});});
+})();
+</script>
