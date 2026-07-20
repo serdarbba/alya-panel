@@ -180,21 +180,21 @@
     <div class="orb"></div>
     <div>
       <h1 class="serif">Alya</h1>
-      <div class="sub">Dardanos</div>
+      <div class="sub">ÇOMÜ Dardanos Yerleşkesi</div>
     </div>
   </div>
   <div class="bybba"><b>BBA Technology</b> · İzmir · yapay zekâ konsiyerj</div>
 </div>
 
 <div class="hero">
-  <h2 class="serif">Misafiriniz <em>kendi dilinde</em> soruyor.<br>Alya <em>anında</em> yanıtlıyor.</h2>
-  <p>kampüs & konferans yerleşkesi — misafirinizi kendi dilinde sesle karşılar, restoran, spa ve transfer taleplerini tek ekranda çözer ve yönetim paneline iletir.</p>
+  <h2 class="serif">Talep beş ayrı kanaldan geliyor.<br><em>Tek yerde</em> toplanabilir.</h2>
+  <p>WhatsApp, telefon, e-posta, Booking, Obilet — Dardanos’a gelen her istek aynı ekrana düşer; kapora, grup planı ve kongre talebi takipte kalır.</p>
 </div>
 
 <div class="stage">
   <!-- SOL -->
   <div class="left">
-    <div class="scn-label">Bir senaryo seçin — Alya canlı oynasın</div>
+    <div class="scn-label">Dardanos’tan 4 gerçek an — birini seçin, canlı oynasın</div>
     <div class="scns" id="scns"></div>
 
     <div class="venues">
@@ -211,7 +211,7 @@
         <div class="orb" id="pOrb"></div>
         <div>
           <div class="ph-name">Alya · Dardanos</div>
-          <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · sesli · 9 dil</span></div>
+          <div class="ph-sub"><span class="d"></span> <span id="phstatus">çevrimiçi · sesli · 16 dil</span></div>
         </div>
         <button class="spk on" id="spk" title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
         <div class="globe" id="globe">TR</div>
@@ -232,14 +232,14 @@
 </div>
 
 <footer>
-  <div>Temsilî demo · kurulumda otelin canlı menü, saat ve PMS verisiyle çalışır.</div>
+  <div>Temsilî demo · kurulumda tesisin canlı müsaitlik, fiyat ve rezervasyon verisiyle çalışır.</div>
   <div><b>Alya</b> · BBA Technology · İzmir</div>
 </footer>
 
 <script>
 (function(){var sent=false;function ping(){if(sent)return;sent=true;
   try{fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'Dardanos demoyu açtı',
-    headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada'}});}}catch(e){}}
+    headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada'}});}catch(e){}}
   ['pointerdown','keydown','touchstart'].forEach(function(ev){window.addEventListener(ev,ping,{once:true,passive:true});});
 })();
 </script>
@@ -278,10 +278,10 @@ function playAudio(key, text, lang){
 }
 
 /* ---- senaryolar (gerçek mekânlar, çok dilli) ---- */
-const SCEN = {"s1": {"icon": "🍽️", "head": "Bu akşam nereye?", "desc": "Akşam yemeği önerir ve rezerve eder", "lang": "Türkçe", "globe": "TR", "msgs": [{"who": "g", "lang": "Türkçe", "text": "İyi akşamlar! Bu akşam için bir yer önerir misiniz?"}, {"who": "a", "lang": "Türkçe", "text": "İyi akşamlar, Dardanos’e hoş geldiniz. Memnuniyetle — à la carte restoranımızda sakin bir masa ayarlayıp öncesinde bir karşılama içeceği ekleyebilirim. İki kişilik ayırayım mı?", "audio": "s1_a1"}, {"who": "g", "lang": "Türkçe", "text": "Evet, 20:30’da sakin bir masa olsun."}, {"who": "a", "lang": "Türkçe", "text": "Ayırdım — 20:30, iki kişilik sakin bir masa, karşılama içeceğiyle. Başka? Spa ya da yarın için havaalanı transferi?", "audio": "s1_a2", "route": ["Yönetim paneline düştü", "Restorana iletildi", "Servise iletildi"]}]}, "s2": {"icon": "🧖", "head": "Sakin bir gün", "desc": "Spa + geç çıkış planlar", "lang": "İngilizce", "globe": "EN", "msgs": [{"who": "g", "lang": "İngilizce", "text": "Hi! We'd like a relaxing afternoon tomorrow.", "gloss": "Misafir İngilizce yazdı."}, {"who": "a", "lang": "İngilizce", "text": "Wonderful. I can book our spa and hold a quiet spot afterwards, plus a late check-out so you're never rushed. Shall I arrange it?", "gloss": "Alya spa + geç çıkış önerdi.", "audio": "s2_a1"}, {"who": "g", "lang": "İngilizce", "text": "Yes please, around 15:00.", "gloss": "“Evet, 15:00 civarı.”"}, {"who": "a", "lang": "İngilizce", "text": "Done — spa at 15:00 and a late check-out noted. I'll have everything ready for you.", "gloss": "Program kuruldu.", "audio": "s2_a2", "route": ["Yönetim paneline düştü", "Spa’ya iletildi", "Resepsiyona iletildi"]}]}};
+const SCEN = {"s1": {"icon": "📲", "head": "WhatsApp’tan rezervasyon", "desc": "Müsaitlik → kapora → dekont takibi", "lang": "Türkçe", "globe": "TR", "msgs": [{"who": "g", "lang": "Türkçe", "text": "Merhaba, 15-16 Ağustos için 2 kişilik oda var mı? Fiyat nedir?", "gloss": "Sitedeki “online rezervasyon” butonu WhatsApp’a düşüyor — talep buradan geliyor."}, {"who": "a", "lang": "Türkçe", "text": "Merhaba, Dardanos Yerleşkesi’ne hoş geldiniz. 15-16 Ağustos için <b>deniz manzaralı standart odalarımız müsait</b>. İki yetişkin, iki gece — toplam tutar ve kapora bilgisini hemen paylaşayım mı?", "audio": "s1_a1"}, {"who": "g", "lang": "Türkçe", "text": "Evet lütfen. Ödemeyi nasıl yapacağız?"}, {"who": "a", "lang": "Türkçe", "text": "Rezervasyonunuzu <b>ön kayda aldım</b>. Toplam tutarın <b>%30’u kapora</b> olarak bekleniyor; havale bilgilerini şimdi gönderiyorum. <b>Dekontunuzu bu sohbete iletmeniz yeterli</b> — ben ön büroya düşürüyorum ve onay mesajınızı göndereceğim.", "gloss": "Kapora ve dekont takibi kimsenin hafızasında değil; kayda giriyor.", "audio": "s1_a2", "route": ["Ön büroya düştü", "Ön kayıt açıldı", "Kapora takibine alındı"]}]}, "s2": {"icon": "🍽️", "head": "Grup & bireysel çakışması", "desc": "Sempozyum grubu varken yemek kapasitesi", "lang": "Türkçe", "globe": "TR", "msgs": [{"who": "g", "lang": "Türkçe", "text": "24 Eylül akşamı restoranda yer bulabilir miyiz?", "gloss": "Aynı akşam 80 kişilik sempozyum grubu kayıtlı."}, {"who": "a", "lang": "Türkçe", "text": "Bilgilendireyim: 24 Eylül akşamı restoranda <b>80 kişilik bir sempozyum grubu</b> kaydı var. Aynı akşam bireysel misafirlerimize <b>ikinci servis saatini</b> açıyoruz — yerinizi garantiye alıyorum. Akşam yemeğinizi hangi saatte planlayalım?", "gloss": "Misafir sürprizle karşılaşmıyor; önceden biliyor.", "audio": "s2_a1"}, {"who": "g", "lang": "Türkçe", "text": "20:30 uygun olur."}, {"who": "a", "lang": "Türkçe", "text": "Ayırdım. Grup ve bireysel servis <b>ayrı saatlerde</b> planlandığı için bekleme yaşamayacaksınız. Bu bilgi mutfağa ve ön büroya iletildi, <b>doluluk raporuna</b> da işlendi.", "audio": "s2_a2", "route": ["Mutfağa iletildi", "Ön büroya düştü", "Doluluk raporuna işlendi"]}]}, "s3": {"icon": "🏖️", "head": "Günübirlik plaj & havuz", "desc": "Yaz sezonunun en çok gelen sorusu", "lang": "Türkçe", "globe": "TR", "msgs": [{"who": "g", "lang": "Türkçe", "text": "Plajınız dışarıdan gelenlere açık mı? Havuz var mı, ücret ne kadar?", "gloss": "Sezonda günde onlarca kez gelen, tekrarlayan soru."}, {"who": "a", "lang": "Türkçe", "text": "Merhaba! Plajımız <b>Mavi Bayraklı ve tüm halka açık</b>. <b>Yarı olimpik havuz</b> ve çırpınma havuzumuz da hizmette. Günübirlik giriş, şezlong ve otopark bilgilerini paylaşabilirim; ayrıca öğle yemeği için <b>Yakamoz Restoran</b>’da yer ayırtabilirim.", "audio": "s3_a1"}, {"who": "g", "lang": "Türkçe", "text": "Yarın 4 kişi geleceğiz, yemek de olsun."}, {"who": "a", "lang": "Türkçe", "text": "Not aldım — yarın <b>4 kişi</b>, günübirlik giriş ve <b>13:30’da öğle yemeği</b>. Yoğun günlerde şezlong sınırlı olduğu için sizin adınıza şimdiden ayırttım.", "gloss": "Tekrarlayan sorular personelden düşüyor; sezon boyunca birikiyor.", "audio": "s3_a2", "route": ["Plaj işletmesine iletildi", "Yakamoz Restoran’a iletildi", "Günübirlik kaydı açıldı"]}]}, "s4": {"icon": "🏛️", "head": "Kongre & kurumsal talep", "desc": "Salon + konaklama + ikram paketi", "lang": "Türkçe", "globe": "TR", "msgs": [{"who": "g", "lang": "Türkçe", "text": "Mayısta 120 kişilik iki günlük bir kongre planlıyoruz. Salon ve konaklama birlikte mümkün mü?", "gloss": "Tesisin en yüksek gelirli iş kalemi."}, {"who": "a", "lang": "Türkçe", "text": "Elbette. Yerleşkemizde <b>4 toplantı ve seminer salonu</b>, <b>62 odalık</b> konaklama kapasitesi bulunuyor; paralel oturumlu kongreler ağırlıyoruz. 120 kişilik iki günlük programınız için <b>salon, konaklama ve ikram paketini birlikte</b> kurgulayabiliriz.", "audio": "s4_a1"}, {"who": "g", "lang": "Türkçe", "text": "Teklif alabilir miyiz?"}, {"who": "a", "lang": "Türkçe", "text": "Talebinizi <b>işletme müdürlüğüne ilettim</b> ve tarihleri <b>ön blokajla</b> tuttum. Yarın sabah size ayrıntılı teklif dönülecek — ihtiyaç listenizi şimdi paylaşırsanız teklife ekliyorum.", "gloss": "Kurumsal talep mesai dışında da kayboluyor değil, blokajla duruyor.", "audio": "s4_a2", "route": ["İşletme müdürlüğüne iletildi", "Salon ön blokajı açıldı", "Teklif kuyruğuna alındı"]}]}};
 
 /* otelin imza mekânları */
-const VENUES = ["Restoran rezervasyonu", "Spa & wellness", "Havaalanı transferi", "Oda servisi", "Geç çıkış", "Etkinlik & toplantı"];
+const VENUES = ["Konaklama rezervasyonu (62 oda)", "Kapora & dekont takibi", "Kongre & 4 seminer salonu", "Yakamoz & Yamaç Restoran", "Mavi Bayraklı plaj", "Havuz & spor tesisleri", "Günübirlik giriş", "Grup / bireysel servis planı"];
 const OPEN_NIGHT = new Set();
 
 let current = 's1', playGen = 0;
@@ -336,7 +336,7 @@ async function play(k){
   const s = SCEN[k];
   buildScns(); buildVenues();
   $('#globe').textContent = s.globe;
-  $('#phstatus').textContent = 'çevrimiçi · sesli · 9 dil';
+  $('#phstatus').textContent = 'çevrimiçi · sesli · 16 dil';
   $('#replay').classList.remove('show');
   const chat = $('#chat'); chat.innerHTML='';
   await sleep(350);
