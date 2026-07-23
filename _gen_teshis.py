@@ -44,15 +44,15 @@ HOTELS = [
  ("atakosk-ankara","Ataköşk Group Hotel","Ankara","₺",63,2200,30,15,45,None),
  ("bellemond-budva","Bellemond Hotel & Residences","Bečići, Budva (Karadağ)","€",50,130,30,17,20,None),
  # --- Codex tur 3 (Grup 3 GM'ler, railway KB henüz yok → NORAIL) ---
- ("radisson-blu-kas","Radisson Blu Hotel Kaş","Kaş, Antalya","₺",50,6000,30,17,100,""),
- ("radisson-blu-cesme","Radisson Blu Resort & Spa Çeşme","Çeşme, İzmir","₺",150,5000,35,17,130,""),
- ("radisson-blu-sakarya","Radisson Blu Hotel Sakarya","Sapanca, Sakarya","₺",120,3500,30,17,70,""),
- ("park-inn-atasehir","Park Inn by Radisson İstanbul Ataşehir","İstanbul","₺",127,3000,30,17,60,""),
- ("ibis-esenyurt","ibis İstanbul Esenyurt","İstanbul","₺",156,2200,30,15,40,""),
- ("renaissance-izmir","Renaissance İzmir Hotel","İzmir","₺",180,4500,30,17,90,""),
- ("crowne-plaza-ankara","Crowne Plaza Ankara","Ankara","₺",250,4000,30,17,90,""),
- ("doubletree-izmir-airport","DoubleTree by Hilton İzmir Airport","İzmir","₺",180,3000,30,17,70,""),
- ("four-points-diyarbakir","Four Points by Sheraton Diyarbakır","Diyarbakır","₺",150,3000,30,17,60,""),
+ ("radisson-blu-kas","Radisson Blu Hotel Kaş","Kaş, Antalya","₺",50,6000,30,17,100,None),
+ ("radisson-blu-cesme","Radisson Blu Resort & Spa Çeşme","Çeşme, İzmir","₺",150,5000,35,17,130,None),
+ ("radisson-blu-sakarya","Radisson Blu Hotel Sakarya","Sapanca, Sakarya","₺",120,3500,30,17,70,None),
+ ("park-inn-atasehir","Park Inn by Radisson İstanbul Ataşehir","İstanbul","₺",127,3000,30,17,60,None),
+ ("ibis-esenyurt","ibis İstanbul Esenyurt","İstanbul","₺",156,2200,30,15,40,None),
+ ("renaissance-izmir","Renaissance İzmir Hotel","İzmir","₺",180,4500,30,17,90,None),
+ ("crowne-plaza-ankara","Crowne Plaza Ankara","Ankara","₺",250,4000,30,17,90,None),
+ ("doubletree-izmir-airport","DoubleTree by Hilton İzmir Airport","İzmir","₺",180,3000,30,17,70,None),
+ ("four-points-diyarbakir","Four Points by Sheraton Diyarbakır","Diyarbakır","₺",150,3000,30,17,60,None),
 ]
 
 CFG_RE = re.compile(r"const CFG = \{.*?\n\};", re.S)
