@@ -32,6 +32,17 @@ HOTELS = [
  ("pinea-resort","Pinea Hotel Resort & Spa","Golem, Arnavutluk","€",34,120,30,17,18,None),
  ("golf-jesolo","Golf Club Jesolo","Jesolo, İtalya","€",7,150,20,15,25,None),
  ("alicante-golf","Hotel Alicante Golf","Alicante, İspanya","€",156,160,25,15,20,None),
+ # --- Codex tur 2 ---
+ ("alila-hinu-bay","Alila Hinu Bay","Dhofar, Umman","€",112,320,30,17,55,None),
+ ("soho-house-istanbul","Soho House İstanbul","İstanbul","₺",87,8000,25,17,160,None),
+ ("kocatas-mansions","Kocatas Mansions İstanbul","İstanbul","₺",43,16000,30,17,350,None),
+ ("la-quinta-gunesli","La Quinta by Wyndham İstanbul Güneşli","İstanbul","₺",404,3000,30,17,55,None),
+ ("four-points-kagithane","Four Points by Sheraton İstanbul Kağıthane","İstanbul","₺",173,3500,30,17,65,None),
+ ("ambrosia-bodrum","Ambrosia Hotel Bodrum","Bitez, Bodrum","₺",110,5500,35,17,130,None),
+ ("trendy-lara","Trendy Lara Hotel","Antalya","₺",674,3800,25,17,100,None),
+ ("dedeman-istanbul","Dedeman İstanbul","İstanbul","₺",325,3800,30,17,70,None),
+ ("atakosk-ankara","Ataköşk Group Hotel","Ankara","₺",63,2200,30,15,45,None),
+ ("bellemond-budva","Bellemond Hotel & Residences","Bečići, Budva (Karadağ)","€",50,130,30,17,20,None),
 ]
 
 CFG_RE = re.compile(r"const CFG = \{.*?\n\};", re.S)
