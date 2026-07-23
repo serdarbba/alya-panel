@@ -83,56 +83,56 @@
     <div><div class="n serif">Alya</div><div class="s">BBA Technology</div></div>
   </div>
 
-  <div class="cap" id="cap">Kaçan gelir teşhisi</div>
+  <div class="cap" id="cap">Lost revenue diagnostic</div>
   <h1 id="title"><b>—</b></h1>
-  <p class="lede" id="lede">Doluluğu yüksek bir otelde her ay komisyon ve kaçan upsell olarak sessizce masada kalan tutar, çoğu zaman kimsenin ölçmediği yerdir. Aşağıdaki varsayımları kendi otelinizin gerçeğine çekin.</p>
+  <p class="lede" id="lede">In a high-occupancy hotel, a meaningful amount quietly slips away every month as OTA commission and missed upsell — usually where no one measures it. Adjust the assumptions below to your own hotel.</p>
 
   <div class="hero">
-    <div class="lbl">Bu ay tahmini geri kazanılabilir gelir</div>
+    <div class="lbl">Estimated recoverable revenue this month</div>
     <div class="big tnum"><span id="mainLow">—</span><span class="cur" id="cur1">₺</span> <span style="color:var(--mut);font-size:22px">–</span> <span id="mainHigh">—</span><span class="cur" id="cur2">₺</span></div>
-    <div class="rng">muhafazakâr – iyimser aralık · aylık</div>
+    <div class="rng">conservative – optimistic range · monthly</div>
     <div class="split">
-      <div><div class="v tnum" id="komVal">—</div><div class="k">geri kazanılabilir OTA komisyonu</div></div>
-      <div><div class="v tnum" id="upsVal">—</div><div class="k">kaçan upsell / ekstra satış</div></div>
+      <div><div class="v tnum" id="komVal">—</div><div class="k">recoverable OTA commission</div></div>
+      <div><div class="v tnum" id="upsVal">—</div><div class="k">missed upsell / extra sales</div></div>
     </div>
   </div>
 
   <div class="assume">
-    ⚠️ Bunlar sektör varsayımıdır, sizin gerçeğiniz değil. <b>Sizin gerçek doluluk, ADR ve komisyon rakamınızla 15 dakikada beraber gerçek sayıya çeviririz.</b>
+    ⚠️ These are industry assumptions, not your actual figures. <b>Let's turn them into your real number together in 15 minutes, using your real occupancy, ADR and commission.</b>
   </div>
 
   <div class="calc">
-    <h2>Kendi rakamınıza çekin</h2>
-    <div class="sub">Slider'ları otelinize göre oynatın; tahmin canlı güncellenir.</div>
+    <h2>Adjust to your numbers</h2>
+    <div class="sub">Move the sliders to match your hotel; the estimate updates live.</div>
 
-    <div class="row"><div class="top"><label>Oda sayısı</label><span class="val"><span id="oOda">200</span></span></div>
+    <div class="row"><div class="top"><label>Number of rooms</label><span class="val"><span id="oOda">200</span></span></div>
       <input type="range" id="sOda" min="20" max="600" step="5" value="200"></div>
-    <div class="row"><div class="top"><label>Ortalama doluluk</label><span class="val">%<span id="oDol">72</span></span></div>
+    <div class="row"><div class="top"><label>Average occupancy</label><span class="val">%<span id="oDol">72</span></span></div>
       <input type="range" id="sDol" min="30" max="95" step="1" value="72"></div>
-    <div class="row"><div class="top"><label>Ortalama gecelik oda geliri (ADR)</label><span class="val"><span id="oAdr">4.000</span> <span class="curL">₺</span></span></div>
+    <div class="row"><div class="top"><label>Average daily rate (ADR)</label><span class="val"><span id="oAdr">4.000</span> <span class="curL">₺</span></span></div>
       <input type="range" id="sAdr" min="1000" max="20000" step="100" value="4000"></div>
-    <div class="row"><div class="top"><label>Rezervasyonun OTA'dan gelen payı</label><span class="val">%<span id="oOta">30</span></span></div>
+    <div class="row"><div class="top"><label>Share of bookings from OTAs</label><span class="val">%<span id="oOta">30</span></span></div>
       <input type="range" id="sOta" min="5" max="70" step="1" value="30"></div>
-    <div class="row"><div class="top"><label>OTA komisyon oranı</label><span class="val">%<span id="oKom">17</span></span></div>
+    <div class="row"><div class="top"><label>OTA commission rate</label><span class="val">%<span id="oKom">17</span></span></div>
       <input type="range" id="sKom" min="8" max="25" step="1" value="17"></div>
   </div>
 
   <div class="cta">
-    <p>Bu bir başlangıç tahmini. <b>Gerçek rakamınızı beraber çıkaralım, 15 dakika.</b></p>
-    <a class="btn" id="ctaBtn" href="#">Gerçek rakamımı hesaplayalım</a>
+    <p>This is a starting estimate. <b>Let's work out your real number together — 15 minutes.</b></p>
+    <a class="btn" id="ctaBtn" href="#">Calculate my real number</a>
     <div class="btnrow">
-      <a class="btn ghost" id="talkBtn" href="#">Alya ile konuş</a>
-      <a class="btn ghost" id="cockpitBtn" href="#">Yönetici kokpitini gör</a>
+      <a class="btn ghost" id="talkBtn" href="#">Talk to Alya</a>
+      <a class="btn ghost" id="cockpitBtn" href="#">View manager cockpit</a>
     </div>
   </div>
 
   <div class="fomo">
     <div class="d"></div>
-    <div><b>Karekodla açılan bir asistan gibi görünür</b>, ama arkasında sisteminize entegre olup rezervasyon, upsell ve ekstra satışı folio'ya işleyen, gelirini ölçen bir katman vardır. Urla'da bir otelde bunu şu an gerçek gelirle ölçmeye başladık.</div>
+    <div><b>It looks like a simple QR-opened assistant</b>, but behind it sits a layer that plugs into your systems, posts bookings, upsells and extra sales to the folio, and measures the revenue it generates. We've just started measuring this with real revenue at a hotel in Türkiye.</div>
   </div>
 
   <div class="foot">
-    Tahmin yalnızca girdiğiniz varsayımlarla hesaplanır, hiçbir veri saklanmaz.<br>
+    The estimate is computed only from the assumptions you enter; no data is stored.<br>
     <b>Alya</b> · BBA Technology · İzmir
   </div>
 </div>
@@ -140,9 +140,9 @@
 <script>
 /* ===== OTELE ÖZEL CONFIG — motor her otel için bunu doldurur ===== */
 const CFG = {
-  hotel:  "Kocatas Mansions İstanbul",
+  hotel:  "Kocataş Mansions Istanbul",
   gm:     "",
-  city:   "İstanbul",
+  city:   "Istanbul",
   cur:    "₺",
   oda:    43,
   dol:    72,
@@ -151,7 +151,7 @@ const CFG = {
   kom:    17,
   upsellPerOda: 350,
   recovery: 0.35,
-  meeting: "https://wa.me/905344318734?text=Kocatas%20Mansions%20%C4%B0stanbul%20i%C3%A7in%20ger%C3%A7ek%20rakam%C4%B1%2015%20dakikada%20konu%C5%9Fmak%20istiyorum",
+  meeting: "https://wa.me/905344318734?text=I%27d%20like%20to%20work%20out%20the%20real%20number%20for%20Kocata%C5%9F%20Mansions%20Istanbul%20in%2015%20minutes",
   talk:    "https://alya-konsiyerj.up.railway.app/?hotel=kocatas-mansions",
   cockpit: "#kokpit"
 };
@@ -161,13 +161,12 @@ const fmt=n=>Math.round(n).toLocaleString('tr-TR');
 const cs=CFG.cur;
 
 /* başlık + config uygula */
-$('#title').innerHTML = `${CFG.hotel}: her ay <b>tahmini masada kalan gelir</b>`;
-document.title = `Alya · ${CFG.hotel} — kaçan gelir teşhisi`;
+$('#title').innerHTML = `${CFG.hotel}: <b>revenue left on the table</b> each month`;
+document.title = `Alya · ${CFG.hotel} — lost revenue diagnostic`;
 $('#cur1').textContent=cs; $('#cur2').textContent=cs;
 document.querySelectorAll('.curL').forEach(e=>e.textContent=cs);
 ['ctaBtn'].forEach(id=>$('#'+id).href=CFG.meeting);
-if(CFG.talk){$('#talkBtn').href=CFG.talk;}else{$('#talkBtn').style.display='none';}
-$('#cockpitBtn').style.display='none';  // kokpit ekranı ikinci aşamada
+$('#talkBtn').href=CFG.talk; $('#cockpitBtn').href=CFG.cockpit;
 
 /* sliderları config'e set et */
 const S={oda:['sOda','oOda'],dol:['sDol','oDol'],adr:['sAdr','oAdr'],ota:['sOta','oOta'],kom:['sKom','oKom']};
@@ -197,6 +196,6 @@ calc();
 ['pointerdown','keydown','touchstart'].forEach(ev=>document.addEventListener(ev,function once(){
   document.removeEventListener(ev,once);
   try{const k='v_'+CFG.hotel;if(!sessionStorage.getItem(k)){sessionStorage.setItem(k,'1');
-    fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'💰 '+CFG.hotel+' — kaçan gelir teşhisi açıldı'});}}catch(e){}
+    fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'💰 '+CFG.hotel+' — lost revenue diagnostic opened'});}}catch(e){}
 },{once:true}));
 </script>
