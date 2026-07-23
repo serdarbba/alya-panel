@@ -16,10 +16,10 @@ RAIL = "https://alya-konsiyerj.up.railway.app/?hotel="
 HOTELS = [
  ("grand-hyatt-istanbul","Grand Hyatt İstanbul","İstanbul","₺",360,7000,30,17,130,"grand-hyatt-istanbul"),
  ("westin-nisantasi","The Westin İstanbul Nişantaşı","İstanbul","₺",150,6000,30,17,110,None),
- ("mgallery-bodrum","MGallery The Bodrum Yalıkavak","Bodrum","₺",97,9000,35,17,180,None),
+ ("mgallery-bodrum","MGallery The Bodrum Yalıkavak","Bodrum","₺",97,9000,35,17,180,"mgallery-bodrum-yalikavak"),
  ("allium-bodrum","Allium Bodrum Resort & Spa","Bodrum","₺",38,13000,35,17,280,None),
  ("radisson-president-oldtown","Radisson President Old Town İstanbul","İstanbul","₺",201,4500,35,17,90,None),
- ("elite-world-grand","Elite World Grand İstanbul","İstanbul","₺",250,3500,30,17,75,None),
+ ("elite-world-grand","Elite World Grand İstanbul","İstanbul","₺",250,3500,30,17,75,"elite-world-hotels"),
  ("swissotel-tbilisi","Swissôtel Tbilisi","Tiflis","€",130,170,30,17,12,None),
  ("doubletree-canakkale","DoubleTree by Hilton Çanakkale","Çanakkale","₺",155,3000,30,17,65,None),
  ("hampton-arnavutkoy","Hampton by Hilton İstanbul Arnavutköy","İstanbul","₺",150,2800,30,15,45,None),
@@ -51,7 +51,7 @@ def esc(s): return s.replace('"', '\\"')
 
 made = []
 for slug,name,city,cur,oda,adr,ota,kom,ups,rail in HOTELS:
-    talk = (RAIL + rail) if rail else ""  # railway içeriği yoksa "Alya ile konuş" gizlenir (yanlış otel gösterme)
+    talk = RAIL + (rail if rail else slug)  # railway'de her otel var; rail override yoksa kendi slug'ı
     cfg = ('const CFG = {\n'
         f'  hotel:  "{esc(name)}",\n'
         f'  gm:     "",\n'
