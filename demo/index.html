@@ -59,6 +59,7 @@
   var P=new URLSearchParams(location.search);
   var NAME=(P.get('ad')||'İşletmeniz').trim();
   var TUR=(P.get('tur')||'klinik').trim().toLowerCase();
+  var ADRES=(P.get('adres')||'').trim(); // opsiyonel: ?adres=... verilirse onu gösterir
 
   // ---- Sektör senaryoları ----
   var S={
@@ -74,7 +75,11 @@
         {k:['beyazlat','ağart'],a:'Diş beyazlatma genelde tek seansta tamamlanır. Size uygun bir randevu ayarlayayım mı?',c:['Randevu almak istiyorum']},
         {k:['fiyat','ücret','ne kadar','kaç para'],a:'Fiyat tedavi planına göre değişir; net tutarı muayenede hekimimiz paylaşır. Önce kısa bir muayene randevusu oluşturayım mı?',c:['Randevu almak istiyorum']},
         {k:['ağrı','acil','acıyor','sızlı'],a:'Geçmiş olsun. 🙏 Sizi en yakın uygun saate alalım — bugün mü, yarın sabah mı uygun?',c:['Bugün','Yarın sabah']},
-        {k:['saat','açık','çalışma'],a:'Randevuyla çalışıyoruz; size uygun gün ve saati birlikte belirleyelim. Hangi gün müsaitsiniz?',c:['Randevu almak istiyorum']}
+        {k:['saat','açık','çalışma'],a:'Randevuyla çalışıyoruz; size uygun gün ve saati birlikte belirleyelim. Hangi gün müsaitsiniz?',c:['Randevu almak istiyorum']},
+        {k:['ilk muayene','danışma','ücretsiz mi','ilk kontrol','muayene ücret'],a:'İlk muayenede durumunuzu değerlendirip size özel bir tedavi planı çıkarıyoruz. Detayları hekimimiz görüşmede netleştirir. Size bir muayene randevusu oluşturayım mı?',c:['Randevu almak istiyorum']},
+        {k:['çocuk','pedodonti','çocuğum'],a:'Çocuk diş sağlığı (pedodonti) hizmetimiz var 😊 Çocuğunuz için de randevu oluşturabilirim. Hangi gün uygundur?',c:['Randevu almak istiyorum']},
+        {k:['sigorta','sgk','anlaşmalı','özel sigorta'],a:'Sigorta ve ödeme detaylarını görüşmede netleştiriyoruz. Dilerseniz önce kısa bir muayene randevusu oluşturayım.',c:['Randevu almak istiyorum']},
+        {k:['kaç seans','ne kadar sürer','süre','kaç gün'],a:'Tedavi süresi ve seans sayısı ağız yapınıza göre muayenede belirlenir. Net bir plan için size randevu oluşturayım mı?',c:['Randevu almak istiyorum']}
       ]
     },
     kuafor:{
@@ -158,11 +163,22 @@
     if(state==='await_when'){ book.when=text; state='await_name'; setChips([]);
       return 'Harika! '+text+' için yerinizi ayırdım. '+cfg.book.emo+'\nOnaylamak adına adınızı yazar mısınız?'; }
     if(state==='await_name'){ book.name=text.replace(/\s+/g,' ').trim(); state='done';
-      setChips(['Yeni talep','Teşekkürler']);
-      return 'Teşekkürler '+book.name+'! ✅\n'+cfg.book.label+' onaylandı:\n📅 '+book.when+'\n'+cfg.book.emo+' '+NAME+'\n\nSizi bekliyoruz. Değişiklik gerekirse buradan yazmanız yeterli — 7/24 buradayım.'; }
+      setChips(['Ön ödeme linki','Adres / konum','Teşekkürler']);
+      return 'Teşekkürler '+book.name+'! ✅\n'+cfg.book.label+' onaylandı:\n📅 '+book.when+'\n'+cfg.book.emo+' '+NAME+(ADRES?'\n📍 '+ADRES:'')+'\n\nYerinizi garantilemek isterseniz güvenli bir ön ödeme linki gönderebilirim 💳 Değişiklik için buradan yazmanız yeterli — 7/24 buradayım.'; }
     function has(){ for(var i=0;i<arguments.length;i++){ if(q.indexOf(arguments[i])>=0) return true; } return false; }
     if(has.apply(null,cfg.book.trig)){ state='await_when'; setChips(cfg.book.slots); return cfg.book.ask+' Örneğin: '+cfg.book.slots.join(', ')+'.'; }
     for(var i=0;i<cfg.rules.length;i++){ if(has.apply(null,cfg.rules[i].k)){ state='idle'; setChips(cfg.rules[i].c||cfg.chips); return cfg.rules[i].a; } }
+    // --- klasik sorular: HER durumda doğru cevap (randevu sonrası dahil) ---
+    if(has('ön ödeme','ödeme linki','ödeme yap','link gönder','kapora','kaparo')){ setChips(cfg.chips);
+      return '💳 Güvenli ödeme linkiniz hazır:\n🔗 pay.bbateknoloji.com/odeme\n\nKartla güvenle ödeyebilirsiniz; ödeme tamamlanınca kaydınız otomatik kesinleşir ve onay mesajı gönderilir.'; }
+    if(has('öde','ödeme','nakit','kart','kredi','taksit','havale','iban','para')){ setChips(cfg.chips);
+      return 'Elbette 💳 Nakit, kredi kartı ve güvenli online ödeme kabul ediyoruz. Dilerseniz hemen bir ödeme/ön ödeme linki gönderebilirim — yerinizi anında garantiler, taksit de mümkün.'; }
+    if(has('adres','yol','nerede','konum','ulaşım','harita','otopark','park','tarif')){ setChips(cfg.chips);
+      return (ADRES?'📍 Adresimiz: '+ADRES+'. ':'📍 Şehir merkezinde, kolay ulaşılır bir konumdayız, otoparkımız mevcut. ')+'Yol tarifi ve konumu hemen paylaşıyorum 📎'; }
+    if(has('iptal','ertele','değiştir','vazgeç')){ setChips(cfg.chips);
+      return 'Tabii, hiç sorun değil 🙂 buradan yazmanız yeterli, kaydınızı hemen güncellerim.'; }
+    if(has('telefon','numara','iletişim')){ setChips(cfg.chips);
+      return 'Buradan 7/24 yazabilirsiniz, en hızlı yanıtı buradan alırsınız 📱'; }
     if(has('merhaba','selam','iyi günler','günaydın','yeni talep')){ state='idle'; setChips(cfg.chips);
       return 'Merhaba, hoş geldiniz! 😊 Size nasıl yardımcı olabilirim?'; }
     if(has('teşekkür','sağ ol','sagol','eyvallah')){ return 'Rica ederim, her zaman buradayım. 😊 '+NAME+' olarak iyi günler dileriz.'; }
