@@ -45,7 +45,7 @@
     <div class="who"><b id="bizname">İşletme</b><span id="status">çevrimiçi</span></div>
     <div class="ico">📞</div><div class="ico">⋮</div>
   </div>
-  <div class="demoband">BBA Teknoloji tanıtım demosu · örnek yanıtlar</div>
+  <div class="demoband">BBA Teknoloji tanıtım demosu · gerçek yapay zekâ, örnek işletme bilgileriyle</div>
   <div class="chat" id="chat"></div>
   <div class="chips" id="chips"></div>
   <form class="bar" id="bar" autocomplete="off">
@@ -185,7 +185,40 @@
     state='idle'; setChips(cfg.chips);
     return 'Bunu ekibimize iletebilirim. 🙂 '+cfg.chips.slice(0,3).join(', ')+' gibi konularda hemen yardımcı olabilirim — hangisini istersiniz?';
   }
-  function handle(text){ text=(text||'').trim(); if(!text) return; bubble(text,'out'); var r=reply(text); botSay(r, 800+Math.min(text.length*12,700)); }
+  // ---- GERÇEK ASİSTAN ----------------------------------------------------
+  // 29 Tem 2026: bu demo eskiden yalnız yukarıdaki anahtar kelime kurallarıyla
+  // çalışıyordu; listede olmayan bir soru gelince "ekibimize iletebilirim"
+  // deyip duruyordu ve satış orada bitiyordu. Artık mesaj gerçekten modele
+  // gidiyor. Kurallar SİLİNMEDİ: ağ koparsa ya da uç nokta yanıt vermezse
+  // demo boş kalmasın diye yedek olarak duruyor.
+  var API='https://bbateknoloji.com/api/demo';
+  var HIST=[];           // [{role:'user'|'model', text:''}]
+  var AI=true;           // ilk hata sonrası yedeğe düşer
+
+  function askAI(text){
+    return fetch(API,{ method:'POST', headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({ sektor:TUR, ad:NAME, messages:HIST.concat([{role:'user',text:text}]) })
+    }).then(function(r){ if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(function(d){ if(!d||!d.reply) throw new Error('bos'); return d.reply; });
+  }
+
+  function handle(text){
+    text=(text||'').trim(); if(!text) return;
+    bubble(text,'out');
+    if(!AI){ var r=reply(text); botSay(r, 700+Math.min(text.length*12,600)); return; }
+    typing(true);
+    var t0=Date.now();
+    askAI(text).then(function(ans){
+      HIST.push({role:'user',text:text}); HIST.push({role:'model',text:ans});
+      if(HIST.length>14) HIST=HIST.slice(-14);
+      // Yanıt çok hızlı gelirse insan gibi durmuyor; en az yarım saniye yazsın.
+      setTimeout(function(){ typing(false); bubble(ans,'in'); setChips(cfg.chips); },
+                 Math.max(0, 500-(Date.now()-t0)));
+    }).catch(function(){
+      AI=false; typing(false);
+      var r=reply(text); botSay(r, 400);
+    });
+  }
   bar.addEventListener('submit',function(e){ e.preventDefault(); var v=inp.value; inp.value=''; handle(v); });
 
   setChips(cfg.chips);
