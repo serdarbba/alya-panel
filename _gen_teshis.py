@@ -73,7 +73,7 @@ for slug,name,city,cur,oda,adr,ota,kom,ups,rail in HOTELS:
         f'  ota:    {ota},\n'
         f'  kom:    {kom},\n'
         f'  upsellPerOda: {ups},\n'
-        f'  recovery: 0.35,\n'
+        f'  recovery: 0.20,\n'
         f'  meeting: "{wa(name)}",\n'
         f'  talk:    "{talk}",\n'
         f'  cockpit: "#kokpit"\n'
