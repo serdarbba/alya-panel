@@ -118,6 +118,18 @@
         {k:['fiyat','ücret','ne kadar','kaç para'],a:'Fiyat damacana ve abonelik seçeneğine göre değişir. Kaç damacana ve hangi sıklıkta istersiniz, net fiyat vereyim.',c:['Su siparişi vermek istiyorum']}
       ]
     },
+    acente:{
+      open:'tur ve paket sorularınızı yanıtlayabilir, rezervasyonunuzu alabilirim',
+      chips:['Yurt dışı turlar','Yurt içi turlar','Otel + uçak paketi','Taksit var mı'],
+      book:{trig:['rezervasyon','tur','gitmek','tatil','yer ayır','müsait'], slots:['Eylül','Ekim','Kasım'],
+            ask:'Tabii! ✈️ Nereye, kaç kişi ve hangi tarih aralığı için bakalım?', label:'Talebiniz', emo:'✈️'},
+      rules:[
+        {k:['yurt dışı','yurtdışı','avrupa','vize','schengen'],a:'Yurt dışı turlarımızda uçak, otel ve transfer dahil paketlerimiz var; vize dosyanızda da yardımcı oluyoruz. Nereyi düşünüyorsunuz?',c:['Yurt dışı turlar']},
+        {k:['yurt içi','yurtiçi','kapadokya','karadeniz','ege'],a:'Yurt içi turlarımızda ulaşım, konaklama ve kahvaltı dahil. Hangi bölge ve hangi tarihler için bakalım?',c:['Yurt içi turlar']},
+        {k:['uçak','otel','paket','bilet'],a:'Otel ve uçağı ayrı paketleyebiliyoruz. Nereye, kaç kişi, hangi tarihler — size özel teklif çıkarayım.',c:['Otel + uçak paketi']},
+        {k:['taksit','ödeme','kapora','fiyat','ne kadar'],a:'Kredi kartına taksit yapıyoruz, kapora ile yer tutulabiliyor. Tarih ve kişi sayısını yazarsanız net tutarı ileteyim.',c:['Taksit var mı']}
+      ]
+    },
     otel:{
       open:'rezervasyon alabilir, oda ve tesis sorularınızı yanıtlayabilirim',
       chips:['Rezervasyon yapmak istiyorum','Odalar','Spa & Havuz','Transfer'],
