@@ -203,7 +203,7 @@ calc();
   if(!slug||slug==='alya-panel')return;
   var k='bbaopen_'+slug, gonder=function(){
     try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');
-      navigator.sendBeacon('https://alya-konsiyerj.up.railway.app/api/demo-open?slug='+encodeURIComponent(slug));
+      navigator.sendBeacon('https://bba-demo-olcum.serdarbba.workers.dev/open?slug='+encodeURIComponent(slug));
     }catch(e){}};
   ['pointerdown','keydown','touchstart','scroll'].forEach(function(ev){
     document.addEventListener(ev,function o(){document.removeEventListener(ev,o);gonder();},{once:true,passive:true});});
