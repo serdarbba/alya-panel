@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ferdi Baba — WhatsApp'ta rezervasyon</title>
+<meta name="description" content="Ferdi Baba için hazırlanmış canlı örnek: misafir yazdığı yerde rezervasyonunu tamamlıyor.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --bg:#0a1014; --card:#111b21; --line:#22333c; --txt:#e9f2ef; --mut:#8fa6ae;
+    --yesil:#25d366; --alt:#075e54; --kirmizi:#e0544b; --altin:#d9a441;
+  }
+  body{background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.6;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:880px;margin:0 auto;padding:0 18px}
+
+  header{padding:26px 0 18px;border-bottom:1px solid var(--line);text-align:center}
+  .kicker{font-size:11.5px;letter-spacing:2.4px;text-transform:uppercase;color:var(--altin);font-weight:700}
+  h1{font-size:clamp(23px,5.4vw,34px);line-height:1.18;letter-spacing:-.7px;font-weight:800;margin-top:10px}
+  header p{color:#a9bdc4;margin-top:10px;font-size:15px;max-width:52ch;margin-left:auto;margin-right:auto}
+
+  section{padding:26px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:14px}
+
+  .ik{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:700px){.ik{grid-template-columns:1fr}}
+  .kut{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .kut .bas{padding:11px 14px;font-size:13px;font-weight:700;border-bottom:1px solid var(--line)}
+  .kut.simdi .bas{color:var(--kirmizi)}
+  .kut.bizde .bas{color:var(--yesil)}
+  .kut .ic{padding:13px 14px;font-size:13.5px;color:#b9cbd2;line-height:1.62}
+  .kut .ic b{color:var(--txt)}
+
+  /* telefon */
+  .tel{max-width:400px;margin:0 auto;background:var(--card);border:1px solid var(--line);
+    border-radius:20px;overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.5)}
+  .tbar{background:var(--alt);padding:11px 15px;display:flex;align-items:center;gap:11px}
+  .av{width:36px;height:36px;border-radius:50%;background:var(--altin);color:#20160a;
+    display:grid;place-items:center;font-weight:800;font-size:15px;flex-shrink:0}
+  .tbar .ad{font-weight:700;font-size:14.5px;line-height:1.25}
+  .tbar .dr{font-size:11.5px;color:#a9d6cd}
+  .sohbet{padding:15px 13px;min-height:430px;background:
+    linear-gradient(rgba(10,16,20,.93),rgba(10,16,20,.93)),
+    repeating-linear-gradient(45deg,#15222a 0 12px,#121e25 12px 24px)}
+  .m{max-width:83%;padding:8px 11px;border-radius:9px;font-size:13.8px;line-height:1.55;
+    margin-bottom:9px;opacity:0;transform:translateY(8px);animation:gel .32s forwards;white-space:pre-line}
+  @keyframes gel{to{opacity:1;transform:none}}
+  .g{background:#1f2c33;border-top-left-radius:2px}
+  .a{background:#075e54;margin-left:auto;border-top-right-radius:2px}
+  .m .sa{display:block;font-size:10.5px;color:#9db3ba;text-align:right;margin-top:3px}
+  .yaz{font-size:12.5px;color:var(--mut);padding:2px 4px 10px;font-style:italic}
+
+  .oz{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:6px}
+  .o{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:13px 14px}
+  .o .t{font-size:14px;font-weight:700}
+  .o .d{font-size:12.5px;color:#a3b8bf;margin-top:4px;line-height:1.5}
+
+  .sube{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .sube span{background:#152229;border:1px solid var(--line);border-radius:20px;
+    padding:5px 12px;font-size:12.5px;color:#b9cbd2}
+
+
+
+
+  .hero{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:22px 0 4px}
+  .hi{background:var(--card);padding:20px 16px}
+  .hi .hn{font-size:44px;font-weight:800;letter-spacing:-2.4px;line-height:.95}
+  .hi .hl{font-size:12.5px;color:#a9bdc4;margin-top:9px;line-height:1.45;font-weight:600}
+  .hi .hl i{font-style:normal;font-weight:400;color:var(--mut);font-size:11.5px}
+  .hi.vur{background:linear-gradient(165deg,#241316,#151d22 70%)}
+  .hi.vur .hn{color:var(--kirmizi)}
+  .hi.iyi{background:linear-gradient(165deg,#0f2419,#141f22 70%)}
+  .hi.iyi .hn{color:var(--yesil)}
+  @media(max-width:760px){.hero{grid-template-columns:1fr 1fr}.hi .hn{font-size:36px}}
+
+  .bul{display:grid;gap:12px}
+  .bl{display:grid;grid-template-columns:34px 1fr;gap:14px;background:var(--card);
+    border:1px solid var(--line);border-left:3px solid var(--kirmizi);
+    border-radius:10px;padding:15px 16px}
+  .bl .no{font-size:17px;font-weight:800;color:var(--kirmizi);letter-spacing:-.5px}
+  .bt{font-size:15.5px;font-weight:750;line-height:1.3}
+  .bd{font-size:13.5px;color:#a9bdc4;line-height:1.6;margin-top:5px}
+  .altnot{font-size:12.5px;color:var(--mut);margin-top:12px;font-style:italic}
+
+
+
+  .rezc{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:var(--card)}
+  .rezbar{display:flex;align-items:center;gap:7px;padding:10px 14px;background:#0e171d;
+    border-bottom:1px solid var(--line)}
+  .rezbar .nk{width:10px;height:10px;border-radius:50%;background:#2a3b45}
+  .rezbar .url{margin-left:10px;font-size:12px;color:var(--mut);
+    font-family:ui-monospace,Menlo,Consolas,monospace}
+  .rezc iframe{width:100%;height:760px;border:0;display:block;background:#0b1216}
+  @media(max-width:560px){.rezc iframe{height:700px}}
+
+  .plan{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .pbas{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;
+    padding:12px 15px;border-bottom:1px solid var(--line);font-size:13px;color:#b9cbd2}
+  .lgn{display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--mut)}
+  .lg{width:10px;height:10px;border-radius:3px;display:inline-block;margin-left:6px}
+  .lg.mus{background:#1f6f4a}.lg.dol{background:#2b3a44}.lg.sec{background:var(--yesil)}
+  .saha{position:relative;height:250px;margin:14px 15px;border-radius:9px;
+    background:linear-gradient(180deg,#0e2a33 0%,#12242c 42%,#16232a 100%);
+    border:1px solid var(--line);overflow:hidden}
+  .deniz{position:absolute;top:9px;left:0;right:0;text-align:center;font-size:10.5px;
+    letter-spacing:5px;color:#3f6d7d;font-weight:700}
+  .ms{position:absolute;border-radius:7px;display:grid;place-items:center;cursor:pointer;
+    font-size:11px;font-weight:700;color:#cfe6dd;transition:.16s;user-select:none}
+  .ms.m{background:#1f6f4a;border:1px solid #2b8d60}
+  .ms.d{background:#2b3a44;border:1px solid #35464f;color:#6d838d;cursor:default}
+  .ms.m:hover{background:#25855a;transform:translateY(-1px)}
+  .ms.s{background:var(--yesil);color:#06231a;border-color:var(--yesil);
+    box-shadow:0 0 0 3px rgba(37,211,102,.22)}
+  .palt{padding:0 15px 14px;font-size:13.5px;color:#a9bdc4;min-height:22px}
+  .palt b{color:var(--yesil)}
+
+  .pnl{background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .pust{display:flex;justify-content:space-between;align-items:center;padding:13px 15px;
+    border-bottom:1px solid var(--line)}
+  .pb{font-weight:800;font-size:15px;letter-spacing:-.3px}
+  .pk{font-size:12px;color:var(--mut);margin-top:1px}
+  .pgun{font-size:12px;color:var(--mut)}
+  .ozet{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line)}
+  .oz1{background:var(--card);padding:13px 15px}
+  .oz1 .s{font-size:21px;font-weight:800;letter-spacing:-.6px}
+  .oz1 .l{font-size:11.5px;color:var(--mut);margin-top:2px}
+  .oz1.iy .s{color:var(--yesil)}
+  .oz1.kt .s{color:#e0a44b}
+  .pt{width:100%;border-collapse:collapse;font-size:13px}
+  .pt th{text-align:left;font-size:10.5px;letter-spacing:.9px;text-transform:uppercase;
+    color:var(--mut);font-weight:700;padding:11px 15px 7px;border-bottom:1px solid var(--line)}
+  .pt td{padding:9px 15px;border-bottom:1px solid #182630;color:#c3d4da}
+  .pt td:first-child{font-weight:700;color:var(--txt)}
+  .pt .iyi{color:var(--yesil);font-weight:700}
+  .pt tr.bek td{color:var(--mut);font-style:italic}
+  .dil{padding:12px 15px;display:flex;flex-wrap:wrap;gap:7px;align-items:center;
+    border-top:1px solid var(--line)}
+  .dt{font-size:10.5px;letter-spacing:.9px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .db{background:#152229;border:1px solid var(--line);border-radius:20px;padding:4px 11px;
+    font-size:12px;color:#b9cbd2}
+  @media(max-width:640px){.ozet{grid-template-columns:repeat(2,1fr)}
+    .pt th:nth-child(5),.pt td:nth-child(5){display:none}}
+
+
+  .mod{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:13px}
+  .md{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:16px 17px}
+  .md .mn{font-size:11px;font-weight:800;letter-spacing:1.4px;color:var(--altin)}
+  .md .mt{font-size:16px;font-weight:750;line-height:1.28;margin-top:7px;letter-spacing:-.3px}
+  .md .mdx{font-size:13.3px;color:#a3b8bf;line-height:1.6;margin-top:7px}
+  .md.dbi{border-color:#3d5a3f;background:linear-gradient(160deg,#10201a,#111b21 60%)}
+  .md.dbi .mn{color:var(--yesil)}
+
+  .son{padding:26px 0 34px;text-align:center}
+  .son h3{font-size:clamp(19px,4.2vw,25px);font-weight:800;letter-spacing:-.5px;line-height:1.3}
+  .son p{color:#a9bdc4;margin-top:10px;font-size:14.5px;max-width:50ch;margin-left:auto;margin-right:auto}
+
+  .kunye{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:20px}
+  .kunye span{background:#152229;border:1px solid var(--line);border-radius:20px;
+    padding:6px 14px;font-size:12.5px;color:#b9cbd2;font-weight:600}
+
+  .imza{margin-top:18px;font-size:13.5px;color:var(--mut)}
+  .imza b{color:var(--altin)}
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <div class="kicker">Bilsev Group için hazırlandı · 22 Eylül 2026</div>
+  <h1>Misafir size nasıl ulaşıyor?<br>Bugün baktık.</h1>
+  <p>On bir mekânınızın misafir girişini inceledik. Aşağıdakiler bulduklarımız — ve aynı
+  akışın nasıl sonuçlanabileceği.</p>
+</header>
+
+
+<div class="hero">
+  <div class="hi"><div class="hn">11</div><div class="hl">mekân<br><i>6 Ferdi Baba · 4 Baba Pizza · Fabrice</i></div></div>
+  <div class="hi"><div class="hn">10</div><div class="hl">ayrı telefon numarası<br><i>misafir hangisini arayacağını kendi seçiyor</i></div></div>
+  <div class="hi vur"><div class="hn">0</div><div class="hl">online rezervasyon<br><i>web, WhatsApp, Instagram — hiçbirinde yok</i></div></div>
+  <div class="hi iyi"><div class="hn">1</div><div class="hl">hat yeterli<br><i>on bir mekân, tek numara, tek panel</i></div></div>
+</div>
+
+<section>
+  <h2>Bulgular</h2>
+  <div class="bul">
+    <div class="bl"><div class="no">01</div><div>
+      <div class="bt">WhatsApp hattı rezervasyon almıyor</div>
+      <div class="bd">“MarinAlaçatı açık mı?” sorusuna gelen cevap altı şubenin telefon
+      listesi oldu. Saat söylenmedi, masa durumu verilmedi, rezervasyon alınmadı. Misafir
+      yazdığı yerden telefona yönlendirildi.</div></div></div>
+
+    <div class="bl"><div class="no">02</div><div>
+      <div class="bt">Web sitesinde online rezervasyon yok</div>
+      <div class="bd">ferdibaba.com.tr üzerinde rezervasyon formu, takvim ya da müsaitlik
+      görünümü bulunmuyor. Sitede on ayrı telefon numarası listeleniyor; misafir hangisini
+      arayacağını kendisi seçiyor. Online sipariş de yok.</div></div></div>
+
+    <div class="bl"><div class="no">03</div><div>
+      <div class="bt">Yani misafir girişinin tamamı telefona bağlı</div>
+      <div class="bd">Mandarin Oriental Bodrum ve İstinyePark İzmir’de şubesi olan, Dubai’ye
+      açılan bir grupta misafirin tek dijital yolu yok. Servis saatinde çalan telefona kim
+      bakarsa rezervasyon o kadar alınıyor.</div></div></div>
+  </div>
+  <p class="altnot">Bu üç madde dışarıdan, herhangi bir misafirin görebileceği şekilde tespit
+  edildi. Rakam ya da iç veri kullanılmadı.</p>
+</section>
+
+<section>
+  <h2>Aynı soru, iki farklı son</h2>
+  <div class="ik">
+    <div class="kut simdi">
+      <div class="bas">Şu an — misafir telefona dönüyor</div>
+      <div class="ic">Misafir “MarinAlaçatı açık mı?” diye yazıyor.<br><br>
+      Cevap: <b>“Hizmet vermeye devam etmektedir. Detaylı bilgi için +90 530 568 60 34
+      numaralı telefondan şubemizle iletişime geçebilirsiniz.”</b><br><br>
+      Soru cevaplandı, iş bitmedi. Saat bilinmiyor, masa durumu bilinmiyor, rezervasyon
+      alınmadı. Misafir aramak zorunda — ve akşam saatinde çoğu aramıyor.</div>
+    </div>
+    <div class="kut bizde">
+      <div class="bas">Alya ile — rezervasyon hatta kapanıyor</div>
+      <div class="ic">Aynı soru geliyor. Alya saati söylüyor, masa durumunu kontrol ediyor,
+      kişi sayısını ve saati alıyor, <b>rezervasyonu tamamlıyor</b> ve şubeye bildiriyor.<br><br>
+      Misafir hiçbir yere yönlendirilmiyor. Telefon çalmıyor, personel masadan kalkmıyor,
+      rezervasyon kaydı kendiliğinden düşüyor.</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <h2>Canlı örnek</h2>
+  <div class="tel">
+    <div class="tbar">
+      <div class="av">FB</div>
+      <div><div class="ad">Ferdi Baba</div><div class="dr">çevrimiçi</div></div>
+    </div>
+    <div class="sohbet" id="s"></div>
+  </div>
+</section>
+
+
+<section>
+  <h2>Masa planı — misafir masasını kendi seçiyor</h2>
+  <p style="color:#a9bdc4;font-size:14.5px;margin-bottom:14px;max-width:60ch">
+  Aşağıdaki plan çalışıyor: dokunun. Dijital ikiz kurulduğunda misafir “teras mı iç mekân mı”
+  sorusuna cevap vermez — masasını görerek seçer.</p>
+
+  <div class="plan">
+    <div class="pbas">
+      <div><b>MarinAlaçatı</b> · marina cephesi teras</div>
+      <div class="lgn"><span class="lg mus"></span>müsait <span class="lg dol"></span>dolu
+        <span class="lg sec"></span>seçili</div>
+    </div>
+    <div class="saha" id="saha">
+      <div class="deniz">M A R İ N A</div>
+    </div>
+    <div class="palt" id="palt">Bir masaya dokunun.</div>
+  </div>
+</section>
+
+<section>
+  <h2>Bu konuşmada olanlar</h2>
+  <div class="oz">
+    <div class="o"><div class="t">Şube seçimi</div>
+      <div class="d">Altı şube arasından misafirin sorduğu şube tanındı, karışmadı.</div></div>
+    <div class="o"><div class="t">Saat ve müsaitlik</div>
+      <div class="d">“Açık mı” sorusu numara ile değil, gerçek cevapla karşılandı.</div></div>
+    <div class="o"><div class="t">Rezervasyon</div>
+      <div class="d">Kişi sayısı, saat ve isim alındı; kayıt hattın içinde tamamlandı.</div></div>
+    <div class="o"><div class="t">Özel not</div>
+      <div class="d">Deniz ürünü alerjisi mutfağa not olarak iletildi.</div></div>
+    <div class="o"><div class="t">Yabancı misafir</div>
+      <div class="d">Misafir hangi dilde yazarsa o dilde karşılanır.</div></div>
+    <div class="o"><div class="t">Şubeye bildirim</div>
+      <div class="d">Rezervasyon anında ilgili şubenin ekranına düşer.</div></div>
+  </div>
+  <div class="sube">
+    <span>Alaçatı Köyiçi</span><span>Çeşme Marina</span><span>MarinAlaçatı</span>
+    <span>Mandarin Bodrum</span><span>İstinyePark İzmir</span><span>Hilltown Karşıyaka</span>
+  </div>
+</section>
+
+
+
+<section>
+  <h2>Rezervasyon sayfası — çalışıyor, deneyin</h2>
+  <p style="color:#a9bdc4;font-size:14.5px;margin-bottom:14px;max-width:62ch">
+  Sitenizde bugün olmayan sayfa. Misafir şubeyi, tarihi, kişi sayısını ve masasını seçip
+  rezervasyonunu bitiriyor. <b style="color:#d9a441">Aşağıdaki form gerçekten çalışıyor</b> —
+  sonuna kadar gidebilirsiniz. Komisyon yok, aracı platform yok, veri sizde kalıyor.</p>
+
+  <div class="rezc">
+    <div class="rezbar"><span class="nk"></span><span class="nk"></span><span class="nk"></span>
+      <span class="url">ferdibaba.com.tr/rezervasyon</span></div>
+    <iframe src="rezervasyon.html" title="Ferdi Baba rezervasyon" loading="lazy"></iframe>
+  </div>
+</section>
+
+<section>
+  <h2>Yönetimin gördüğü ekran</h2>
+  <p style="color:#a9bdc4;font-size:14px;margin-bottom:14px">Grup düzeyinde tek panel: hangi
+  mekân, kaç talep, kaç rezervasyon, kaçı kaçtı. Aşağıdaki tablo <b style="color:#d9a441">örnek
+  bir haftayı</b> gösteriyor; kurulumdan sonra bu rakamlar sizin gerçek verinizle dolar.</p>
+
+  <div class="pnl">
+    <div class="pust">
+      <div><div class="pb">Bilsev Group</div><div class="pk">son 7 gün · tüm mekânlar</div></div>
+      <div class="pgun">22 Eylül</div>
+    </div>
+    <div class="ozet">
+      <div class="oz1"><div class="s">1.284</div><div class="l">gelen mesaj</div></div>
+      <div class="oz1"><div class="s">486</div><div class="l">rezervasyon talebi</div></div>
+      <div class="oz1 iy"><div class="s">431</div><div class="l">tamamlanan</div></div>
+      <div class="oz1 kt"><div class="s">55</div><div class="l">masa bulunamadı</div></div>
+    </div>
+    <table class="pt">
+      <tr><th>Mekân</th><th>Talep</th><th>Rezervasyon</th><th>Dönüşüm</th><th>Yoğun saat</th></tr>
+      <tr><td>MarinAlaçatı</td><td>118</td><td>104</td><td class="iyi">%88</td><td>20:00–22:00</td></tr>
+      <tr><td>Alaçatı Köyiçi</td><td>97</td><td>89</td><td class="iyi">%92</td><td>20:30–22:30</td></tr>
+      <tr><td>Çeşme Marina</td><td>84</td><td>72</td><td class="iyi">%86</td><td>19:30–22:00</td></tr>
+      <tr><td>Mandarin Bodrum</td><td>71</td><td>63</td><td class="iyi">%89</td><td>20:00–23:00</td></tr>
+      <tr><td>İstinyePark İzmir</td><td>63</td><td>56</td><td class="iyi">%89</td><td>19:00–21:00</td></tr>
+      <tr><td>Hilltown Karşıyaka</td><td>53</td><td>47</td><td class="iyi">%89</td><td>19:00–21:30</td></tr>
+      <tr class="bek"><td>Baba Pizza · 4 şube</td><td colspan="4">2. aşamada eklenir</td></tr>
+      <tr class="bek"><td>Fabrice</td><td colspan="4">2. aşamada eklenir</td></tr>
+      <tr class="bek"><td>Ferdi Baba Dubai</td><td colspan="4">açılışta aynı gün devreye alınır</td></tr>
+    </table>
+    <div class="dil">
+      <span class="dt">Misafir dili</span>
+      <span class="db">Türkçe %61</span><span class="db">İngilizce %24</span>
+      <span class="db">Almanca %8</span><span class="db">Rusça %5</span><span class="db">diğer %2</span>
+    </div>
+  </div>
+
+  <div class="oz" style="margin-top:16px">
+    <div class="o"><div class="t">Kaçan masa görünür oluyor</div>
+      <div class="d">“Masa bulunamadı” satırı, hangi mekânda hangi saatte kapasite eksik olduğunu söylüyor.</div></div>
+    <div class="o"><div class="t">Şubeler karşılaştırılabiliyor</div>
+      <div class="d">Aynı ölçü, aynı tabloda. Hangi şube talebi rezervasyona çeviremiyor, ortada.</div></div>
+    <div class="o"><div class="t">Yabancı misafir oranı</div>
+      <div class="d">Alaçatı ve Bodrum’da hangi dilden kaç misafir geliyor, grup düzeyinde görünüyor.</div></div>
+  </div>
+</section>
+
+
+<section>
+  <h2>Kurulacak yapı</h2>
+  <p style="color:#a9bdc4;font-size:14.5px;margin-bottom:16px;max-width:62ch">Rezervasyon
+  bunun bir katmanı. Grubun on bir mekânı ve iki mağazası tek altyapıda birleşiyor —
+  misafirin girdiği kapıdan yönetimin baktığı ekrana kadar.</p>
+
+  <div class="mod">
+    <div class="md"><div class="mn">01</div>
+      <div class="mt">Misafir iletişimi ve rezervasyon</div>
+      <div class="mdx">WhatsApp, Instagram, web sitesi ve Google’dan gelen her mesaj tek hatta.
+      Misafirin yazdığı dilde karşılanır, rezervasyon yazıldığı yerde tamamlanır, ilgili
+      şubeye anında düşer.</div></div>
+
+    <div class="md"><div class="mn">02</div>
+      <div class="mt">Dijital ikiz — mekân planı</div>
+      <div class="mdx">Marina cephesi, teras, salon üç boyutlu plana çıkar. Misafir “teras mı iç mekân mı” sorusuna cevap vermez — masayı planda seçer.</div></div>
+
+    <div class="md"><div class="mn">03</div>
+      <div class="mt">Mevcut kameralardan analitik</div>
+      <div class="mdx">Yeni donanım yok. Tavandaki kameralar doluluk, masa devir hızı ve bekleme süresini ölçer. Samsung ve Siemens mağazalarında aynı motor dönüşümü ölçer.</div></div>
+
+    <div class="md"><div class="mn">04</div>
+      <div class="mt">Sipariş, ödeme ve sadakat</div>
+      <div class="mdx">Masadan QR ile sipariş ve ödeme. Ferdi Baba’da yemek yiyen misafir Baba Pizza’da da tanınır.</div></div>
+
+    <div class="md"><div class="mn">05</div>
+      <div class="mt">Mevcut sistemlere bağlanma</div>
+      <div class="mdx">POS, kasa, muhasebe, Google rezervasyon. Hiçbiri değişmez — üstüne bağlanırız.</div></div>
+
+    <div class="md"><div class="mn">06</div>
+      <div class="mt">Grup zekâsı</div>
+      <div class="mdx">On üç nokta tek ekranda, aynı ölçüyle. Hangi mekân talebi kaçırıyor, hangi saatte kapasite yetmiyor — yönetime tek sayfa.</div></div>
+
+    <div class="md dbi"><div class="mn">07</div>
+      <div class="mt">Dubai</div>
+      <div class="mdx">Dubai şubesi açıldığında sistem aynı gün çalışır. Yeni kurulum yok, şube tanımı eklenir. Dubai’de yürüttüğümüz işler var.</div></div>
+  </div>
+</section>
+
+<div class="son">
+  <h3>On bir mekân, iki mağaza,<br>tek altyapı.</h3>
+  <p>Mevcut numaralarınız ve mevcut sistemleriniz değişmeden kurulur. Ferdi Baba ile
+  başlanır; çalıştığı görüldükten sonra grubun geri kalanı eklenir.</p>
+  <div class="kunye">
+    <span>İzmir Bilişim Vadisi Teknoparkı</span>
+    <span>ISO 9001</span>
+    <span>TÜBİTAK Ar-Ge</span>
+    <span>KOSGEB destekli · 2021</span>
+  </div>
+  <div class="imza">Hazırlayan: <b>BBA Teknoloji</b> · İzmir · serdarbatkan@bbateknoloji.com</div>
+</div>
+
+</div>
+
+<script>
+const AKIS=[
+ {k:'g',t:'MarinAlaçatı açık mı?'},
+ {k:'a',t:'Merhaba, hoş geldiniz. MarinAlaçatı şubemiz bugün 12:00–00:30 arası açık.\nBu akşam için masa ayırtmamı ister misiniz?'},
+ {k:'g',t:'Evet, 4 kişi 20:30'},
+ {k:'a',t:'20:30 için 4 kişilik masamız var. İç mekân mı, marina manzaralı teras mı tercih edersiniz?'},
+ {k:'g',t:'Teras olsun'},
+ {k:'a',t:'Not ettim. Rezervasyonu hangi isme yazalım?'},
+ {k:'g',t:'Serdar Batkan. Bir de eşimde deniz ürünü alerjisi var'},
+ {k:'a',t:'Teşekkürler. Alerji notunu mutfağa ilettim, alternatif menüyü masanızda hazır bulunduracağız.\n\n✓ MarinAlaçatı · bugün 20:30 · 4 kişi · teras\n✓ Serdar Batkan adına\n✓ Alerji notu mutfağa iletildi\n\nRezervasyonunuz tamamlandı. Değişiklik gerekirse buradan yazmanız yeterli.'},
+ {k:'g',t:'Teşekkürler'},
+ {k:'a',t:'Rica ederim, akşam görüşmek üzere.'}
+];
+const s=document.getElementById('s');
+let i=0;
+function saat(){const d=new Date();return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');}
+function yazor(){
+  if(i>=AKIS.length)return;
+  const it=AKIS[i];
+  if(it.k==='a'){
+    const y=document.createElement('div');y.className='yaz';y.textContent='Alya yazıyor…';y.id='yz';
+    s.appendChild(y);s.scrollTop=s.scrollHeight;
+    setTimeout(()=>{const e=document.getElementById('yz');if(e)e.remove();koy(it);},900);
+  } else koy(it);
+}
+function koy(it){
+  const d=document.createElement('div');
+  d.className='m '+it.k;
+  d.textContent=it.t;
+  const sa=document.createElement('span');sa.className='sa';sa.textContent=saat()+(it.k==='a'?' ✓✓':'');
+  d.appendChild(sa);
+  s.appendChild(d);s.scrollTop=s.scrollHeight;
+  i++;
+  setTimeout(yazor, it.k==='g'?700:1250);
+}
+setTimeout(yazor,600);
+
+/* demo açılma ölçümü — ilk etkileşimde */
+(function(){try{
+  var k='bbaopen_ferdi-baba', gonder=function(){
+    try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');
+      navigator.sendBeacon('https://bba-demo-olcum.serdarbba.workers.dev/open?slug=ferdi-baba');
+    }catch(e){}};
+  ['pointerdown','keydown','touchstart','scroll'].forEach(function(ev){
+    document.addEventListener(ev,function o(){document.removeEventListener(ev,o);gonder();},{once:true,passive:true});});
+}catch(e){}})();
+</script>
+
+<script>
+(function(){
+  const M=[
+   {id:'T1',k:2,x:7,y:26,w:15,h:17,d:0},{id:'T2',k:2,x:26,y:26,w:15,h:17,d:1},
+   {id:'T3',k:4,x:45,y:24,w:20,h:21,d:0},{id:'T4',k:4,x:70,y:24,w:20,h:21,d:0},
+   {id:'T5',k:6,x:7,y:52,w:26,h:22,d:0},{id:'T6',k:2,x:38,y:54,w:15,h:17,d:1},
+   {id:'T7',k:4,x:57,y:52,w:20,h:21,d:0},{id:'T8',k:8,x:80,y:52,w:15,h:34,d:0},
+   {id:'T9',k:2,x:7,y:80,w:15,h:15,d:1},{id:'T10',k:4,x:27,y:78,w:20,h:18,d:0},
+   {id:'T11',k:4,x:52,y:78,w:20,h:18,d:0}
+  ];
+  const saha=document.getElementById('saha'), alt=document.getElementById('palt');
+  let sec=null;
+  M.forEach(m=>{
+    const e=document.createElement('div');
+    e.className='ms '+(m.d?'d':'m');
+    e.style.cssText=`left:${m.x}%;top:${m.y}%;width:${m.w}%;height:${m.h}%`;
+    e.textContent=m.k;
+    if(!m.d) e.onclick=()=>{
+      if(sec) sec.classList.remove('s');
+      e.classList.add('s'); sec=e;
+      const yer = m.y<50 ? 'deniz kenarı' : (m.x>70?'köşe':'teras ortası');
+      alt.innerHTML=`<b>${m.id}</b> seçildi · ${m.k} kişilik · ${yer} · bu akşam 20:30 için müsait`;
+    };
+    saha.appendChild(e);
+  });
+})();
+</script>
+
+</body>
+</html>

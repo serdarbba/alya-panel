@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Bilsev Group — Rezervasyon ve Misafir İletişimi Altyapısı</title>
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#111a24;--body:#43536a;--mut:#7787a0;--line:#dde3ec;--soft:#f5f8fb;
+        --acc:#0b63c5;--grn:#0a7d4f;--kir:#c0392b}
+  body{background:#fff;color:var(--ink);font-family:"Inter","Segoe UI",-apple-system,Helvetica,Arial,sans-serif;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .p{width:210mm;height:297mm;overflow:hidden;display:flex;flex-direction:column;
+    padding:15mm 16mm 11mm;page-break-after:always}
+  .top{display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:4.5mm;border-bottom:2px solid var(--ink);margin-bottom:7mm}
+  .bd{font-size:18px;font-weight:800;letter-spacing:-.4px}
+  .bd span{color:var(--mut);font-weight:500}
+  .sec{font-size:11.5px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--acc)}
+  h1{font-size:30px;line-height:1.14;letter-spacing:-1.1px;font-weight:800}
+  .sub{font-size:15.5px;line-height:1.6;color:var(--body);margin-top:4mm;max-width:150mm}
+  .sub b{color:var(--ink);font-weight:700}
+  h2{font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--mut);
+    font-weight:700;margin:7mm 0 3mm}
+
+  .durum{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:5mm}
+  .d{border:1px solid var(--line);border-radius:2mm;padding:5mm}
+  .d.s{border-left:3px solid var(--kir)}
+  .d.b{border-left:3px solid var(--grn);background:var(--soft)}
+  .d .t{font-size:13.5px;font-weight:750}
+  .d .x{font-size:13px;color:var(--body);line-height:1.55;margin-top:2mm}
+  .d .x i{font-style:italic;color:var(--ink)}
+
+  table{width:100%;border-collapse:collapse;margin-top:3mm;font-size:13.5px}
+  th{text-align:left;font-size:11px;letter-spacing:.8px;text-transform:uppercase;
+    color:var(--mut);font-weight:700;padding:0 0 2.5mm}
+  td{padding:3mm 0;border-top:1px solid var(--line);color:var(--body);vertical-align:top}
+  td.n{text-align:right;color:var(--ink);font-weight:700;white-space:nowrap}
+  td b{color:var(--ink)}
+  tr.tp td{border-top:2px solid var(--ink);font-weight:800;color:var(--ink);font-size:15px}
+
+  .kap{display:grid;grid-template-columns:1fr 1fr;gap:3mm 6mm;margin-top:3mm}
+  .k{display:grid;grid-template-columns:6mm 1fr;gap:2mm}
+  .k .i{color:var(--grn);font-weight:800;font-size:14px}
+  .k .t{font-size:13.5px;font-weight:700;line-height:1.3}
+  .k .d2{font-size:12.5px;color:var(--body);line-height:1.5;margin-top:.8mm}
+
+  .not{margin-top:auto;background:var(--soft);border:1px solid var(--line);
+    border-radius:2mm;padding:6mm}
+  .not .t{font-size:14px;font-weight:750}
+  .not p{font-size:13px;color:var(--body);line-height:1.6;margin-top:2mm}
+  .foot{padding-top:5mm;margin-top:5mm;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;font-size:11.5px;color:var(--mut)}
+</style>
+</head>
+<body>
+
+<section class="p">
+  <div class="top">
+    <div class="bd">BBA <span>Teknoloji</span></div>
+    <div class="sec">Bilsev Group için hazırlandı</div>
+  </div>
+
+  <h1>Misafir yazdığı yerde<br>rezervasyonunu tamamlasın.</h1>
+  <p class="sub">Altı Ferdi Baba şubesi, dört Baba Pizza ve Fabrice için tek WhatsApp hattı,
+  tek panel. <b>Mevcut numaralarınız değişmeden kurulur.</b></p>
+
+  <h2>Bugün ne oluyor</h2>
+  <div class="durum">
+    <div class="d s">
+      <div class="t">Hattınıza bugün yazdık</div>
+      <div class="x">“MarinAlaçatı açık mı?” sorusuna gelen cevap:
+      <i>“Hizmet vermeye devam etmektedir. Detaylı bilgi için … numaralı telefondan
+      şubemizle iletişime geçebilirsiniz.”</i><br><br>
+      Soru cevaplandı, iş bitmedi. Saat yok, masa durumu yok, rezervasyon yok. Misafir
+      aramak zorunda — akşam saatinde çoğu aramıyor.</div>
+    </div>
+    <div class="d b">
+      <div class="t">Kurulumdan sonra</div>
+      <div class="x">Aynı soru gelir; saat söylenir, müsaitlik kontrol edilir, kişi sayısı
+      ve saat alınır, <b>rezervasyon hattın içinde tamamlanır</b> ve ilgili şubeye anında düşer.<br><br>
+      Misafir hiçbir yere yönlendirilmez. Telefon çalmaz, personel masadan kalkmaz,
+      özel notlar (alerji, doğum günü, engelli erişimi) mutfağa ve servise iletilir.</div>
+    </div>
+  </div>
+
+  <h2>Kapsam</h2>
+  <div class="kap">
+    <div class="k"><div class="i">✓</div><div>
+      <div class="t">WhatsApp rezervasyon asistanı</div>
+      <div class="d2">Altı şube tek hatta, şube ayrımı otomatik. Türkçe, İngilizce ve misafirin yazdığı dilde.</div></div></div>
+    <div class="k"><div class="i">✓</div><div>
+      <div class="t">Ortak rezervasyon sayfası</div>
+      <div class="d2">Her şube için kendi sayfası, komisyonsuz, tek panelden yönetilir.</div></div></div>
+    <div class="k"><div class="i">✓</div><div>
+      <div class="t">Şube paneli ve bildirim</div>
+      <div class="d2">Rezervasyon anında ilgili şubenin ekranına ve telefonuna düşer.</div></div></div>
+    <div class="k"><div class="i">✓</div><div>
+      <div class="t">Görünürlük ve takip</div>
+      <div class="d2">Hangi şube, hangi saat, kaç talep, kaç rezervasyon, kaç gelmeyen.</div></div></div>
+    <div class="k"><div class="i">✓</div><div>
+      <div class="t">Grup raporu</div>
+      <div class="d2">Aylık, şube şube karşılaştırmalı; yönetime tek sayfa.</div></div></div>
+    <div class="k"><div class="i">✓</div><div>
+      <div class="t">Instagram ve web</div>
+      <div class="d2">Aynı asistan Instagram mesajlarını ve web sitesini de karşılar.</div></div></div>
+  </div>
+
+  <div class="not">
+    <div class="t">Dubai açılışı</div>
+    <p>Kurduğumuz yapı coğrafyaya bağlı değil. Dubai şubesi açıldığında aynı sistem aynı gün
+    çalışır; ek kurulum süreci gerekmez, yalnız şube tanımı eklenir. Dubai'de hâlihazırda
+    yürüttüğümüz işler var, saat farkı ve çok dilli misafir akışı bizim için yeni değil.</p>
+  </div>
+
+  <div class="foot"><span>BBA Teknoloji · İzmir</span><span>serdarbatkan@bbateknoloji.com</span></div>
+</section>
+
+<section class="p">
+  <div class="top">
+    <div class="bd">BBA <span>Teknoloji</span></div>
+    <div class="sec">Yatırım ve aşamalar</div>
+  </div>
+
+  <h1>İki aşamada kurulum.</h1>
+  <p class="sub">Ferdi Baba ile başlanır, çalıştığı görüldükten sonra grubun diğer
+  markaları eklenir. <b>İkinci aşamada yeni kurulum süreci yoktur.</b></p>
+
+  <h2>Aşama 1 — Ferdi Baba, 6 şube</h2>
+  <table>
+    <tr><th>Kalem</th><th style="text-align:right">Tutar</th></tr>
+    <tr><td><b>Kurulum</b><br>Altı şubenin tanımlanması, menü ve saat bilgilerinin işlenmesi,
+      rezervasyon sayfaları, panel kurulumu, personel eğitimi — tek seferlik</td>
+      <td class="n">145.000 TL</td></tr>
+    <tr><td><b>Aylık hizmet — şube başı 10.000 TL</b><br>Asistan, rezervasyon sayfası, şube
+      paneli ve bildirimler, görünürlük takibi, grup raporu, bakım ve sürekli iyileştirme.
+      Grup platformu için ayrıca bedel alınmaz.</td>
+      <td class="n">60.000 TL / ay</td></tr>
+  </table>
+
+  <h2>Aşama 2 — Baba Pizza (4) ve Fabrice</h2>
+  <table>
+    <tr><th>Kalem</th><th style="text-align:right">Tutar</th></tr>
+    <tr><td><b>Kurulum</b><br>Beş mekânın eklenmesi; grup platformu kurulu olduğu için indirimli</td>
+      <td class="n">95.000 TL</td></tr>
+    <tr><td><b>Aylık hizmet</b><br>Mekân başı 10.000 TL</td>
+      <td class="n">+50.000 TL / ay</td></tr>
+    <tr class="tp"><td>Grup toplamı — 11 mekân</td><td class="n">110.000 TL / ay</td></tr>
+  </table>
+
+  <h2>Neden bu tutar</h2>
+  <div class="kap">
+    <div class="k"><div class="i">·</div><div>
+      <div class="t">Kaçan rezervasyon</div>
+      <div class="d2">Telefona yönlendirilen misafirin bir kısmı aramıyor. Şube başına akşamda birkaç masa, o şubenin aylık bedelini tek başına karşılıyor.</div></div></div>
+    <div class="k"><div class="i">·</div><div>
+      <div class="t">Personel zamanı</div>
+      <div class="d2">Servis saatinde telefona bakan personel salondan kopuyor. Altı şubenin tamamı için aylık bedel, tek bir çalışanın maliyetinin altında.</div></div></div>
+    <div class="k"><div class="i">·</div><div>
+      <div class="t">Komisyon yok</div>
+      <div class="d2">Rezervasyon kendi hattınızda ve kendi sayfanızda kalıyor, aracı platforma pay gitmiyor.</div></div></div>
+    <div class="k"><div class="i">·</div><div>
+      <div class="t">Misafir verisi sizde</div>
+      <div class="d2">Kim ne zaman geldi, ne tercih etti, hangi notu bıraktı — grup elinde kalıyor.</div></div></div>
+  </div>
+
+  <div class="not">
+    <div class="t">Nasıl başlıyoruz</div>
+    <p>Tek şubeyle başlanabilir. MarinAlaçatı ya da Alaçatı Köyiçi'nde iki hafta çalıştırırız;
+    gelen talep, tamamlanan rezervasyon ve kazanılan zaman ölçülür. Sonuç ortadayken diğer
+    şubeler açılır. Bu iki haftada aylık bedel işlemez.</p>
+  </div>
+
+  <div class="foot"><span>BBA Teknoloji · İzmir · Fiyatlar KDV hariçtir</span>
+    <span>serdarbatkan@bbateknoloji.com</span></div>
+</section>
+
+</body>
+</html>

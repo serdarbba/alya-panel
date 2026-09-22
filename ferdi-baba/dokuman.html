@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<title>Bilsev Group — Misafir İletişimi ve Rezervasyon Altyapısı</title>
+<style>
+  @page { size: A4 portrait; margin: 0; }
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--ink:#101823;--body:#42536a;--mut:#7787a0;--line:#dde4ec;--soft:#f5f8fb;
+        --acc:#0b63c5;--grn:#0a7d4f;--kir:#c0392b;--altin:#b6862c}
+  body{background:#fff;color:var(--ink);
+    font-family:"Inter","Segoe UI",-apple-system,Helvetica,Arial,sans-serif;
+    -webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .p{width:210mm;height:297mm;overflow:hidden;page-break-after:always;
+    display:flex;flex-direction:column;padding:15mm 16mm 11mm;background:#fff}
+
+  .top{display:flex;justify-content:space-between;align-items:baseline;
+    padding-bottom:4.5mm;border-bottom:2px solid var(--ink);margin-bottom:8mm}
+  .bd{font-size:17px;font-weight:800;letter-spacing:-.4px}
+  .bd span{color:var(--mut);font-weight:500}
+  .sec{font-size:11px;font-weight:700;letter-spacing:1.7px;text-transform:uppercase;color:var(--acc)}
+
+  h1{font-size:34px;line-height:1.12;letter-spacing:-1.3px;font-weight:800}
+  h2{font-size:25px;line-height:1.16;letter-spacing:-.9px;font-weight:800}
+  .lead{font-size:15.5px;line-height:1.62;color:var(--body);margin-top:5mm;max-width:150mm}
+  .lead b{color:var(--ink);font-weight:700}
+  .kck{font-size:11px;letter-spacing:1.9px;text-transform:uppercase;color:var(--acc);
+    font-weight:700;margin-bottom:3mm}
+
+  .foot{margin-top:auto;padding-top:5mm;border-top:1px solid var(--line);
+    display:flex;justify-content:space-between;font-size:11px;color:var(--mut)}
+
+  /* kapak */
+  .kap{justify-content:center}
+  .kap .no{font-size:12px;letter-spacing:2.4px;text-transform:uppercase;color:var(--mut);font-weight:700}
+  .rk{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:3mm;overflow:hidden;margin-top:10mm}
+  .rk .c{background:#fff;padding:7mm 5mm}
+  .rk .n{font-size:34px;font-weight:800;letter-spacing:-1.8px;line-height:1}
+  .rk .l{font-size:10.5px;color:var(--mut);margin-top:3mm;line-height:1.45;font-weight:600}
+  .rk .c.k .n{color:var(--kir)}
+  .rk .c.y .n{color:var(--grn)}
+
+  /* bulgu */
+  .bul{display:grid;gap:4mm;margin-top:6mm}
+  .b{display:grid;grid-template-columns:9mm 1fr;gap:4mm;border-left:2.5px solid var(--kir);
+    padding-left:5mm}
+  .b .i{font-size:15px;font-weight:800;color:var(--kir)}
+  .b .t{font-size:15.5px;font-weight:750;line-height:1.3}
+  .b .d{font-size:13px;color:var(--body);line-height:1.58;margin-top:1.5mm}
+  .ntc{font-size:12px;color:var(--mut);font-style:italic;margin-top:5mm}
+
+  /* görsel */
+  .ss{border:1px solid var(--line);border-radius:2.5mm;overflow:hidden;background:var(--soft)}
+  .ss img{width:100%;display:block}
+  .ss .cp{font-size:11.5px;color:var(--mut);padding:2.5mm 4mm;border-top:1px solid var(--line);
+    background:#fff;line-height:1.45}
+  .ikili{display:grid;grid-template-columns:1fr 1fr;gap:5mm;margin-top:6mm;align-items:start}
+  .dortlu{display:grid;grid-template-columns:repeat(4,1fr);gap:3mm;margin-top:6mm}
+  .dortlu .ss img{height:78mm;object-fit:cover;object-position:top}
+  .dortlu .cp{font-size:10px;padding:2mm 2.5mm}
+
+  .madde{margin-top:5mm}
+  .md{display:grid;grid-template-columns:5mm 1fr;gap:2mm;padding:2.2mm 0}
+  .md .k{color:var(--grn);font-weight:800;font-size:13px}
+  .md .t{font-size:13.5px;line-height:1.55;color:var(--body)}
+  .md .t b{color:var(--ink);font-weight:700}
+
+  .kat{display:grid;grid-template-columns:1fr 1fr;gap:4mm;margin-top:5mm}
+  .kt{border:1px solid var(--line);border-radius:2.5mm;padding:4.5mm 5mm;background:var(--soft)}
+  .kt .n{font-size:10px;font-weight:800;letter-spacing:1.3px;color:var(--altin)}
+  .kt .t{font-size:14.5px;font-weight:750;line-height:1.28;margin-top:1.5mm}
+  .kt .d{font-size:12.5px;color:var(--body);line-height:1.55;margin-top:1.5mm}
+
+  .vurgu{background:var(--ink);color:#fff;border-radius:3mm;padding:7mm 8mm;margin-top:auto}
+  .vurgu .q{font-size:18px;font-weight:750;line-height:1.35;letter-spacing:-.4px}
+  .vurgu .q em{font-style:normal;color:#6cc0ff}
+  .vurgu .s{font-size:13px;color:#a7bcd2;line-height:1.6;margin-top:3.5mm;max-width:150mm}
+
+  .dene{border:2px solid var(--ink);border-radius:3mm;padding:7mm 8mm;margin-top:6mm}
+  .dene .t{font-size:20px;font-weight:800;letter-spacing:-.6px}
+  .dene p{font-size:13.5px;color:var(--body);line-height:1.6;margin-top:3mm}
+  .dene .lnk{font-size:14px;font-weight:750;color:var(--acc);margin-top:4mm;word-break:break-all}
+
+  .kunye{display:flex;flex-wrap:wrap;gap:2.5mm;margin-top:5mm}
+  .kunye span{border:1px solid var(--line);border-radius:20px;padding:2mm 4mm;
+    font-size:11px;color:var(--body);font-weight:600;background:var(--soft)}
+</style>
+</head>
+<body>
+
+<!-- 1 KAPAK -->
+<section class="p kap">
+  <div class="top" style="margin-bottom:auto">
+    <div class="bd">BBA <span>Teknoloji</span></div>
+    <div class="sec">Bilsev Group için hazırlandı</div>
+  </div>
+  <div style="margin:auto 0">
+    <div class="no">22 Eylül 2026</div>
+    <h1 style="margin-top:5mm">Misafir size nasıl<br>ulaşıyor?</h1>
+    <p class="lead">Ferdi Baba'nın misafir kanallarını dışarıdan inceledik — bir misafirin
+    göreceği kadarıyla. <b>Bulduklarımız ve aynı akışın nasıl sonuçlanabileceği bu dokümanda.</b></p>
+    <div class="rk">
+      <div class="c"><div class="n">11</div><div class="l">mekân<br>6 Ferdi Baba · 4 Baba Pizza · Fabrice</div></div>
+      <div class="c"><div class="n">10</div><div class="l">ayrı telefon numarası<br>misafir hangisini arayacağını seçiyor</div></div>
+      <div class="c k"><div class="n">0</div><div class="l">online rezervasyon<br>web, WhatsApp, Instagram</div></div>
+      <div class="c y"><div class="n">1</div><div class="l">hat yeterli<br>on bir mekân, tek panel</div></div>
+    </div>
+  </div>
+  <div class="foot"><span>BBA Teknoloji · İzmir Bilişim Vadisi Teknoparkı</span>
+    <span>serdarbatkan@bbateknoloji.com</span></div>
+</section>
+
+<!-- 2 BULGULAR -->
+<section class="p">
+  <div class="top"><div class="bd">BBA <span>Teknoloji</span></div><div class="sec">01 · Bulgular</div></div>
+  <h2>Misafir girişinin tamamı<br>telefona bağlı.</h2>
+  <div class="bul">
+    <div class="b"><div class="i">01</div><div>
+      <div class="t">WhatsApp hattı rezervasyon almıyor</div>
+      <div class="d">“MarinAlaçatı açık mı?” sorusuna gelen cevap altı şubenin telefon listesi
+      oldu. Saat söylenmedi, masa durumu verilmedi, rezervasyon alınmadı. Misafir yazdığı
+      yerden telefona yönlendirildi.</div></div></div>
+    <div class="b"><div class="i">02</div><div>
+      <div class="t">Web sitesinde online rezervasyon yok</div>
+      <div class="d">ferdibaba.com.tr üzerinde rezervasyon formu, takvim ya da müsaitlik
+      görünümü bulunmuyor. Sitede on ayrı telefon numarası listeleniyor. Online sipariş de yok.</div></div></div>
+    <div class="b"><div class="i">03</div><div>
+      <div class="t">Talebin kaydı tutulmuyor</div>
+      <div class="d">Telefonda başlayan ve telefonda biten bir rezervasyonun arkasında kayıt
+      kalmıyor. Kaç kişi aradı, kaçı masa bulamadı, hangi saat doldu, hangi şube talebi
+      karşılayamadı — bunların hiçbiri sonradan bakılabilir bir yerde durmuyor.</div></div></div>
+  </div>
+  <p class="ntc">Bu tespitler dışarıdan, herhangi bir misafirin görebileceği şekilde yapıldı.
+  İç veri kullanılmadı.</p>
+
+  <div class="vurgu">
+    <div class="q">Telefon rezervasyonu alır, <em>ama hatırlamaz.</em></div>
+    <div class="s">Servis saatinde çalan telefona kim bakarsa rezervasyon o kadar alınıyor.
+    Alınamayan talep hiç yaşanmamış gibi kayboluyor — ve on bir mekânda bu her akşam
+    tekrarlanıyor.</div>
+  </div>
+  <div class="foot"><span>Bulgular</span><span>2</span></div>
+</section>
+
+<!-- 3 MİSAFİR DENEYİMİ -->
+<section class="p">
+  <div class="top"><div class="bd">BBA <span>Teknoloji</span></div><div class="sec">02 · Misafir deneyimi</div></div>
+  <h2>Aynı soru, farklı son.</h2>
+  <p class="lead">Misafir yine “MarinAlaçatı açık mı?” diye yazıyor. Bu kez saat söyleniyor,
+  masa durumu kontrol ediliyor, tercih alınıyor ve <b>rezervasyon hattın içinde tamamlanıyor.</b>
+  Özel not mutfağa iletiliyor, kayıt ilgili şubeye anında düşüyor.</p>
+  <div class="ikili" style="grid-template-columns:1fr 1fr">
+    <div class="ss"><img src="gorsel/sohbet.png" alt="">
+      <div class="cp">Misafir hiçbir yere yönlendirilmiyor; telefon çalmıyor, personel
+      salondan kalkmıyor.</div></div>
+    <div>
+      <div class="madde">
+        <div class="md"><div class="k">✓</div><div class="t"><b>Şube ayrımı</b> — altı şube arasından sorulan şube tanınıyor.</div></div>
+        <div class="md"><div class="k">✓</div><div class="t"><b>Saat ve müsaitlik</b> — “açık mı” sorusu numarayla değil, cevapla karşılanıyor.</div></div>
+        <div class="md"><div class="k">✓</div><div class="t"><b>Rezervasyon</b> — kişi, saat, isim alınıyor; kayıt tamamlanıyor.</div></div>
+        <div class="md"><div class="k">✓</div><div class="t"><b>Özel not</b> — alerji, doğum günü, engelli erişimi mutfağa ve servise iletiliyor.</div></div>
+        <div class="md"><div class="k">✓</div><div class="t"><b>Misafirin dili</b> — hangi dilde yazarsa o dilde karşılanıyor.</div></div>
+        <div class="md"><div class="k">✓</div><div class="t"><b>Şube bildirimi</b> — rezervasyon anında ilgili şubenin ekranına düşüyor.</div></div>
+      </div>
+      <p class="lead" style="font-size:13px;margin-top:6mm">Aynı asistan Instagram mesajlarını
+      ve web sitesinden gelen soruları da karşılıyor. Mevcut numaralarınız değişmiyor.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Misafir deneyimi</span><span>3</span></div>
+</section>
+
+<!-- 4 REZERVASYON SAYFASI -->
+<section class="p">
+  <div class="top"><div class="bd">BBA <span>Teknoloji</span></div><div class="sec">03 · Rezervasyon sayfası</div></div>
+  <h2>Sitenizde bugün<br>olmayan sayfa.</h2>
+  <p class="lead">Misafir şubeyi, tarihi ve kişi sayısını seçiyor; masasını planda işaretliyor;
+  rezervasyonu bitiriyor. <b>Komisyon yok, aracı platform yok</b> — ve kayıt sizde kalıyor.</p>
+  <div class="dortlu">
+    <div class="ss"><img src="gorsel/rez1.png" alt=""><div class="cp">Şube, tarih, kişi, saat</div></div>
+    <div class="ss"><img src="gorsel/rez2.png" alt=""><div class="cp">Masa planı — kişi sayısına göre süzülür</div></div>
+    <div class="ss"><img src="gorsel/rez3.png" alt=""><div class="cp">İletişim ve özel not</div></div>
+    <div class="ss"><img src="gorsel/rez4.png" alt=""><div class="cp">Onay — şubeye anında düşer</div></div>
+  </div>
+  <div class="ikili" style="margin-top:7mm">
+    <div class="ss"><img src="gorsel/plan.png" alt="">
+      <div class="cp">MarinAlaçatı terası — misafir masasını görerek seçiyor. Dijital ikiz
+      kurulduğunda aynı plan kapasite ve yerleşim kararlarında da kullanılıyor.</div></div>
+    <div>
+      <div class="kck">Yan fayda</div>
+      <p class="lead" style="margin-top:0;font-size:13.5px">Rezervasyon sayfası her kullanıldığında
+      bir kayıt oluşuyor: hangi şube, hangi saat, kaç kişi, hangi tercih. Kimse fazladan iş
+      yapmıyor — ama bir sezon sonunda grubun elinde <b>kendi misafir verisi</b> birikmiş
+      oluyor. Bugün bu bilgi telefonda konuşulup kayboluyor.</p>
+    </div>
+  </div>
+  <div class="foot"><span>Rezervasyon sayfası</span><span>4</span></div>
+</section>
+
+<!-- 5 YÖNETİM -->
+<section class="p">
+  <div class="top"><div class="bd">BBA <span>Teknoloji</span></div><div class="sec">04 · Yönetim görünümü</div></div>
+  <h2>On bir mekân,<br>tek ekran.</h2>
+  <p class="lead">Grup düzeyinde tek panel: hangi mekân kaç talep aldı, kaçını rezervasyona
+  çevirdi, hangi saatte masa bulunamadı. <b>Aynı ölçü, aynı tabloda.</b></p>
+  <div class="ss" style="margin-top:6mm"><img src="gorsel/panel.png" alt="">
+    <div class="cp">Örnek bir haftanın görünümü. Kurulumdan sonra bu tablo grubun kendi
+    verisiyle dolar; Baba Pizza, Fabrice ve Dubai açıldıkça satır olarak eklenir.</div></div>
+  <div class="madde" style="margin-top:6mm">
+    <div class="md"><div class="k">·</div><div class="t"><b>Kaçan masa görünür oluyor.</b> “Masa bulunamadı” satırı hangi mekânda hangi saatte kapasitenin yetmediğini söylüyor.</div></div>
+    <div class="md"><div class="k">·</div><div class="t"><b>Şubeler karşılaştırılabiliyor.</b> Hangi şube talebi rezervasyona çeviremiyor, tabloda görünüyor.</div></div>
+    <div class="md"><div class="k">·</div><div class="t"><b>Yabancı misafir oranı.</b> Alaçatı ve Bodrum'da hangi dilden kaç misafir geldiği grup düzeyinde okunuyor.</div></div>
+  </div>
+  <div class="vurgu">
+    <div class="q">Kayıt tutulmayan hiçbir şey <em>yönetilemiyor.</em></div>
+    <div class="s">Bu tablonun kıymeti bugünkü rakamlarda değil, bir yıl sonra geriye
+    bakabilmekte. Sezon nasıl geçti, hangi şube büyüdü, kapasite nerede yetmedi — bunlar
+    ancak biriktirilirse cevaplanabiliyor.</div>
+  </div>
+  <div class="foot"><span>Yönetim görünümü</span><span>5</span></div>
+</section>
+
+<!-- 6 KAPSAM -->
+<section class="p">
+  <div class="top"><div class="bd">BBA <span>Teknoloji</span></div><div class="sec">05 · Kurulacak yapı</div></div>
+  <h2>Rezervasyon bunun<br>bir katmanı.</h2>
+  <p class="lead">On bir mekân ve iki mağaza tek altyapıda birleşiyor — misafirin girdiği
+  kapıdan yönetimin baktığı ekrana kadar.</p>
+  <div class="kat">
+    <div class="kt"><div class="n">01</div><div class="t">Misafir iletişimi ve rezervasyon</div>
+      <div class="d">WhatsApp, Instagram, web ve Google tek hatta. Rezervasyon yazıldığı yerde bitiyor.</div></div>
+    <div class="kt"><div class="n">02</div><div class="t">Dijital ikiz — mekân planı</div>
+      <div class="d">Teras, salon ve marina cephesi plana çıkıyor; misafir masasını görerek seçiyor.</div></div>
+    <div class="kt"><div class="n">03</div><div class="t">Mevcut kameralardan analitik</div>
+      <div class="d">Yeni donanım yok. Doluluk, masa devir hızı, bekleme süresi; mağazalarda dönüşüm.</div></div>
+    <div class="kt"><div class="n">04</div><div class="t">Sipariş, ödeme ve sadakat</div>
+      <div class="d">Masadan QR ile sipariş. Ferdi Baba'da yemek yiyen misafir Baba Pizza'da da tanınıyor.</div></div>
+    <div class="kt"><div class="n">05</div><div class="t">Mevcut sistemlere bağlanma</div>
+      <div class="d">POS, kasa, muhasebe, Google rezervasyon. Hiçbiri değişmiyor — üstüne bağlanıyoruz.</div></div>
+    <div class="kt"><div class="n">06</div><div class="t">Grup zekâsı</div>
+      <div class="d">On üç nokta tek ekranda, aynı ölçüyle. Yönetime aylık tek sayfa.</div></div>
+  </div>
+  <div class="kt" style="margin-top:4mm;border-color:#bcd6c4;background:#f2f9f4">
+    <div class="n" style="color:var(--grn)">07</div><div class="t">Dubai</div>
+    <div class="d">Yapı coğrafyaya bağlı değil. Şube açıldığında sistem aynı gün çalışıyor;
+    yeni kurulum süreci yok, yalnız şube tanımı ekleniyor. Dubai'de yürüttüğümüz işler var.</div></div>
+  <div class="foot"><span>Kurulacak yapı</span><span>6</span></div>
+</section>
+
+<!-- 7 SONRAKİ ADIM -->
+<section class="p">
+  <div class="top"><div class="bd">BBA <span>Teknoloji</span></div><div class="sec">06 · Sonraki adım</div></div>
+  <h2>Önce deneyin,<br>sonra konuşalım.</h2>
+  <p class="lead">Bu dokümandaki ekranların hepsi çalışıyor. Aşağıdaki adreste rezervasyon
+  sayfasını ve masa planını <b>kendiniz kullanabilirsiniz</b> — sonuna kadar gider.</p>
+
+  <div class="dene">
+    <div class="t">Çalışan örnek</div>
+    <p>MarinAlaçatı için hazırlandı. Şubeyi seçin, masanızı planda işaretleyin, rezervasyonu
+    tamamlayın. Kurulum sonrası misafirlerinizin göreceği akışın aynısı.</p>
+    <div class="lnk">serdarbba.github.io/alya-panel/ferdi-baba</div>
+  </div>
+
+  <div class="dene" style="margin-top:5mm">
+    <div class="t">Yirmi dakika</div>
+    <p>Beğenirseniz kısa bir görüşmede grubun tamamı için nasıl kurulacağını anlatayım —
+    altı şube, Baba Pizza, Fabrice ve Dubai açılışı dahil. Yatırım ve takvim o görüşmede
+    netleşir.</p>
+    <div class="lnk">serdarbatkan@bbateknoloji.com</div>
+  </div>
+
+  <div class="kunye">
+    <span>İzmir Bilişim Vadisi Teknoparkı</span><span>ISO 9001</span>
+    <span>TÜBİTAK Ar-Ge</span><span>KOSGEB destekli · 2021</span>
+  </div>
+  <div class="foot"><span>BBA Teknoloji · İzmir · bbateknoloji.com</span><span>7</span></div>
+</section>
+
+</body>
+</html>
