@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FEDS — the layer after the flight</title>
+<meta name="description" content="Prepared for Falcon Eye Drone Services: automated detection, change tracking and reporting on the imagery you already collect.">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  :root{--bg:#070b12;--card:#0e1826;--line:#1d2b3e;--txt:#e4edf8;--mut:#8599ae;
+        --acc:#12b5e5;--grn:#22d38a;--amb:#f0b040}
+  body{background:var(--bg);color:var(--txt);
+    font-family:-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.62;-webkit-font-smoothing:antialiased}
+  .w{max-width:900px;margin:0 auto;padding:0 18px}
+
+  header{padding:30px 0 22px;border-bottom:1px solid var(--line)}
+  .kick{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--acc);font-weight:700}
+  h1{font-size:clamp(25px,5.4vw,38px);line-height:1.14;letter-spacing:-1px;font-weight:800;margin-top:12px}
+  header p{color:#a6b8cc;margin-top:12px;font-size:15.5px;max-width:60ch}
+  .kunye{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+  .kunye span{background:#132030;border:1px solid var(--line);border-radius:20px;
+    padding:5px 12px;font-size:12px;color:#a6b8cc}
+
+  section{padding:28px 0;border-bottom:1px solid var(--line)}
+  h2{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--mut);
+    font-weight:700;margin-bottom:14px}
+  .lead{font-size:clamp(17px,3vw,23px);font-weight:750;letter-spacing:-.5px;line-height:1.3;
+    max-width:28ch;margin-bottom:10px}
+  .sub{color:#a6b8cc;max-width:66ch;font-size:15px}
+  .sub b{color:#fff}
+
+  .say{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-top:20px}
+  .sy{background:var(--card);padding:17px 15px}
+  .sy .n{font-size:27px;font-weight:800;letter-spacing:-1.2px;line-height:1}
+  .sy .l{font-size:11.5px;color:var(--mut);margin-top:6px;line-height:1.42}
+  .sy.a .n{color:var(--acc)}.sy.g .n{color:var(--grn)}
+  @media(max-width:700px){.say{grid-template-columns:1fr 1fr}}
+
+  .iki{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px}
+  @media(max-width:760px){.iki{grid-template-columns:1fr}}
+  .im{background:var(--card);border:1px solid var(--line);border-radius:11px;overflow:hidden}
+  .im img{width:100%;display:block;aspect-ratio:16/10;object-fit:cover}
+  .im .c{padding:11px 13px}
+  .im .t{font-size:13.5px;font-weight:700}
+  .im .d{font-size:12.5px;color:var(--mut);margin-top:3px;line-height:1.45}
+
+  /* rapor */
+  .rap{background:#fff;color:#16202e;border-radius:11px;overflow:hidden;margin-top:18px;
+    border:1px solid var(--line)}
+  .rb{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;
+    border-bottom:2px solid #16202e}
+  .rb .l{font-weight:800;font-size:15px;letter-spacing:-.3px}
+  .rb .l span{color:#6b7c90;font-weight:500}
+  .rb .m{font-size:11px;color:#6b7c90;text-align:right;line-height:1.5}
+  .rin{padding:16px 18px}
+  .rt{font-size:19px;font-weight:800;letter-spacing:-.5px}
+  .rs{font-size:12.5px;color:#55677d;margin-top:3px}
+  .rk{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:14px}
+  .rk div{border-left:2.5px solid #12b5e5;padding-left:10px}
+  .rk .v{font-size:19px;font-weight:800;letter-spacing:-.5px;line-height:1.1}
+  .rk .k{font-size:10.5px;color:#6b7c90;margin-top:3px;line-height:1.35}
+  table.rt2{width:100%;border-collapse:collapse;margin-top:14px;font-size:12.5px}
+  table.rt2 th{text-align:left;font-size:10px;letter-spacing:.8px;text-transform:uppercase;
+    color:#8090a4;font-weight:700;padding-bottom:6px;border-bottom:1px solid #dde3ea}
+  table.rt2 td{padding:7px 0;border-bottom:1px solid #eef1f5;color:#42536a}
+  table.rt2 td:first-child{font-weight:700;color:#16202e}
+  .ok{color:#0a7d4f;font-weight:700}.uy{color:#b8791a;font-weight:700}.kt{color:#c0392b;font-weight:700}
+  .rf{padding:11px 18px;background:#f4f7fa;font-size:11px;color:#6b7c90;
+    display:flex;justify-content:space-between;border-top:1px solid #dde3ea}
+
+  .kart{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:13px;margin-top:16px}
+  .kt2{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:16px 17px}
+  .kt2 .n{font-size:10.5px;font-weight:800;letter-spacing:1.4px;color:var(--amb)}
+  .kt2 .t{font-size:15.5px;font-weight:750;margin-top:7px;line-height:1.28}
+  .kt2 .d{font-size:13px;color:#a0b3c6;margin-top:6px;line-height:1.55}
+
+  .son{padding:30px 0 40px;text-align:center}
+  .son h3{font-size:clamp(20px,4vw,27px);font-weight:800;letter-spacing:-.6px;line-height:1.3}
+  .son p{color:#a6b8cc;margin-top:12px;font-size:15px;max-width:54ch;margin:12px auto 0}
+  .imza{margin-top:20px;font-size:14px;color:var(--acc);font-weight:700}
+  .imza span{display:block;color:var(--mut);font-weight:400;font-size:12.5px;margin-top:6px}
+</style>
+</head>
+<body>
+<div class="w">
+
+<header>
+  <div class="kick">Prepared for Falcon Eye Drone Services · 22 September 2026</div>
+  <h1>You already collect the imagery.<br>This is the layer after the flight.</h1>
+  <p>Detection, counting, change between flights and the report your client receives —
+  produced automatically from the data you are already flying for. Nothing below is a concept:
+  the output on this page was generated by our engine.</p>
+  <div class="kunye">
+    <span>BBA Technology · Izmir, Türkiye</span><span>Izmir Bilişim Vadisi Technopark</span>
+    <span>ISO 9001</span><span>TÜBİTAK R&amp;D</span>
+  </div>
+</header>
+
+<section>
+  <h2>Where the hours go</h2>
+  <div class="lead">Flying is fast. Reading the imagery is not.</div>
+  <p class="sub">A survey or progress flight takes an hour. Turning it into something a client
+  will accept — counted, marked, compared with last month, written up — takes days of an
+  analyst's time. <b>That step is the one we automate</b>, and it is the same step on a solar
+  field, a construction site or a pipeline corridor.</p>
+  <div class="say">
+    <div class="sy a"><div class="n">2.9 s</div><div class="l">per frame processed<br>on CPU, no GPU needed</div></div>
+    <div class="sy"><div class="n">30</div><div class="l">objects found<br>in one frame, with confidence</div></div>
+    <div class="sy"><div class="n">10</div><div class="l">classes separated<br>car, person, truck, bus, motorcycle…</div></div>
+    <div class="sy g"><div class="n">0</div><div class="l">new hardware<br>runs on the imagery you already fly</div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Processed here, today</h2>
+  <p class="sub" style="margin-bottom:6px">Below is a real run of our engine on a sample aerial
+  frame — not a mock-up. Detection, class separation and density map produced in one pass.
+  <b>The frame is only a sample; what we are showing is the machinery behind it.</b> On your
+  sites it runs on your own imagery, with the classes and thresholds that matter to your
+  clients — panels, towers, corrosion, stockpiles, whatever the contract asks for.</p>
+  <div class="iki">
+    <div class="im"><img src="gorsel/ham.jpg" alt="">
+      <div class="c"><div class="t">Input — raw aerial frame</div>
+      <div class="d">The kind of frame a survey flight produces by the thousand.</div></div></div>
+    <div class="im"><img src="gorsel/aerial_out.jpg" alt="">
+      <div class="c"><div class="t">Output — detected, classified, counted</div>
+      <div class="d">30 objects, each with class and confidence. 2.9 seconds on CPU.</div></div></div>
+  </div>
+  <div class="iki">
+    <div class="im"><img src="gorsel/cv_asset.jpg" alt="">
+      <div class="c"><div class="t">Asset &amp; defect tracking</div>
+      <div class="d">The same engine marks assets and condition across repeat flights.</div></div></div>
+    <div class="im"><img src="gorsel/poster_gpsdenied.jpg" alt="">
+      <div class="c"><div class="t">3D reconstruction &amp; digital twin</div>
+      <div class="d">SLAM-based mapping with measurable geometry and change between flights.</div></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>What the client actually receives</h2>
+  <div class="lead">The report writes itself.</div>
+  <p class="sub">Your deliverable is not the video. It is this — and today an analyst assembles
+  it by hand after every flight.</p>
+
+  <div class="rap">
+    <div class="rb">
+      <div class="l">FEDS <span>· Site Report</span></div>
+      <div class="m">Site 04 · Solar field<br>Flight 12 — 22.09.2026</div>
+    </div>
+    <div class="rin">
+      <div class="rt">Progress &amp; condition, flight 12</div>
+      <div class="rs">Compared with flight 11 — 18 days earlier. Generated automatically, 4 min after upload.</div>
+      <div class="rk">
+        <div><div class="v">30</div><div class="k">objects detected this flight</div></div>
+        <div><div class="v">+6</div><div class="k">change since last flight</div></div>
+        <div><div class="v">3</div><div class="k">items flagged for review</div></div>
+        <div><div class="v">98.2%</div><div class="k">frames processed</div></div>
+      </div>
+      <table class="rt2">
+        <tr><th>Zone</th><th>Detected</th><th>Change</th><th>Flagged</th><th>Status</th></tr>
+        <tr><td>Zone A — north array</td><td>11</td><td>+2</td><td>0</td><td class="ok">clear</td></tr>
+        <tr><td>Zone B — access road</td><td>8</td><td>+3</td><td>1</td><td class="uy">review</td></tr>
+        <tr><td>Zone C — substation</td><td>6</td><td>0</td><td>0</td><td class="ok">clear</td></tr>
+        <tr><td>Zone D — perimeter</td><td>5</td><td>+1</td><td>2</td><td class="kt">action</td></tr>
+      </table>
+    </div>
+    <div class="rf"><span>Generated by BBA Vision · runs on your own machines</span>
+      <span>Branding, zones and thresholds configurable</span></div>
+  </div>
+  <p class="sub" style="margin-top:14px">Every flight produces the same document, in the same
+  format, with the same thresholds. <b>The client gets a comparable record instead of a fresh
+  opinion each month.</b></p>
+</section>
+
+<section>
+  <h2>The wider layer</h2>
+  <div class="lead">Detection is one module of six.</div>
+  <div class="kart">
+    <div class="kt2"><div class="n">01</div><div class="t">One control screen</div>
+      <div class="d">DJI, PX4 and ArduPilot in a single operating picture — planning, telemetry,
+      video and reporting. Most fleets run on three or four apps that never join up.</div></div>
+    <div class="kt2"><div class="n">02</div><div class="t">Image processing</div>
+      <div class="d">Detection, classification, counting, tracking and change between flights.
+      The engine above is the generic baseline; each site gets its own tuned model, trained on
+      a few hundred frames from your own flights.</div></div>
+    <div class="kt2"><div class="n">03</div><div class="t">3D &amp; digital twin</div>
+      <div class="d">SLAM-based reconstruction with measurable geometry, navigable by the client.</div></div>
+    <div class="kt2"><div class="n">04</div><div class="t">Automated reporting</div>
+      <div class="d">Findings, counts, flagged frames and comparison assembled into your branded
+      document, without an analyst.</div></div>
+    <div class="kt2"><div class="n">05</div><div class="t">Runs on your machines</div>
+      <div class="d">On-premise or on the aircraft. No cloud, no imagery leaving the site —
+      which is what energy and government clients ask first.</div></div>
+    <div class="kt2"><div class="n">06</div><div class="t">GPS-denied flight</div>
+      <div class="d">Vision-fed navigation for interiors, tanks and tunnels, where satellite
+      positioning stops.</div></div>
+  </div>
+</section>
+
+<div class="son">
+  <h3>Twenty minutes is enough to judge it.</h3>
+  <p>Send us one sample flight from a site you know. We process it, return the report, and you
+  decide whether it belongs in your delivery. No commitment attached to that.</p>
+  <div class="imza">serdarbatkan@bbateknoloji.com
+    <span>Serdar Batkan · BBA Technology · Izmir, Türkiye</span></div>
+</div>
+
+</div>
+<script>
+(function(){try{var k='bbaopen_feds',g=function(){try{if(sessionStorage.getItem(k))return;
+ sessionStorage.setItem(k,'1');navigator.sendBeacon('https://bba-demo-olcum.serdarbba.workers.dev/open?slug=feds');}catch(e){}};
+ ['pointerdown','keydown','touchstart','scroll'].forEach(function(e){
+ document.addEventListener(e,function o(){document.removeEventListener(e,o);g();},{once:true,passive:true});});}catch(e){}})();
+</script>
+</body>
+</html>
