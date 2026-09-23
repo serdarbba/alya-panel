@@ -1,0 +1,424 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alya for Yasmine Palace — guest messaging, answered</title>
+<style>
+  :root{
+    --bg:#0a0c12; --bg2:#0e1119; --panel:#12151e; --panel2:#191d28; --line:#282d3c;
+    --ink:#eef1f7; --mut:#9aa3b5; --faint:#6a7285;
+    --gold:#cBa15c; --gold:#c9a35d; --gold2:#ecd39a; --goldsoft:rgba(201,163,93,.13);
+    --emer:#41c393; --emer-soft:rgba(65,195,147,.14);
+    --rose:#e08a7a;
+    --shadow:0 30px 70px -30px rgba(0,0,0,.85);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 15% -8%, rgba(201,163,93,.10) 0%, transparent 55%),
+      radial-gradient(800px 500px at 92% 4%, rgba(65,195,147,.08) 0%, transparent 55%),
+      linear-gradient(180deg,var(--bg2),var(--bg) 45%);
+    color:var(--ink);min-height:100vh;
+    font-family:'Segoe UI',Inter,system-ui,-apple-system,sans-serif;
+    -webkit-font-smoothing:antialiased;font-size:15px;line-height:1.45}
+  .serif{font-family:'Iowan Old Style',Georgia,'Times New Roman',serif}
+  h1,h2,h3{margin:0}
+  a{color:var(--gold2)}
+
+  .top{max-width:1120px;margin:0 auto;padding:30px 26px 6px;display:flex;
+    align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap}
+  .brand{display:flex;align-items:center;gap:13px}
+  .orb{width:40px;height:40px;border-radius:50%;flex:none;position:relative;
+    background:radial-gradient(circle at 34% 28%,var(--gold2),var(--gold) 55%,#7c6330);
+    box-shadow:0 0 22px -2px rgba(201,163,93,.6)}
+  .orb::after{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+  .brand h1{font-size:16px;font-weight:600;letter-spacing:.2px}
+  .brand .sub{font-size:10.5px;color:var(--gold2);letter-spacing:2.6px;text-transform:uppercase;margin-top:2px}
+  .bybba{font-size:11px;color:var(--faint);letter-spacing:.4px}
+  .bybba b{color:var(--mut);font-weight:600}
+
+  .hero{max-width:1120px;margin:0 auto;padding:20px 26px 6px;text-align:center}
+  .hero h2{font-size:clamp(26px,4.6vw,40px);font-weight:600;letter-spacing:-.4px;text-wrap:balance;line-height:1.12}
+  .hero h2 em{font-style:normal;color:var(--gold2)}
+  .hero p{max-width:600px;margin:14px auto 0;color:var(--mut);font-size:15px;text-wrap:balance}
+
+  .stage{max-width:1120px;margin:0 auto;padding:26px 26px 20px;
+    display:grid;grid-template-columns:1fr 360px;gap:40px;align-items:center}
+  @media(max-width:900px){.stage{grid-template-columns:1fr;gap:26px;justify-items:center}}
+
+  /* sol: anlatı + senaryo seçim + mekanlar */
+  .left{max-width:440px}
+  .scn-label{font-size:11px;color:var(--faint);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+  .scns{display:flex;flex-direction:column;gap:10px;margin-bottom:26px}
+  .scn{display:flex;align-items:center;gap:13px;padding:13px 15px;border-radius:14px;cursor:pointer;
+    background:var(--panel);border:1px solid var(--line);transition:.22s;text-align:left;width:100%;color:inherit;font:inherit}
+  .scn:hover{border-color:color-mix(in srgb,var(--gold) 45%,var(--line))}
+  .scn.on{border-color:var(--gold);background:linear-gradient(100deg,var(--goldsoft),var(--panel) 65%);
+    box-shadow:0 0 0 1px var(--gold) inset}
+  .scn .ic{width:34px;height:34px;border-radius:10px;flex:none;display:grid;place-items:center;font-size:17px;
+    background:var(--panel2);border:1px solid var(--line)}
+  .scn.on .ic{background:var(--goldsoft);border-color:transparent}
+  .scn .st{flex:1;min-width:0}
+  .scn .sh{font-size:14px;font-weight:600}
+  .scn .sd{font-size:11.5px;color:var(--mut);margin-top:2px}
+  .scn .lg{font-size:9.5px;padding:2px 8px;border-radius:20px;background:var(--panel2);color:var(--faint);
+    border:1px solid var(--line);letter-spacing:.4px;flex:none}
+  .scn.on .lg{color:var(--gold2)}
+
+  .venues{border-top:1px solid var(--line);padding-top:18px}
+  .venues .vh{font-size:11px;color:var(--faint);letter-spacing:.5px;margin-bottom:10px}
+  .venues .vh b{color:var(--mut);font-weight:600}
+  .vchips{display:flex;flex-wrap:wrap;gap:7px}
+  .vchip{font-size:11.5px;padding:5px 11px;border-radius:20px;background:var(--panel);
+    border:1px solid var(--line);color:var(--mut)}
+  .vchip.open{color:var(--emer);border-color:color-mix(in srgb,var(--emer) 36%,transparent);
+    background:var(--emer-soft)}
+  .vchip .d{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--emer);
+    margin-right:5px;vertical-align:middle;box-shadow:0 0 6px var(--emer)}
+
+  /* sağ: telefon */
+  .phone{width:360px;max-width:92vw;height:720px;max-height:78vh;border-radius:44px;flex:none;position:relative;
+    background:linear-gradient(160deg,#20242f,#0c0e14);padding:13px;
+    box-shadow:var(--shadow), 0 0 0 1px rgba(255,255,255,.05), inset 0 0 0 1px rgba(0,0,0,.6)}
+  .screen{position:relative;height:100%;border-radius:33px;overflow:hidden;background:var(--bg);
+    display:flex;flex-direction:column}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:26px;
+    background:#0c0e14;border-radius:0 0 16px 16px;z-index:6}
+  .phead{display:flex;align-items:center;gap:11px;padding:20px 18px 14px;
+    background:linear-gradient(180deg,var(--panel2),var(--panel));border-bottom:1px solid var(--line);z-index:4}
+  .phead .orb{width:36px;height:36px}
+  .phead .ph-name{font-size:14px;font-weight:600;line-height:1.1}
+  .phead .ph-sub{font-size:10.5px;color:var(--emer);margin-top:2px;display:flex;align-items:center;gap:5px}
+  .phead .ph-sub .d{width:6px;height:6px;border-radius:50%;background:var(--emer);box-shadow:0 0 6px var(--emer)}
+  .spk{margin-left:auto;flex:none;width:34px;height:34px;border-radius:50%;padding:0;cursor:pointer;
+    display:grid;place-items:center;font-size:15px;background:var(--panel2);border:1px solid var(--line);
+    color:var(--gold2);transition:.2s}
+  .spk:hover{border-color:var(--gold)}
+  .spk.off{color:var(--faint)}
+  .spk:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+  .globe{font-size:11px;color:var(--faint);letter-spacing:.4px;border:1px solid var(--line);
+    padding:3px 9px;border-radius:20px}
+  .orb.speaking{animation:spk 1s ease-in-out infinite}
+  @keyframes spk{0%,100%{box-shadow:0 0 22px -2px rgba(201,163,93,.6)}
+    50%{box-shadow:0 0 32px 2px rgba(201,163,93,.92), 0 0 0 5px rgba(201,163,93,.16)}}
+  @media(prefers-reduced-motion:reduce){.orb.speaking{animation:none}}
+
+  .chat{flex:1;overflow-y:auto;padding:16px 14px 18px;display:flex;flex-direction:column;gap:16px;
+    scroll-behavior:smooth;
+    background:
+      radial-gradient(600px 300px at 80% 0%, rgba(201,163,93,.05), transparent 60%),
+      var(--bg)}
+  .chat::-webkit-scrollbar{width:0}
+  .row{display:flex;flex-direction:column;max-width:82%;animation:pop .3s ease}
+  @keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .row.g{align-self:flex-end;align-items:flex-end}
+  .row.a{align-self:flex-start;align-items:flex-start}
+  .bub{padding:10px 13px;border-radius:16px;font-size:13.5px;line-height:1.45}
+  .row.a .bub{background:var(--panel2);border:1px solid var(--line);border-bottom-left-radius:5px;color:var(--ink)}
+  .row.g .bub{background:linear-gradient(160deg,var(--gold),#a5813f);color:#1a1407;
+    border-bottom-right-radius:5px;font-weight:500}
+  .who-lbl{font-size:10.5px;font-weight:600;letter-spacing:.3px;margin:0 3px 5px;
+    display:flex;align-items:center;gap:5px}
+  .row.a .who-lbl{color:var(--gold2)}
+  .row.g .who-lbl{color:var(--mut)}
+  .who-lbl .mini{width:14px;height:14px;border-radius:50%;flex:none;
+    background:radial-gradient(circle at 34% 28%,var(--gold2),var(--gold) 60%,#7c6330);
+    box-shadow:0 0 7px -1px var(--gold)}
+  .who-lbl .langpart{color:var(--faint);font-weight:400;letter-spacing:.2px}
+  .gloss{font-size:11px;color:var(--faint);font-style:italic;margin:5px 5px 0;line-height:1.4}
+  .row.a .gloss{border-left:2px solid var(--line);padding-left:8px}
+
+  /* rezervasyon iletim şeridi */
+  .route{align-self:flex-start;display:flex;flex-direction:column;gap:6px;margin:2px 2px 0;max-width:88%}
+  .route .rt-h{font-size:9.5px;letter-spacing:.6px;text-transform:uppercase;color:var(--emer);
+    display:flex;align-items:center;gap:6px}
+  .route .rt-h::before{content:"";width:14px;height:1px;background:color-mix(in srgb,var(--emer) 45%,transparent)}
+  .rchip{font-size:11.5px;color:var(--emer);background:var(--emer-soft);align-self:flex-start;
+    border:1px solid color-mix(in srgb,var(--emer) 30%,transparent);padding:5px 11px 5px 6px;
+    border-radius:20px;display:inline-flex;align-items:center;gap:7px;animation:rin .35s ease}
+  @keyframes rin{from{opacity:0;transform:translateX(-6px)}to{opacity:1;transform:none}}
+  .rchip .tick{width:15px;height:15px;border-radius:50%;background:var(--emer);color:#06130d;flex:none;
+    display:grid;place-items:center;font-size:9px;font-weight:800}
+  .rchip b{color:var(--ink);font-weight:600}
+
+  .typing{align-self:flex-start;background:var(--panel2);border:1px solid var(--line);
+    padding:11px 14px;border-radius:16px;border-bottom-left-radius:5px;display:flex;gap:4px}
+  .typing span{width:7px;height:7px;border-radius:50%;background:var(--mut);animation:bnc 1.2s infinite}
+  .typing span:nth-child(2){animation-delay:.18s}.typing span:nth-child(3){animation-delay:.36s}
+  @keyframes bnc{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-5px);opacity:1}}
+
+  .pfoot{padding:11px 14px;border-top:1px solid var(--line);background:var(--panel);
+    display:flex;align-items:center;gap:9px}
+  .pfoot .fake{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:20px;
+    padding:9px 14px;font-size:12.5px;color:var(--faint)}
+  .pfoot .send{width:34px;height:34px;border-radius:50%;flex:none;display:grid;place-items:center;
+    background:linear-gradient(160deg,var(--gold2),var(--gold));color:#1a1407;font-size:15px}
+  .replay{position:absolute;bottom:76px;left:50%;transform:translateX(-50%);z-index:5;
+    font-size:11.5px;padding:7px 15px;border-radius:20px;background:rgba(12,14,20,.82);color:var(--gold2);
+    border:1px solid var(--line);cursor:pointer;backdrop-filter:blur(6px);opacity:0;transition:.3s;pointer-events:none}
+  .replay.show{opacity:1;pointer-events:auto}
+
+  footer{max-width:1120px;margin:14px auto 0;padding:18px 26px 46px;
+    display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:11px;color:var(--faint)}
+  footer b{color:var(--gold2);font-weight:600}
+  @media(prefers-reduced-motion:reduce){.row,.typing span{animation:none}}
+
+  .startov{position:absolute;inset:0;z-index:20;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:15px;background:radial-gradient(circle at 50% 38%, color-mix(in srgb,var(--gold) 14%, var(--bg)) 0%, var(--bg) 70%);
+    cursor:pointer;text-align:center;padding:26px;transition:opacity .35s}
+  .startov.hide{opacity:0;pointer-events:none}
+  .startov .pbtn{width:76px;height:76px;border-radius:50%;display:grid;place-items:center;font-size:30px;color:#14130c;
+    background:radial-gradient(circle at 35% 30%,var(--gold2),var(--gold) 65%);box-shadow:0 0 36px -4px var(--gold);
+    animation:ppls 2s ease-in-out infinite;padding-left:5px}
+  @keyframes ppls{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .startov .ptitle{font-size:16.5px;font-weight:600;color:var(--ink)}
+  .startov .psub{font-size:12.5px;color:var(--mut);max-width:230px;line-height:1.5}
+  @media(prefers-reduced-motion:reduce){.startov .pbtn{animation:none}}
+</style>
+
+<div class="top">
+  <div class="brand">
+    <div class="orb"></div>
+    <div>
+      <h1 class="serif">Alya</h1>
+      <div class="sub">Yasmine Palace · Qatar</div>
+    </div>
+  </div>
+  <div class="bybba"><b>BBA Technology</b> · Izmir, Turkiye · AI concierge</div>
+</div>
+
+<div class="hero">
+  <h2 class="serif">Your guest writes <em>in their own language</em>.<br>Alya answers <em>in seconds</em>.</h2>
+  <p>A table for six on Friday, a walk-in at Place Vendôme, a forty-person enquiry at one in the morning — answered in the guest's own language, on both locations, without anyone picking up the phone.</p>
+</div>
+
+<div class="stage">
+  <!-- SOL -->
+  <div class="left">
+    <div class="scn-label">Pick a scenario — watch it play</div>
+    <div class="scns" id="scns"></div>
+
+    <div class="venues">
+      <div class="vh"><b>Your two locations</b> · Alya knows both <span id="vhinfo" style="color:var(--emer)"></span></div>
+      <div class="vchips" id="vchips"></div>
+    </div>
+  </div>
+
+  <!-- SAĞ: telefon -->
+  <div class="phone">
+    <div class="screen">
+      <div class="notch"></div>
+      <div class="phead">
+        <div class="orb" id="pOrb"></div>
+        <div>
+          <div class="ph-name">Alya · Yasmine Palace</div>
+          <div class="ph-sub"><span class="d"></span> <span id="phstatus">online · Arabic &amp; English</span></div>
+        </div>
+        <button class="spk on" id="spk" hidden title="Sesi aç / kapat" aria-label="Sesi aç veya kapat">🔊</button>
+        <div class="globe" id="globe">TR</div>
+      </div>
+      <div class="chat" id="chat"></div>
+      <div class="startov" id="startov">
+        <div class="pbtn">&#9654;</div>
+        <div class="ptitle">Start the demo</div>
+        <div class="psub">Tap to watch Alya answer a real guest message.</div>
+      </div>
+      <button class="replay" id="replay">↻ play again</button>
+      <div class="pfoot">
+        <div class="fake">Type a message…</div>
+        <div class="send">➤</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div>Illustrative demo, built on your own two locations. In a live setup it runs on your real menu, hours and reservation system.</div>
+  <div><b>Alya</b> · BBA Technology · Izmir, Turkiye</div>
+</footer>
+
+<script>
+(function(){var sent=false;function ping(){if(sent)return;sent=true;
+  try{fetch('https://ntfy.sh/bba-alya-visits-51886a0e14',{method:'POST',body:'Yasmine Palace demoyu acti',
+    headers:{'Title':'Alya demo goruntulendi','Tags':'eyes,tada'}});}catch(e){}}
+  ['pointerdown','keydown','touchstart'].forEach(function(ev){window.addEventListener(ev,ping,{once:true,passive:true});});
+})();
+</script>
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---- ses (Alya'nın gerçek sesi — Sulafat) ---- */
+let soundOn = true, curAudio = null;
+const sleep = ms => new Promise(r=>setTimeout(r,ms));
+function stopAudio(){ if(curAudio){ curAudio.pause(); curAudio=null; } const o=$('#pOrb'); if(o) o.classList.remove('speaking'); }
+/* sesi çalar ve BİTENE kadar bekler (Promise) — akış sese göre ilerlesin diye */
+function playAudio(key, text, lang){
+  return new Promise(resolve=>{
+    if(!soundOn){ resolve(false); return; }
+    stopAudio();
+    const o=$('#pOrb');
+    const LC={'İngilizce':'en-US','Türkçe':'tr-TR','Rusça':'ru-RU','Almanca':'de-DE','Arapça':'ar-SA'};
+    function fallback(){
+      try{ const u=new SpeechSynthesisUtterance(String(text||'').replace(/<[^>]+>/g,''));
+        u.lang=LC[lang]||'tr-TR'; if(o) o.classList.add('speaking');
+        u.onend=()=>{ if(o) o.classList.remove('speaking'); resolve(true); };
+        u.onerror=()=>{ if(o) o.classList.remove('speaking'); resolve(false); };
+        window.speechSynthesis.cancel(); window.speechSynthesis.speak(u);
+      }catch(e){ if(o) o.classList.remove('speaking'); resolve(false); }
+    }
+    if(!key){ fallback(); return; }
+    const a = new Audio('audio/'+key+'.mp3'); curAudio = a;
+    let done = false;
+    const fin = ok => { if(done) return; done = true; if(o) o.classList.remove('speaking'); if(curAudio===a) curAudio=null; resolve(ok); };
+    a.onplay  = ()=>{ if(o) o.classList.add('speaking'); };
+    a.onended = ()=>fin(true);
+    a.onerror = ()=>{ if(done) return; done=true; if(curAudio===a) curAudio=null; fallback(); };
+    a.play().catch(()=>{ if(done) return; done=true; if(curAudio===a) curAudio=null; fallback(); });
+  });
+}
+
+/* ---- scenarios · Yasmine Palace, two locations ---- */
+const SCEN = {
+  arabic:{
+    icon:'🌙', head:'A guest writes in Arabic', desc:'Friday night, six people, The Pearl', lang:'AR', globe:'AR',
+    msgs:[
+      {who:'g',lang:'Arabic',text:"مساء الخير، عندكم طاولة لستة أشخاص الجمعة الساعة ٩ في اللؤلؤة؟",
+        gloss:'"Good evening, do you have a table for six on Friday at 9 at The Pearl?"'},
+      {who:'a',route:['Logged to the management panel','Sent to The Pearl'],lang:'Arabic',
+        text:"مساء النور! نعم، لدينا طاولة لستة أشخاص الجمعة الساعة ٩:٠٠ في فرع <b>اللؤلؤة</b>. هل تفضلون الجلوس بالداخل أم على التراس؟",
+        gloss:'Answered in Arabic, in seconds, with the real availability of the Pearl branch — no phone call.'},
+      {who:'g',lang:'Arabic',text:"على التراس من فضلك، ومناسبة عيد ميلاد."},
+      {who:'a',route:['Sent to The Pearl','Note added to the booking'],lang:'Arabic',
+        text:"تم الحجز — <b>اللؤلؤة</b>، التراس، الجمعة ٩:٠٠، ستة أشخاص. رقم الحجز <b>YP-4127</b>. سجّلنا ملاحظة عيد الميلاد للفريق. نتشرف بكم.",
+        gloss:'Booking closed inside the conversation, birthday note routed to the floor team.'},
+    ]},
+  branch:{
+    icon:'📍', head:'Which branch?', desc:'Guest does not know you have two', lang:'EN', globe:'EN',
+    msgs:[
+      {who:'g',lang:'English',text:"Hi, are you open now? I am at Place Vendome."},
+      {who:'a',route:['Sent to Place Vendome'],lang:'English',
+        text:"Good evening! Yes — <b>Place Vendôme</b> is open until 23:30 tonight, and we are on the ground floor near the canal. Shall I hold a table for you, and for how many?",
+        gloss:'Alya knows both branches and answers for the one the guest is standing in.'},
+      {who:'g',lang:'English',text:"Two people, in ten minutes."},
+      {who:'a',route:['Sent to Place Vendome','Logged to the management panel'],lang:'English',
+        text:"Held — table for two, <b>Place Vendôme</b>, 10 minutes. Code <b>YP-4128</b>. If you are delayed just write here and we will keep it.",
+        gloss:'A walk-in that would otherwise have been a phone call, or lost.'},
+    ]},
+  late:{
+    icon:'🕐', head:'After closing', desc:'01:20, nobody is at the phone', lang:'EN', globe:'EN',
+    msgs:[
+      {who:'g',lang:'English',text:"Do you do private events? We are about 40 people, end of next month."},
+      {who:'a',route:['Logged to the management panel','Flagged for the owner'],lang:'English',
+        text:"We do — both <b>The Pearl</b> and <b>Place Vendôme</b> take private groups, and 40 guests fits the upper level at The Pearl. May I take your name and a date, so the team calls you first thing in the morning with a menu and a price?",
+        gloss:'A 40-person enquiry arriving at 01:20 is answered, captured and put on the owner desk instead of waiting until morning.'},
+      {who:'g',lang:'English',text:"Ahmed, 27th, around 8pm."},
+      {who:'a',route:['Sent to the owner','Added to the calendar'],lang:'English',
+        text:"Noted, Ahmed — 27th, 20:00, about 40 guests, The Pearl. The team will call you tomorrow morning. Thank you for thinking of us.",
+        gloss:'The lead is not lost. This is the enquiry that usually disappears.'},
+    ]},
+};
+
+/* branches */
+const VENUES = ['The Pearl · Qatar','Place Vendôme','Terrace','Private dining','Group events'];
+const OPEN_NIGHT = new Set(['The Pearl · Qatar','Place Vendôme','Terrace']);
+
+let current = 'arabic', playGen = 0;
+
+function buildScns(){
+  $('#scns').innerHTML = Object.entries(SCEN).map(([k,s])=>`
+    <button class="scn ${k===current?'on':''}" data-k="${k}">
+      <div class="ic">${s.icon}</div>
+      <div class="st"><div class="sh">${esc(s.head)}</div><div class="sd">${esc(s.desc)}</div></div>
+      <div class="lg">${s.lang}</div>
+    </button>`).join('');
+  $('#scns').querySelectorAll('.scn').forEach(b=>b.onclick=()=>play(b.dataset.k));
+}
+function buildVenues(){
+  const openSet = current==='night' ? OPEN_NIGHT : null;
+  $('#vhinfo').textContent = current==='arabic' ? '· open now' : '';
+  $('#vchips').innerHTML = VENUES.map(v=>{
+    const on = openSet && openSet.has(v);
+    return `<span class="vchip ${on?'open':''}">${on?'<span class="d"></span>':''}${esc(v)}</span>`;
+  }).join('');
+}
+
+function typingEl(){ const d=document.createElement('div'); d.className='typing';
+  d.innerHTML='<span></span><span></span><span></span>'; return d; }
+
+function rowEl(m){
+  const d=document.createElement('div'); d.className='row '+m.who;
+  const who = m.who==='a' ? `<span class="mini"></span>Alya` : 'Guest';
+  d.innerHTML = `<div class="who-lbl">${who}<span class="langpart">· ${esc(m.lang)}</span></div>`+
+    `<div class="bub">${m.text}</div>`+
+    (m.gloss?`<div class="gloss">${esc(m.gloss)}</div>`:'');
+  return d;
+}
+
+async function showRoute(targets, chat, gen){
+  const box = document.createElement('div'); box.className='route';
+  box.innerHTML = '<div class="rt-h">routed automatically</div>';
+  chat.appendChild(box); chat.scrollTop = chat.scrollHeight;
+  for(const t of targets){
+    if(gen !== playGen) return;
+    await sleep(480);
+    if(gen !== playGen) return;
+    const c = document.createElement('div'); c.className = 'rchip';
+    c.innerHTML = '<span class="tick">✓</span> ' + esc(t);
+    box.appendChild(c); chat.scrollTop = chat.scrollHeight;
+  }
+}
+
+async function play(k){
+  current = k; stopAudio();
+  const gen = ++playGen;                 // her yeni oynatma öncekini iptal eder
+  const s = SCEN[k];
+  buildScns(); buildVenues();
+  $('#globe').textContent = s.globe;
+  $('#phstatus').textContent = 'online · Arabic & English · 20 languages';
+  $('#replay').classList.remove('show');
+  const chat = $('#chat'); chat.innerHTML='';
+  await sleep(350);
+  for(const m of s.msgs){
+    if(gen !== playGen) return;
+    if(m.who === 'a'){
+      const tp = typingEl(); chat.appendChild(tp); chat.scrollTop = chat.scrollHeight;
+      await sleep(750 + Math.min(m.text.length*7, 1100));
+      if(gen !== playGen){ tp.remove(); return; }
+      tp.remove();
+      chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
+      const played = await playAudio(m.audio, m.text, m.lang);
+      if(gen !== playGen) return;
+      if(m.route){ await sleep(300); if(gen !== playGen) return; await showRoute(m.route, chat, gen); if(gen !== playGen) return; }
+      await sleep(played ? 650 : 1100 + Math.min(m.text.length*20, 3200));
+    } else {
+      chat.appendChild(rowEl(m)); chat.scrollTop = chat.scrollHeight;
+      await sleep(950 + Math.min(m.text.length*9, 1400));
+    }
+  }
+  if(gen === playGen) $('#replay').classList.add('show');
+}
+
+$('#replay').onclick = ()=>play(current);
+$('#spk').onclick = ()=>{
+  soundOn = !soundOn;
+  $('#spk').classList.toggle('off', !soundOn);
+  $('#spk').textContent = soundOn ? '🔊' : '🔇';
+  if(!soundOn) stopAudio();
+};
+function armStart(k){var o=document.getElementById('startov');if(!o){play(k);return;}o.addEventListener('click',function(){o.classList.add('hide');play(k);},{once:true});}
+buildScns(); buildVenues(); armStart('night');
+</script>
+
+<script>/* BBA-DEMO-BEACON — demo açılma ölçümü (ilk etkileşimde, crawler ötmesin) */
+(function(){try{
+  var m=location.pathname.replace(/\/+$/,'').split('/');
+  var slug=(m[m.length-1]||'').toLowerCase().replace(/[^a-z0-9_-]/g,'');
+  if(!slug||slug==='alya-panel')return;
+  var k='bbaopen_'+slug, gonder=function(){
+    try{if(sessionStorage.getItem(k))return;sessionStorage.setItem(k,'1');
+      navigator.sendBeacon('https://bba-demo-olcum.serdarbba.workers.dev/open?slug='+encodeURIComponent(slug));
+    }catch(e){}};
+  ['pointerdown','keydown','touchstart','scroll'].forEach(function(ev){
+    document.addEventListener(ev,function o(){document.removeEventListener(ev,o);gonder();},{once:true,passive:true});});
+}catch(e){}})();
+</script>
